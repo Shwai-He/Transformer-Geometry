@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List, Any, Optional
+from statistics import mean
+from typing import Dict, List, Any, Optional, Sequence
 
 import torch
 import torch.nn.functional as F
@@ -31,6 +32,10 @@ def _project_parallel(delta: torch.Tensor, base: torch.Tensor, eps: float = 1e-1
 
 def _topk_indices(logits: torch.Tensor, k: int) -> torch.Tensor:
     return torch.topk(logits, k=min(k, logits.shape[-1]), dim=-1).indices
+
+
+def _mean_or_none(values: Sequence[float]) -> Optional[float]:
+    return float(mean(values)) if values else None
 
 
 class GeometryAnalyzer:
@@ -64,11 +69,7 @@ class GeometryAnalyzer:
             raise ValueError("Model has no lm_head; logits-space analysis requires a causal LM with lm_head.")
 
     @torch.no_grad()
-    def analyze(self, prompt: str, top_k: int = 5) -> Dict[str, Any]:
-        encoded = self.tokenizer(prompt, return_tensors="pt")
-        input_ids = encoded.input_ids.to(self.device)
-        attention_mask = encoded.attention_mask.to(self.device)
-
+    def _analyze_from_ids(self, input_ids: torch.Tensor, attention_mask: torch.Tensor, top_k: int = 5) -> Dict[str, Any]:
         outputs = self.model(
             input_ids=input_ids,
             attention_mask=attention_mask,
@@ -169,11 +170,92 @@ class GeometryAnalyzer:
         decoded_top0 = self.tokenizer.decode([int(torch.argmax(outputs.logits[:, -1, :], dim=-1).item())])
 
         return {
-            "prompt": prompt,
             "summary": summary,
             "predicted_next_token": decoded_top0,
             "layer_metrics": [m.__dict__ for m in metrics],
             "topk_changes": topk_changes,
+        }
+
+    @torch.no_grad()
+    def analyze(self, prompt: str, top_k: int = 5) -> Dict[str, Any]:
+        encoded = self.tokenizer(prompt, return_tensors="pt")
+        input_ids = encoded.input_ids.to(self.device)
+        attention_mask = encoded.attention_mask.to(self.device)
+
+        result = self._analyze_from_ids(input_ids=input_ids, attention_mask=attention_mask, top_k=top_k)
+        result["prompt"] = prompt
+        return result
+
+    @torch.no_grad()
+    def analyze_batch(self, prompts: List[str], top_k: int = 5) -> Dict[str, Any]:
+        runs = [self.analyze(prompt=p, top_k=top_k) for p in prompts]
+
+        summary_keys = [
+            "z_post_median",
+            "dz_para_median",
+            "dz_perp_median",
+            "dz_para_dz_perp_log_median",
+        ]
+
+        agg = {}
+        for k in summary_keys:
+            vals = [r["summary"][k] for r in runs if r["summary"].get(k) is not None]
+            agg[f"mean_{k}"] = _mean_or_none(vals)
+
+        return {
+            "n_prompts": len(prompts),
+            "aggregate": agg,
+            "runs": runs,
+        }
+
+    @torch.no_grad()
+    def analyze_generation(
+        self,
+        prompt: str,
+        max_new_tokens: int = 16,
+        top_k: int = 5,
+        do_sample: bool = False,
+        temperature: float = 1.0,
+    ) -> Dict[str, Any]:
+        # Step-wise decoding analysis: run full forward at each step and log geometry stats.
+        encoded = self.tokenizer(prompt, return_tensors="pt")
+        input_ids = encoded.input_ids.to(self.device)
+
+        steps: List[Dict[str, Any]] = []
+
+        for step in range(max_new_tokens):
+            attention_mask = torch.ones_like(input_ids, device=self.device)
+            probe = self._analyze_from_ids(input_ids=input_ids, attention_mask=attention_mask, top_k=top_k)
+
+            logits = self.model(input_ids=input_ids, attention_mask=attention_mask, return_dict=True).logits[:, -1, :]
+            if do_sample:
+                probs = F.softmax(logits / max(temperature, 1e-6), dim=-1)
+                next_token = torch.multinomial(probs, num_samples=1)
+            else:
+                next_token = torch.argmax(logits, dim=-1, keepdim=True)
+
+            token_id = int(next_token.item())
+            token_text = self.tokenizer.decode([token_id])
+
+            steps.append(
+                {
+                    "step": step,
+                    "token_id": token_id,
+                    "token_text": token_text,
+                    "summary": probe["summary"],
+                    "predicted_next_token": probe["predicted_next_token"],
+                }
+            )
+
+            input_ids = torch.cat([input_ids, next_token], dim=1)
+
+        generated = self.tokenizer.decode(input_ids[0], skip_special_tokens=True)
+
+        return {
+            "prompt": prompt,
+            "max_new_tokens": max_new_tokens,
+            "generated_text": generated,
+            "steps": steps,
         }
 
 
