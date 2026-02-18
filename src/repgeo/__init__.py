@@ -5,6 +5,7 @@ from .gated_attention import (
     compute_update_geometry,
     compare_vanilla_vs_gated,
 )
+from .technical_reproduction import TechnicalReproducer
 
 __all__ = [
     "GeometryAnalyzer",
@@ -13,4 +14,5 @@ __all__ = [
     "GatedAttentionBlock",
     "compute_update_geometry",
     "compare_vanilla_vs_gated",
+    "TechnicalReproducer",
 ]
