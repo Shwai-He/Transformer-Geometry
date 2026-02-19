@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Plot layer-wise metrics from probe output")
-    parser.add_argument("--input", type=str, required=True, help="JSON from run_probe.py")
+    parser.add_argument("--input", type=str, default="results/probe_result.json", help="JSON from run_probe.py")
     parser.add_argument("--output", type=str, default="results/layer_metrics.png")
     args = parser.parse_args()
 
