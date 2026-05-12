@@ -63,6 +63,8 @@ The figures below are exported from the paper experiments as SVG assets for quic
 
 These profiles measure how much transformer updates preserve the current direction versus change it across depth. The plotting scripts use saved probe summaries, while the probe runners regenerate the underlying activations.
 
+> **Key result:** transformer updates contain both rescaling-aligned and direction-changing structure across depth, and the profile remains visible across model scales.
+
 <table>
   <tr>
     <td width="50%" align="center"><img src="docs/assets/component_profiles_qwen3_4b.svg" alt="Parallel and perpendicular component profiles for Qwen3-4B" width="390"></td>
@@ -87,6 +89,8 @@ scripts/run_batch_probe.py
 ### Manual component scaling at inference time
 
 These ablations manually scale parallel or perpendicular components and measure the resulting perplexity change. They are the lightweight diagnostic counterpart to the benchmark evaluations in `lm-evaluation-harness/`.
+
+> **Key result:** value-parallel scaling is comparatively robust, while changing the perpendicular component more directly disrupts model behavior.
 
 <table>
   <tr>
@@ -113,6 +117,8 @@ lm-evaluation-harness/scripts/run_lm_eval_attn_removal_batch.sh
 
 This view compares attention maps after value-space and residual-space diagonal edits. The hook code implements the edit, and the drawing code replots saved attention-map bundles.
 
+> **Key result:** edits that look similar as scalar diagonal controls can behave differently depending on whether the constraint is solved in value space or residual space.
+
 <p align="center">
   <img src="docs/assets/diagonal_edit_attention_maps.svg" alt="Attention maps under diagonal editing" width="660">
 </p>
@@ -133,6 +139,8 @@ drawing/attn_matrix/
 ### Compression error geometry
 
 The compression experiments decompose pruning and quantization error into parallel and perpendicular parts. The paired attention-side views show that the direction-changing component separates pruning severity more clearly, while the parallel component gives the complementary rescaling view.
+
+> **Key result:** stronger pruning is most visible in the direction-changing error, whereas quantization stays closer to the dense update geometry in both components.
 
 <table>
   <tr>
@@ -158,6 +166,8 @@ drawing/comp_analysis/data/all_settings_master_v2.tsv
 ### Training-time parallel removal
 
 The training experiments test whether suppressing parallel updates changes optimization. The plot summarizes scratch pretraining runs across model sizes, with downstream evaluation handled through the same lm-eval workspace.
+
+> **Key result:** parallel-update control affects scratch-training loss curves, so the geometry is relevant to optimization as well as inference-time editing.
 
 <p align="center">
   <img src="docs/assets/pretraining_parallel_removal.svg" alt="Pretraining loss curves under parallel removal" width="700">
