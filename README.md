@@ -68,6 +68,10 @@ These profiles measure how much transformer updates preserve the current directi
     <td width="50%" align="center"><img src="docs/assets/component_profiles_qwen3_4b.svg" alt="Parallel and perpendicular component profiles for Qwen3-4B" width="390"></td>
     <td width="50%" align="center"><img src="docs/assets/component_profiles_qwen3_30b_a3b.svg" alt="Parallel and perpendicular component profiles for Qwen3-30B-A3B" width="390"></td>
   </tr>
+  <tr>
+    <td width="50%" align="center"><b>Qwen3-4B.</b><br>Layerwise parallel and perpendicular update ratios across sampled layers.</td>
+    <td width="50%" align="center"><b>Qwen3-30B-A3B.</b><br>The same geometry profile on a larger MoE-style model.</td>
+  </tr>
 </table>
 
 ```text
@@ -89,6 +93,10 @@ These ablations manually scale parallel or perpendicular components and measure 
     <td width="50%" align="center"><img src="docs/assets/component_scaling_parallel.svg" alt="Perplexity change under parallel component scaling" width="360"></td>
     <td width="50%" align="center"><img src="docs/assets/component_scaling_perpendicular.svg" alt="Perplexity change under perpendicular component scaling" width="360"></td>
   </tr>
+  <tr>
+    <td width="50%" align="center"><b>Parallel scaling.</b><br>Scaling the rescaling-aligned component has a relatively broad stable range.</td>
+    <td width="50%" align="center"><b>Perpendicular scaling.</b><br>Changing the direction-changing component is more sensitive.</td>
+  </tr>
 </table>
 
 ```text
@@ -107,6 +115,9 @@ This view compares attention maps after value-space and residual-space diagonal 
 
 <p align="center">
   <img src="docs/assets/diagonal_edit_attention_maps.svg" alt="Attention maps under diagonal editing" width="660">
+</p>
+<p align="center">
+  <em>Attention maps compare baseline attention with value-space and residual-space diagonal edits, highlighting how different spaces change self-directed attention.</em>
 </p>
 
 ```text
@@ -150,6 +161,9 @@ The training experiments test whether suppressing parallel updates changes optim
 
 <p align="center">
   <img src="docs/assets/pretraining_parallel_removal.svg" alt="Pretraining loss curves under parallel removal" width="700">
+</p>
+<p align="center">
+  <em>Training curves compare baseline scratch pretraining with variants that suppress or adjust parallel updates.</em>
 </p>
 
 ```text
