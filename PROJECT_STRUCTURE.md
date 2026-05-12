@@ -16,7 +16,7 @@ scripts/                      # small repo-level utilities
 notebooks/                    # exploratory notebooks
 results/                      # non-paper raw or intermediate results
 representation-analysis/      # compatibility directory with symlinks/aliases only
-focused-compression-analysis/ # legacy alias kept for compatibility
+compression/                 # compression analysis and diagnostics
 archive/                      # retired assets once no longer active
 _imports/                     # imported snapshots kept for provenance
 ```

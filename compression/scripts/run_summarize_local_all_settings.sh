@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-RUNS_ROOT="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/focused-compression-analysis/outputs/layerwise_para_perp"
+RUNS_ROOT="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/compression/outputs/layerwise_para_perp"
 OUT_DIR="$RUNS_ROOT/_summaries"
 PYTHON_BIN="python3"
 

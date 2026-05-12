@@ -9,7 +9,7 @@ MAX_PROMPTS=32
 MAX_LENGTH=512
 DTYPE="float16"  # float16 | bfloat16 | float32
 TAG="qwen3_4b_vs_awq_sanity"
-OUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/focused-compression-analysis/outputs/dense_quant_diff"
+OUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/compression/outputs/dense_quant_diff"
 
 PYTHON_BIN="python3"
 BACKGROUND=false

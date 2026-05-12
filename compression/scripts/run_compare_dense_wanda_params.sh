@@ -6,7 +6,7 @@ DENSE_MODEL="/mnt/bn/seed-aws-va/shwai.he/models/Qwen/Qwen3-4B"
 WANDA_MODEL="/mnt/bn/seed-aws-va/shwai.he/wanda/out/Qwen/Qwen3-4B/unstructured/wanda"
 DTYPE="float16"  # float16 | bfloat16 | float32
 TAG="qwen3_4b_vs_wanda_param_sanity"
-OUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/focused-compression-analysis/outputs/dense_wanda_params"
+OUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/compression/outputs/dense_wanda_params"
 
 PYTHON_BIN="python3"
 BACKGROUND=false

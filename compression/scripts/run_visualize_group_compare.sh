@@ -6,7 +6,7 @@ set -euo pipefail
 RUN_DIRS=""
 LABELS=""
 COMPONENT="block_out"  # block_out | attn_out | mlp_out
-OUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/focused-compression-analysis/outputs/viz_group_compare"
+OUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/compression/outputs/viz_group_compare"
 
 PYTHON_BIN="python3"
 BACKGROUND=false

@@ -5,7 +5,7 @@ set -euo pipefail
 MODEL_NAME="/mnt/bn/seed-aws-va/shwai.he/models/Qwen/Qwen3-4B"
 QUANT_MODEL_NAME="/mnt/bn/seed-aws-va/shwai.he/models/Qwen/Qwen3-4B-AWQ"
 PROMPTS_FILE="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/prompts.txt"
-OUTPUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/focused-compression-analysis/outputs/layerwise_para_perp"
+OUTPUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/compression/outputs/layerwise_para_perp"
 METHOD_PREFIX="local_bnb4_nf4"
 MAX_PROMPTS=32
 MAX_LENGTH=512

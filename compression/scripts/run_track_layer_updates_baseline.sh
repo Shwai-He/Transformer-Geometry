@@ -5,7 +5,7 @@ MODEL_NAME="/mnt/bn/seed-aws-va/shwai.he/models/Qwen/Qwen3-4B"
 PROMPTS_FILE="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/prompts.txt"
 MAX_PROMPTS=32
 MAX_LENGTH=512
-OUTPUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/focused-compression-analysis/outputs/layerwise_para_perp"
+OUTPUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/compression/outputs/layerwise_para_perp"
 METHOD_NAME="dense_baseline_track"
 
 PYTHON_BIN="python3"

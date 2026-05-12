@@ -1,67 +1,131 @@
 # Transformer Geometry
 
-This repository is organized around the NeurIPS 2026 paper in `_NeurIPS_2026_/`. The paper studies transformer updates through a geometric decomposition into parallel and perpendicular components, compares residual-space and value-space views, and uses that geometry for three connected goals: inference-time editing, compression diagnostics, and training-time intervention.
+This repository accompanies the NeurIPS 2026 paper in `_NeurIPS_2026_/`. The paper studies transformer computation through a geometric decomposition of module updates into **parallel** and **perpendicular** components, compares **residual-space** and **value-space** views, and uses that geometry for three connected goals:
 
-## Paper-first entrypoint
+- inference-time component editing
+- compression diagnostics
+- training-time intervention
 
-If you want the paper itself, start here:
+## Paper directory
 
-- `_NeurIPS_2026_/`: LaTeX source, paper-facing figures, and paper-facing result tables.
+The manuscript itself lives in:
 
-The rest of the repository is arranged to support that paper with experiment code, reusable analysis, and benchmark infrastructure.
+- `_NeurIPS_2026_/`
 
-## How the codebase maps to the paper
+This paper directory contains the LaTeX source, paper-facing figures, and paper-facing result CSVs. The rest of the repository contains the code used to run, analyze, and visualize the experiments reported there.
+
+## Repository map
 
 ```text
 _NeurIPS_2026_/            paper source, final figures, final CSV tables
 lm-evaluation-harness/     benchmark evaluation for general-task and RULER experiments
 training/                  training and optimization runs related to parallel suppression
-compression/               compression-analysis workspace for pruning and quantization studies
+compression/               pruning and quantization geometry analysis
 drawing/                   editable figure-generation code and plotting assets
 analysis/                  standalone intervention, visualization, and diagnostic scripts
 src/repgeo/                reusable geometry and intervention utilities
+notebooks/                 exploratory analysis notebooks
 ```
 
-A good mental model is:
+## Paper-related code by topic
 
-- `_NeurIPS_2026_/` contains what is cited by the paper.
-- `lm-evaluation-harness/`, `training/`, and `compression/` contain the main experimental backends.
-- `drawing/` contains editable figure-source code.
-- `analysis/` contains smaller research scripts that do not belong in a benchmark harness.
-- `src/repgeo/` is where reusable logic should accumulate over time.
+### 1. Geometry of transformer updates
 
-## Main research themes represented in the code
+These parts of the code support the paper's core decomposition into parallel and perpendicular components.
 
-- Parallel vs perpendicular decomposition of transformer updates.
-- Residual-space vs value-space measurement and intervention.
-- Attention-side component scaling and diagonal editing.
-- Compression-induced geometry distortion under pruning and quantization.
-- Training-time suppression of self-value-parallel updates.
+- `src/repgeo/`: reusable geometry utilities.
+- `scripts/run_probe.py`: single-prompt probing.
+- `scripts/run_batch_probe.py`: batch probing across prompts.
+- `scripts/run_generation_probe.py`: generation-step geometry analysis.
+- `analysis/`: standalone diagnostic and visualization scripts for deeper inspection.
 
-## What to use for new work
+### 2. Inference-time component editing
 
-- Put paper text, final figures, and final tables in `_NeurIPS_2026_/`.
-- Put benchmark runners and result collection under `lm-evaluation-harness/`.
-- Put pretraining or optimization experiments under `training/`.
-- Put compression-specific studies under `compression/`.
-- Put editable figure-source code under `drawing/`.
-- Put standalone research scripts under `analysis/`.
-- Put reusable Python logic under `src/repgeo/`.
+These parts support the paper's editing experiments, including residual-space versus value-space interventions and diagonal edits.
 
-## Compatibility paths
+- `lm-evaluation-harness/lm_eval/models/hf_xsa.py`
+- `lm-evaluation-harness/lm_eval/models/xsa_hooks.py`
+- `lm-evaluation-harness/lm_eval/models/attn_diag_hooks.py`
+- `analysis/qwen_xsa_forward_ablation.py`
+- `analysis/qwen_xsa_forward_generate.py`
 
-`representation-analysis/` is now a compatibility directory. Older commands still resolve through it, but new work should use the root-level paths directly.
+Key runners:
 
-Examples:
+- `lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh`
+- `lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh`
+- `lm-evaluation-harness/scripts/run_lm_eval_xsa_multihead_batch.sh`
+- `lm-evaluation-harness/scripts/run_lm_eval_attn_removal_batch.sh`
+- `lm-evaluation-harness/scripts/run_lm_eval_attn_diag_batch.sh`
 
-- `representation-analysis/lm-evaluation-harness/...` -> `lm-evaluation-harness/...`
-- `representation-analysis/drawing/...` -> `drawing/...`
-- `representation-analysis/training/...` -> `training/...`
-- `representation-analysis/compression/...` -> `compression/...`
+### 3. General-task and long-context evaluation
 
-## Related navigation docs
+These parts correspond to the paper's evaluation without task-specific fine-tuning, including both standard downstream tasks and RULER.
 
-- `PROJECT_STRUCTURE.md`: higher-level structure policy.
-- `_NeurIPS_2026_/README.md`: paper-directory notes and links back to the experiment workspaces.
-- `lm-evaluation-harness/scripts/README.md`: benchmark launcher guide.
-- `analysis/README.md`: grouped guide to standalone analysis scripts.
+- `lm-evaluation-harness/scripts/run_lm_eval_xsa_multihead_batch.sh`
+- `lm-evaluation-harness/scripts/run_lm_eval_attn_removal_batch.sh`
+- `lm-evaluation-harness/scripts/run_lm_eval_attn_diag_batch.sh`
+- `lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh`
+
+Result collection:
+
+- `lm-evaluation-harness/scripts/collect_xsa_lm_eval_results.py`
+- `lm-evaluation-harness/scripts/collect_xsa_lm_eval_ruler_results.py`
+
+### 4. Training-time intervention
+
+These parts correspond to the paper's experiments on suppressing self-value-parallel updates during training and tracking optimization effects.
+
+- `training/`: training-side workspace.
+- `analysis/check_nanogpt_gamma_ckpt.py`
+- `analysis/cleanup_invalid_nanogpt_checkpoints.py`
+- `analysis/download_wandb_history.py`
+- `analysis/plot_wandb_history.py`
+- `lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh`
+- `lm-evaluation-harness/scripts/collect_nanogpt_lm_eval_results.py`
+
+### 5. Compression diagnostics
+
+These parts correspond to the paper's pruning and quantization analysis.
+
+- `compression/code/layerwise_para_perp_compare.py`
+- `compression/code/visualize_local_sweep_compare.py`
+- `compression/code/visualize_local_sweep_summary.py`
+- `compression/scripts/run_layerwise_para_perp_compare.sh`
+- `compression/scripts/run_intra_layer_quant_para_perp.sh`
+- `compression/scripts/run_intra_layer_prune_para_perp.sh`
+- `compression/scripts/run_inter_layer_drop_para_perp.sh`
+
+## Figure-generation code
+
+Editable plotting and figure-source code lives under `drawing/`.
+
+Representative subfolders:
+
+- `drawing/overview/`: schematics and overview assets
+- `drawing/para_dist/`: parallel/perpendicular profile plots
+- `drawing/comp_analysis/`: compression-geometry plots
+- `drawing/loss_curves/`: training curves
+- `drawing/attn_matrix/`: attention-matrix and diagonal-edit visualizations
+
+Paper-facing figures used by LaTeX should be copied into `_NeurIPS_2026_/figs`.
+
+## Recommended reading order
+
+1. Read `_NeurIPS_2026_/` for the paper narrative.
+2. Read `PAPER_CODE_MAP.md` for a direct paper-to-code index.
+3. Use `lm-evaluation-harness/` for benchmark evaluation.
+4. Use `training/` for training-side experiments.
+5. Use `compression/` for pruning/quantization analysis.
+6. Use `drawing/` for figure reproduction or editing.
+
+## Related docs
+
+- `PAPER_CODE_MAP.md`: paper claims mapped to code locations.
+- `PROJECT_STRUCTURE.md`: repository layout policy.
+- `_NeurIPS_2026_/README.md`: notes for the paper directory.
+- `lm-evaluation-harness/scripts/README.md`: launcher guide for benchmark evaluation.
+- `analysis/README.md`: grouped guide to standalone research scripts.
+
+## Compatibility note
+
+`representation-analysis/` is retained only as a compatibility layer for older commands. New work should use the root-level paths directly.

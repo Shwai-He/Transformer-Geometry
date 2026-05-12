@@ -3,11 +3,11 @@ set -euo pipefail
 
 # ===== User config =====
 # If both roots are the same directory, script will auto-filter by label prefix.
-RUNS_ROOT_A="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/focused-compression-analysis/outputs/layerwise_para_perp"
-RUNS_ROOT_B="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/focused-compression-analysis/outputs/layerwise_para_perp"
+RUNS_ROOT_A="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/compression/outputs/layerwise_para_perp"
+RUNS_ROOT_B="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/compression/outputs/layerwise_para_perp"
 LABEL_A="local_wanda50"   # prune prefix
 LABEL_B="local_bnb4_nf4"  # quant prefix
-OUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/focused-compression-analysis/outputs/viz_local_compare"
+OUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/compression/outputs/viz_local_compare"
 
 PYTHON_BIN="python3"
 BACKGROUND=false

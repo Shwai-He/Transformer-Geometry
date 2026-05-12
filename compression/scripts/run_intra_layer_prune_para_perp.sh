@@ -11,7 +11,7 @@ FOCUS_LAYER=12                       # used only when EFFECT_SCOPE=local
 PROMPTS_FILE="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/prompts.txt"
 MAX_PROMPTS=32
 MAX_LENGTH=512
-OUTPUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/focused-compression-analysis/outputs/layerwise_para_perp"
+OUTPUT_DIR="/mnt/bn/seed-aws-va/shwai.he/demystifying-transformers-main/compression/outputs/layerwise_para_perp"
 
 PYTHON_BIN="python3"
 BACKGROUND=false
