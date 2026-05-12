@@ -1,26 +1,51 @@
 # Transformer Geometry
 
-This repository now separates the NeurIPS paper, active experiment workspaces, reusable code, and compatibility paths. The goal is to keep paper-facing assets stable while making it obvious where new code and new outputs should live.
+This repository is organized around the NeurIPS 2026 paper in `_NeurIPS_2026_/`. The paper studies transformer updates through a geometric decomposition into parallel and perpendicular components, compares residual-space and value-space views, and uses that geometry for three connected goals: inference-time editing, compression diagnostics, and training-time intervention.
 
-## Primary workspaces
+## Paper-first entrypoint
+
+If you want the paper itself, start here:
+
+- `_NeurIPS_2026_/`: LaTeX source, paper-facing figures, and paper-facing result tables.
+
+The rest of the repository is arranged to support that paper with experiment code, reusable analysis, and benchmark infrastructure.
+
+## How the codebase maps to the paper
 
 ```text
-_NeurIPS_2026_/            paper source, paper figures, paper-facing CSVs
-lm-evaluation-harness/     forked lm-eval workspace for general and RULER evaluation
-training/                  training and optimization experiments
-compression/               canonical compression-analysis workspace
-drawing/                   editable plotting and figure-generation sources
-analysis/                  standalone research scripts and one-off analyses
-src/repgeo/                reusable geometry and intervention code
+_NeurIPS_2026_/            paper source, final figures, final CSV tables
+lm-evaluation-harness/     benchmark evaluation for general-task and RULER experiments
+training/                  training and optimization runs related to parallel suppression
+compression/               compression-analysis workspace for pruning and quantization studies
+drawing/                   editable figure-generation code and plotting assets
+analysis/                  standalone intervention, visualization, and diagnostic scripts
+src/repgeo/                reusable geometry and intervention utilities
 ```
+
+A good mental model is:
+
+- `_NeurIPS_2026_/` contains what is cited by the paper.
+- `lm-evaluation-harness/`, `training/`, and `compression/` contain the main experimental backends.
+- `drawing/` contains editable figure-source code.
+- `analysis/` contains smaller research scripts that do not belong in a benchmark harness.
+- `src/repgeo/` is where reusable logic should accumulate over time.
+
+## Main research themes represented in the code
+
+- Parallel vs perpendicular decomposition of transformer updates.
+- Residual-space vs value-space measurement and intervention.
+- Attention-side component scaling and diagonal editing.
+- Compression-induced geometry distortion under pruning and quantization.
+- Training-time suppression of self-value-parallel updates.
 
 ## What to use for new work
 
 - Put paper text, final figures, and final tables in `_NeurIPS_2026_/`.
 - Put benchmark runners and result collection under `lm-evaluation-harness/`.
 - Put pretraining or optimization experiments under `training/`.
+- Put compression-specific studies under `compression/`.
 - Put editable figure-source code under `drawing/`.
-- Put standalone research scripts that do not belong to a specific benchmark harness under `analysis/`.
+- Put standalone research scripts under `analysis/`.
 - Put reusable Python logic under `src/repgeo/`.
 
 ## Compatibility paths
@@ -32,32 +57,11 @@ Examples:
 - `representation-analysis/lm-evaluation-harness/...` -> `lm-evaluation-harness/...`
 - `representation-analysis/drawing/...` -> `drawing/...`
 - `representation-analysis/training/...` -> `training/...`
-
-## Suggested mental model
-
-```text
-paper assets      -> _NeurIPS_2026_/
-active experiments -> lm-evaluation-harness/ , training/ , compression/ , analysis/
-editable figures   -> drawing/
-reusable code      -> src/repgeo/
-legacy aliases     -> representation-analysis/
-archive/imports    -> archive/ , _imports/
-```
-
-## Files that look miscellaneous
-
-A few paths are intentionally still preserved in place because they may still be referenced by older commands or remote jobs:
-
-- `representation-analysis/`
-- `_imports/`
-- `focused-compression-analysis/` (legacy alias to `compression/`)
-- one-off PDFs, zips, and local outputs in the repository root
-
-These can be further cleaned once active jobs and scripts no longer depend on them.
+- `representation-analysis/compression/...` -> `compression/...`
 
 ## Related navigation docs
 
 - `PROJECT_STRUCTURE.md`: higher-level structure policy.
-- `_NeurIPS_2026_/README.md`: paper-specific notes.
+- `_NeurIPS_2026_/README.md`: paper-directory notes and links back to the experiment workspaces.
 - `lm-evaluation-harness/scripts/README.md`: benchmark launcher guide.
 - `analysis/README.md`: grouped guide to standalone analysis scripts.

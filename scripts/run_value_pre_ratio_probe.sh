@@ -5,6 +5,13 @@ set -euo pipefail
 #   y_pre_t = sum_s A_ts v_s
 # and decompose y_pre_t into directions parallel/perpendicular to self value v_t.
 #
+# Paper context:
+# - This script supports the value-space side of the transformer-geometry paper.
+# - It is useful when we want to inspect the projected self-value direction before
+#   the attention output projection, rather than only the residual-space update.
+# - The resulting summaries live under results/value_pre_ratio/ and can be used as
+#   diagnostics or as supporting evidence for value-space robustness claims.
+#
 # Examples:
 #   bash scripts/run_value_pre_ratio_probe.sh
 #   PROMPT_FILES="results/prompts_len128.txt results/prompts_len512.txt" bash scripts/run_value_pre_ratio_probe.sh

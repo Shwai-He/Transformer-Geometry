@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Dedicated patch run for the two missing Table-1 DROP cells:
+# Dedicated patch run for the missing paper-table DROP cells.
+#
+# Paper context:
+# - This script exists only to repair missing general-task evaluation cells after
+#   the main benchmark sweeps were already complete.
+# - It should not be treated as a normal launcher for the paper's full evaluation
+#   pipeline; use the standard lm-eval batch scripts for that.
+# - The current target is Qwen3-30B-A3B under specific attention-side edits.
+#
+# Historically this script was used for:
 #   Qwen3-30B-A3B / Attn Para-Rem. / DROP
 #   Qwen3-30B-A3B / Diag. Rem. / DROP
 #
