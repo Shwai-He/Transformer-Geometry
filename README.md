@@ -8,6 +8,10 @@ This repository contains the public codebase for our work on the geometry of tra
 
 The public repository is organized around the experiments and analysis code. Paper source files, private drafting assets, and Overleaf-specific materials are not included here.
 
+<p align="center">
+  <img src="docs/assets/transformer_geometry_overview.svg" alt="Overview of parallel and perpendicular transformer update geometry" width="860">
+</p>
+
 ## What this repository reproduces
 
 This codebase supports the main experimental threads of the paper:
