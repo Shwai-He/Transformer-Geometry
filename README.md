@@ -1,31 +1,59 @@
-# Transformer Geometry
+<h1 align="center">Transformer Geometry</h1>
 
-This repository contains the public codebase for our work on the geometry of transformer computation. The central idea is to decompose a module update into a **parallel** component that mainly rescales the current representation and a **perpendicular** component that changes direction. We use this view to study three connected problems:
+<p align="center">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-blue">
+  <img alt="Framework" src="https://img.shields.io/badge/Framework-PyTorch-red">
+  <img alt="Models" src="https://img.shields.io/badge/Models-Transformers-orange">
+  <img alt="Evaluation" src="https://img.shields.io/badge/Evaluation-lm--eval-success">
+</p>
 
-- **inference-time component editing**
-- **compression diagnostics**
-- **training-time intervention**
+<p align="center">
+  <a href="#what-you-can-run-here">What You Can Run</a> |
+  <a href="#selected-figures-and-code">Figures and Code</a> |
+  <a href="#installation">Installation</a> |
+  <a href="#repository-layout">Layout</a> |
+  <a href="#related-documentation">Docs</a>
+</p>
 
-The public repository is organized around the experiments and analysis code. Paper source files, private drafting assets, and Overleaf-specific materials are not included here.
+<p align="center">
+  Public codebase for studying transformer computation through parallel and perpendicular update geometry.
+</p>
 
 <p align="center">
   <img src="docs/assets/transformer_geometry_overview.svg" alt="Overview of parallel and perpendicular transformer update geometry" width="860">
 </p>
+<p align="center">
+  <em>Overview. Transformer updates are decomposed into direction-preserving and direction-changing components, then used for inference-time editing, compression diagnostics, and training-time analysis.</em>
+</p>
 
-## What this repository reproduces
+This repository supports experiments for a geometric view of transformer computation. The central decomposition separates each module update into a **parallel** component, which mostly rescales the current representation, and a **perpendicular** component, which changes direction. We compare residual-space and value-space versions of this decomposition and use them to study editing, compression, and optimization behavior.
 
-This codebase supports the main experimental threads of the paper:
+This public release focuses on code, scripts, lightweight plotting data, and exported figure assets.
 
-1. **Geometry probing of pretrained transformers**
-   Measure parallel and perpendicular update structure across layers, branches, prompts, and generation steps.
-2. **Inference-time editing without additional training**
-   Compare residual-space and value-space interventions, including attention-parallel removal and diagonal edits, on general-task benchmarks and long-context RULER evaluation.
-3. **Training-time suppression of parallel updates**
-   Study how parallel suppression affects optimization and downstream behavior in scratch pretraining runs.
-4. **Compression-induced error geometry**
-   Analyze pruning and quantization through the same parallel/perpendicular decomposition.
-5. **Figure generation and diagnostic visualization**
-   Rebuild analysis plots, schematic figures, and inspection notebooks used to interpret the experiments.
+## What You Can Run Here
+
+- **Geometry probing**: measure parallel and perpendicular update structure across layers, branches, prompts, and generation steps.
+- **Inference-time component editing**: run residual-space and value-space interventions, including attention-parallel removal and diagonal edits.
+- **Benchmark evaluation**: evaluate edited models on general tasks and long-context RULER through the included lm-evaluation-harness fork.
+- **Training-time intervention**: inspect scratch pretraining runs that suppress or rescale parallel updates.
+- **Compression diagnostics**: decompose pruning and quantization error into parallel and perpendicular components.
+- **Figure reproduction**: regenerate selected paper plots from lightweight saved summaries.
+
+## Installation
+
+Create an environment, install the light root dependencies, then install the evaluation harness when running benchmark experiments.
+
+```bash
+conda create -n transformer-geometry python=3.10 -y
+conda activate transformer-geometry
+pip install -r requirements.txt
+
+cd lm-evaluation-harness
+pip install -e .
+cd ..
+```
+
+For model-scale benchmark runs, install the backend packages required by your local setup, such as `transformers`, `accelerate`, `datasets`, and CUDA-compatible PyTorch builds.
 
 ## Selected figures and code
 
@@ -142,36 +170,32 @@ notebooks/                 exploratory notebooks
 results/                   non-paper intermediate outputs and local artifacts
 ```
 
-## Workspace index
+## Quick Usage
 
-Most experiment-specific guidance now lives next to the figures above. This section is only a quick directory map.
+Start from the figure or experiment family you care about, then use the nearby scripts listed above. The most common entrypoints are:
 
-```text
-scripts/                    geometry probing and small runners
-lm-evaluation-harness/       benchmark interventions and collectors
-training/                    scratch pretraining experiments
-compression/                 pruning and quantization analysis
-drawing/                     plotting code and lightweight figure data
-analysis/                    standalone diagnostics and exploratory checks
+```bash
+# Geometry probes
+python scripts/run_probe.py
+python scripts/run_batch_probe.py
+
+# Inference-time component editing and diagonal edits
+bash lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh
+bash lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh
+
+# Long-context RULER evaluation
+bash lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh
+
+# Compression geometry
+bash compression/scripts/run_layerwise_para_perp_compare.sh
+
+# Figure regeneration examples
+python drawing/para_ablation/plot_para_ppl_summary.py
+python drawing/comp_analysis/plot_local_flip_compare_v2.py
+python drawing/loss_curves/plot_loss_csv_sizes_overview.py
 ```
 
-## How to use this repository
-
-### Read the code in this order
-
-1. Start with `PAPER_CODE_MAP.md` for a paper-to-code index.
-2. Use `lm-evaluation-harness/` if you want to reproduce benchmark results.
-3. Use `training/` for training-side experiments.
-4. Use `compression/` for pruning and quantization analysis.
-5. Use `drawing/` and `notebooks/` for figure reproduction and exploratory analysis.
-
-### Install and run
-
-This repository is a research workspace rather than a single packaged library. In practice, workflows are launched from the subdirectories above. Typical setup is:
-
-1. Create a Python environment and install the root requirements if needed.
-2. Follow workspace-specific setup inside `lm-evaluation-harness/`, `training/`, or `compression/`.
-3. Use the shell runners in each workspace as the canonical entrypoints for paper experiments.
+For a paper-to-code index, use [`PAPER_CODE_MAP.md`](PAPER_CODE_MAP.md). For workspace-specific details, use the README files under `lm-evaluation-harness/scripts/`, `training/`, `compression/`, and `analysis/`.
 
 ## Related documentation
 
