@@ -128,6 +128,10 @@ The compression experiments decompose pruning and quantization error into parall
     <td width="50%" align="center"><img src="docs/assets/compression_attention_perp.svg" alt="Attention compression error decomposed by perpendicular component" width="390"></td>
     <td width="50%" align="center"><img src="docs/assets/compression_attention_para.svg" alt="Attention compression error decomposed by parallel component" width="390"></td>
   </tr>
+  <tr>
+    <td width="50%" align="center"><b>Perpendicular error.</b><br>Direction-changing compression error normalized by the dense attention update.</td>
+    <td width="50%" align="center"><b>Parallel error.</b><br>Rescaling-aligned compression error normalized by the dense attention update.</td>
+  </tr>
 </table>
 
 ```text
