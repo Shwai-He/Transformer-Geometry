@@ -28,7 +28,7 @@
 
 This repository supports experiments for a geometric view of transformer computation. The central decomposition separates each module update into a **parallel** component, which mostly rescales the current representation, and a **perpendicular** component, which changes direction. We compare residual-space and value-space versions of this decomposition and use them to study editing, compression, and optimization behavior.
 
-This public release focuses on code, scripts, lightweight plotting data, and exported figure assets.
+This public release focuses on code, scripts, lightweight plotting data, and exported figure assets. Large raw outputs, private drafting materials, local model paths, and Overleaf-specific files are intentionally not included.
 
 ## What You Can Run Here
 
@@ -53,7 +53,7 @@ pip install -e .
 cd ..
 ```
 
-For model-scale benchmark runs, install the backend packages required by your local setup, such as `transformers`, `accelerate`, `datasets`, and CUDA-compatible PyTorch builds.
+For model-scale benchmark runs, install the backend packages required by your local setup, such as `transformers`, `accelerate`, `datasets`, and CUDA-compatible PyTorch builds. Most launch scripts are file-first: edit model paths, output roots, and GPU settings near the top of the script before running.
 
 ## Selected figures and code
 
@@ -170,9 +170,11 @@ notebooks/                 exploratory notebooks
 results/                   non-paper intermediate outputs and local artifacts
 ```
 
+Lightweight summaries used to regenerate README and paper-style figures live under `drawing/*/data/`. Full benchmark logs, model checkpoints, raw activations, and private paper exports are excluded from the public repository.
+
 ## Quick Usage
 
-Start from the figure or experiment family you care about, then use the nearby scripts listed above. The most common entrypoints are:
+Start from the figure or experiment family you care about, then use the nearby scripts listed above. The most common entrypoints are shown below; edit paths and resource settings inside each script before launching long jobs.
 
 ```bash
 # Geometry probes
@@ -205,6 +207,10 @@ For a paper-to-code index, use [`PAPER_CODE_MAP.md`](PAPER_CODE_MAP.md). For wor
 - `training/README.md`: training workspace notes
 - `compression/README.md`: compression workspace notes
 - `analysis/README.md`: standalone analysis script guide
+
+## Citation
+
+Citation information will be added after the paper metadata is public.
 
 ## Compatibility note
 
