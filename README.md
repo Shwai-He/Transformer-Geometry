@@ -27,6 +27,56 @@ This codebase supports the main experimental threads of the paper:
 5. **Figure generation and diagnostic visualization**
    Rebuild analysis plots, schematic figures, and inspection notebooks used to interpret the experiments.
 
+## Selected figures and code
+
+The figures below are exported from the paper experiments as SVG assets for quick browsing. Each block points to the code that regenerates or analyzes the corresponding result.
+
+### Component structure across depth
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/assets/component_profiles_qwen3_4b.svg" alt="Parallel and perpendicular component profiles for Qwen3-4B"></td>
+    <td width="50%"><img src="docs/assets/component_profiles_qwen3_30b_a3b.svg" alt="Parallel and perpendicular component profiles for Qwen3-30B-A3B"></td>
+  </tr>
+</table>
+
+Code: [`drawing/para_dist/`](drawing/para_dist), embedded plotting scripts in [`drawing/embedded_data/`](drawing/embedded_data), and probing utilities in [`scripts/`](scripts).
+
+### Manual component scaling at inference time
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/assets/component_scaling_parallel.svg" alt="Perplexity change under parallel component scaling"></td>
+    <td width="50%"><img src="docs/assets/component_scaling_perpendicular.svg" alt="Perplexity change under perpendicular component scaling"></td>
+  </tr>
+</table>
+
+Code: [`drawing/para_ablation/plot_para_ppl_summary.py`](drawing/para_ablation/plot_para_ppl_summary.py), summary data in [`drawing/para_ablation/data/`](drawing/para_ablation/data), and lm-eval runners under [`lm-evaluation-harness/scripts/`](lm-evaluation-harness/scripts).
+
+### Attention diagonal editing
+
+<p align="center">
+  <img src="docs/assets/diagonal_edit_attention_maps.svg" alt="Attention maps under diagonal editing" width="760">
+</p>
+
+Code: [`lm-evaluation-harness/lm_eval/models/attn_diag_hooks.py`](lm-evaluation-harness/lm_eval/models/attn_diag_hooks.py), [`drawing/attn_matrix/replot_from_saved_data.py`](drawing/attn_matrix/replot_from_saved_data.py), and [`drawing/attn_matrix/`](drawing/attn_matrix).
+
+### Compression error geometry
+
+<p align="center">
+  <img src="docs/assets/compression_attention_perp.svg" alt="Attention compression error decomposed by perpendicular component" width="760">
+</p>
+
+Code: [`compression/code/layerwise_para_perp_compare.py`](compression/code/layerwise_para_perp_compare.py), [`compression/code/visualize_local_sweep_compare.py`](compression/code/visualize_local_sweep_compare.py), and [`drawing/comp_analysis/plot_local_flip_compare_v2.py`](drawing/comp_analysis/plot_local_flip_compare_v2.py).
+
+### Training-time parallel removal
+
+<p align="center">
+  <img src="docs/assets/pretraining_parallel_removal.svg" alt="Pretraining loss curves under parallel removal" width="760">
+</p>
+
+Code: [`training/`](training), [`drawing/loss_curves/plot_loss_csv_sizes_overview.py`](drawing/loss_curves/plot_loss_csv_sizes_overview.py), and nanoGPT evaluation collectors under [`lm-evaluation-harness/scripts/`](lm-evaluation-harness/scripts).
+
 ## Repository layout
 
 ```text
