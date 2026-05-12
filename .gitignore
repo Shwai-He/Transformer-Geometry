@@ -1,0 +1,20 @@
+# Local environment
+.venv/
+.DS_Store
+
+# Private paper workspace and local exports
+_NeurIPS_2026_/
+_NeurIPS_2026_.zip
+Demystifying Transformers through Representation Geometries.pdf
+paper_extract.txt
+model.text
+
+# Private plotting code and experiment artifacts
+drawing/
+results/
+outputs/
+_imports/
+archive/
+
+# Optional local checklists
+EXPERIMENT_CHECKLIST.md

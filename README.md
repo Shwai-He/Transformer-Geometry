@@ -1,99 +1,63 @@
-# Demystifying Transformers through Representation Geometries (Starter)
+# Transformer Geometry
 
-This local project is an initial coding scaffold based on the paper notes.
+This repository now separates the NeurIPS paper, active experiment workspaces, reusable code, and compatibility paths. The goal is to keep paper-facing assets stable while making it obvious where new code and new outputs should live.
 
-## What is implemented
+## Primary workspaces
 
-A representation-geometry probe for causal LMs:
-- `z_post_median`: median hidden-state norm across layers (last token).
-- `z_post[i+1] / z_post[i]`: layer-wise scale gain.
-- `dz_para_median`: median norm of update component parallel to input representation.
-- `dz_perp_median`: median norm of update component orthogonal to input representation.
-- `log(dz_para / dz_perp)`: dominance of parallel over orthogonal updates.
-- top-k index overlap in logits space across adjacent layers.
-
-And two practical extensions:
-- batch analysis over multiple prompts.
-- step-wise generation analysis (recompute geometry at each decoding step).
-
-And one architecture-oriented toy study:
-- gated attention vs vanilla attention on synthetic inputs, measured by the same parallel/orthogonal geometry decomposition.
-
-## Structure
-
-- `src/repgeo/analyzer.py`: core analysis logic.
-- `scripts/run_probe.py`: single-prompt probe.
-- `scripts/run_batch_probe.py`: batch prompt probe.
-- `scripts/run_generation_probe.py`: generation-step probe.
-- `scripts/plot_layer_metrics.py`: basic plotting utility.
-- `scripts/run_gated_attention_demo.py`: synthetic gated-attention geometry comparison.
-- `results/`: output JSON/figures.
-
-## Install
-
-```bash
-cd /Users/heshuai/Documents/Code/demystifying-transformers
-python3 -m pip install -r requirements.txt
+```text
+_NeurIPS_2026_/            paper source, paper figures, paper-facing CSVs
+lm-evaluation-harness/     forked lm-eval workspace for general and RULER evaluation
+training/                  training and optimization experiments
+compression/               canonical compression-analysis workspace
+drawing/                   editable plotting and figure-generation sources
+analysis/                  standalone research scripts and one-off analyses
+src/repgeo/                reusable geometry and intervention code
 ```
 
-## Quick start
+## What to use for new work
 
-Single prompt:
+- Put paper text, final figures, and final tables in `_NeurIPS_2026_/`.
+- Put benchmark runners and result collection under `lm-evaluation-harness/`.
+- Put pretraining or optimization experiments under `training/`.
+- Put editable figure-source code under `drawing/`.
+- Put standalone research scripts that do not belong to a specific benchmark harness under `analysis/`.
+- Put reusable Python logic under `src/repgeo/`.
 
-```bash
-PYTHONPATH=src python3 scripts/run_probe.py \
-  --model_name_or_path gpt2 \
-  --prompt "John has twice as many books as Mary. Together they have 18 books. How many books does John have?" \
-  --top_k 5 \
-  --output results/gpt2_probe.json
+## Compatibility paths
+
+`representation-analysis/` is now a compatibility directory. Older commands still resolve through it, but new work should use the root-level paths directly.
+
+Examples:
+
+- `representation-analysis/lm-evaluation-harness/...` -> `lm-evaluation-harness/...`
+- `representation-analysis/drawing/...` -> `drawing/...`
+- `representation-analysis/training/...` -> `training/...`
+
+## Suggested mental model
+
+```text
+paper assets      -> _NeurIPS_2026_/
+active experiments -> lm-evaluation-harness/ , training/ , compression/ , analysis/
+editable figures   -> drawing/
+reusable code      -> src/repgeo/
+legacy aliases     -> representation-analysis/
+archive/imports    -> archive/ , _imports/
 ```
 
-Batch prompts:
+## Files that look miscellaneous
 
-```bash
-cat > results/prompts.txt << 'EOF'
-John has twice as many books as Mary. Together they have 18 books. How many books does John have?
-If all bloops are razzies and some razzies are lazzies, can some bloops be lazzies?
-EOF
+A few paths are intentionally still preserved in place because they may still be referenced by older commands or remote jobs:
 
-PYTHONPATH=src python3 scripts/run_batch_probe.py \
-  --model_name_or_path gpt2 \
-  --prompts_file results/prompts.txt \
-  --output results/gpt2_batch_probe.json
-```
+- `representation-analysis/`
+- `_imports/`
+- `focused-compression-analysis/` (legacy alias to `compression/`)
+- one-off PDFs, zips, and local outputs in the repository root
 
-Generation-step analysis:
+These can be further cleaned once active jobs and scripts no longer depend on them.
 
-```bash
-PYTHONPATH=src python3 scripts/run_generation_probe.py \
-  --model_name_or_path gpt2 \
-  --prompt "Solve: 2x + 3 = 11, x =" \
-  --max_new_tokens 8 \
-  --output results/gpt2_generation_probe.json
-```
+## Related navigation docs
 
-Plot layer metrics:
-
-```bash
-PYTHONPATH=src python3 scripts/plot_layer_metrics.py \
-  --input results/gpt2_probe.json \
-  --output results/gpt2_layer_metrics.png
-```
-
-Gated attention demo:
-
-```bash
-PYTHONPATH=src python3 scripts/run_gated_attention_demo.py \
-  --d_model 512 \
-  --n_heads 8 \
-  --seq_len 64 \
-  --batch_size 8 \
-  --device cpu \
-  --output results/gated_attention_demo.json
-```
-
-## Next steps
-
-- Add token-level trajectory analysis for full sequence positions (not only final token).
-- Add model-to-model comparison (dense vs pruned) in the same interface.
-- Add dataset-level benchmark scripts and statistical tests.
+- `PROJECT_STRUCTURE.md`: higher-level structure policy.
+- `_NeurIPS_2026_/README.md`: paper-specific notes.
+- `lm-evaluation-harness/scripts/README.md`: benchmark launcher guide.
+- `analysis/README.md`: grouped guide to standalone analysis scripts.
