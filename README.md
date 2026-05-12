@@ -29,9 +29,11 @@ This codebase supports the main experimental threads of the paper:
 
 ## Selected figures and code
 
-The figures below are exported from the paper experiments as SVG assets for quick browsing. Each figure is followed by the most relevant scripts or data files for reproducing it.
+The figures below are exported from the paper experiments as SVG assets for quick browsing. Each block gives the local entrypoints that reproduce the figure or the corresponding experiment.
 
 ### Component structure across depth
+
+These profiles measure how much transformer updates preserve the current direction versus change it across depth. The plotting scripts use saved probe summaries, while the probe runners regenerate the underlying activations.
 
 <table>
   <tr>
@@ -41,13 +43,18 @@ The figures below are exported from the paper experiments as SVG assets for quic
 </table>
 
 ```text
+# Plot saved component profiles
 drawing/para_dist/
 drawing/embedded_data/
+
+# Regenerate geometry probes
 scripts/run_probe.py
 scripts/run_batch_probe.py
 ```
 
 ### Manual component scaling at inference time
+
+These ablations manually scale parallel or perpendicular components and measure the resulting perplexity change. They are the lightweight diagnostic counterpart to the benchmark evaluations in `lm-evaluation-harness/`.
 
 <table>
   <tr>
@@ -57,48 +64,66 @@ scripts/run_batch_probe.py
 </table>
 
 ```text
+# Plot scaling summaries
 drawing/para_ablation/plot_para_ppl_summary.py
 drawing/para_ablation/data/
+
+# Run intervention evaluations
 lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh
 lm-evaluation-harness/scripts/run_lm_eval_attn_removal_batch.sh
 ```
 
 ### Attention diagonal editing
 
+This view compares attention maps after value-space and residual-space diagonal edits. The hook code implements the edit, and the drawing code replots saved attention-map bundles.
+
 <p align="center">
   <img src="docs/assets/diagonal_edit_attention_maps.svg" alt="Attention maps under diagonal editing" width="660">
 </p>
 
 ```text
+# Implement diagonal edits
 lm-evaluation-harness/lm_eval/models/attn_diag_hooks.py
 lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh
+
+# Replot saved attention maps
 drawing/attn_matrix/replot_from_saved_data.py
 drawing/attn_matrix/
 ```
 
 ### Compression error geometry
 
+The compression experiments decompose pruning and quantization error into parallel and perpendicular parts. The example below shows that the direction-changing error is a useful descriptor of compression behavior.
+
 <p align="center">
   <img src="docs/assets/compression_attention_perp.svg" alt="Attention compression error decomposed by perpendicular component" width="620">
 </p>
 
 ```text
+# Run compression geometry analysis
 compression/code/layerwise_para_perp_compare.py
 compression/code/visualize_local_sweep_compare.py
+
+# Recreate paper plot
 drawing/comp_analysis/plot_local_flip_compare_v2.py
 drawing/comp_analysis/data/all_settings_master_v2.tsv
 ```
 
 ### Training-time parallel removal
 
+The training experiments test whether suppressing parallel updates changes optimization. The plot summarizes scratch pretraining runs across model sizes, with downstream evaluation handled through the same lm-eval workspace.
+
 <p align="center">
   <img src="docs/assets/pretraining_parallel_removal.svg" alt="Pretraining loss curves under parallel removal" width="700">
 </p>
 
 ```text
+# Training workspace and loss plots
 training/
 drawing/loss_curves/plot_loss_csv_sizes_overview.py
 drawing/loss_curves/data/
+
+# Post-training evaluation
 lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh
 lm-evaluation-harness/scripts/collect_nanogpt_lm_eval_results.py
 ```
@@ -117,73 +142,18 @@ notebooks/                 exploratory notebooks
 results/                   non-paper intermediate outputs and local artifacts
 ```
 
-## Main experiment entrypoints
+## Workspace index
 
-### 1. Geometry probing
+Most experiment-specific guidance now lives next to the figures above. This section is only a quick directory map.
 
-Use these when you want to inspect the decomposition itself on pretrained models.
-
-- `scripts/run_probe.py`: single-prompt probing
-- `scripts/run_batch_probe.py`: batch probing across prompts
-- `scripts/run_generation_probe.py`: generation-step geometry analysis
-- `analysis/`: extra inspection scripts, ablations, and visual diagnostics
-
-### 2. Inference-time component editing
-
-This is the main evaluation stack for the paper's training-free interventions.
-
-Core implementation:
-
-- `lm-evaluation-harness/lm_eval/models/hf_xsa.py`
-- `lm-evaluation-harness/lm_eval/models/xsa_hooks.py`
-- `lm-evaluation-harness/lm_eval/models/attn_diag_hooks.py`
-
-Common runners:
-
-- `lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh`
-- `lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh`
-- `lm-evaluation-harness/scripts/run_lm_eval_xsa_multihead_batch.sh`
-- `lm-evaluation-harness/scripts/run_lm_eval_attn_removal_batch.sh`
-- `lm-evaluation-harness/scripts/run_lm_eval_attn_diag_batch.sh`
-- `lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh`
-
-Collectors:
-
-- `lm-evaluation-harness/scripts/collect_xsa_lm_eval_results.py`
-- `lm-evaluation-harness/scripts/collect_xsa_lm_eval_ruler_results.py`
-
-### 3. Training-time intervention
-
-Use this workspace for scratch pretraining experiments that suppress or rescale parallel updates.
-
-- `training/`
-- `lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh`
-- `lm-evaluation-harness/scripts/collect_nanogpt_lm_eval_results.py`
-- `analysis/check_nanogpt_gamma_ckpt.py`
-- `analysis/download_wandb_history.py`
-- `analysis/plot_wandb_history.py`
-
-### 4. Compression diagnostics
-
-Use this workspace for pruning and quantization experiments viewed through the same geometry.
-
-- `compression/code/layerwise_para_perp_compare.py`
-- `compression/code/visualize_local_sweep_compare.py`
-- `compression/code/visualize_local_sweep_summary.py`
-- `compression/scripts/run_layerwise_para_perp_compare.sh`
-- `compression/scripts/run_intra_layer_quant_para_perp.sh`
-- `compression/scripts/run_intra_layer_prune_para_perp.sh`
-- `compression/scripts/run_inter_layer_drop_para_perp.sh`
-
-### 5. Figure generation
-
-Editable plot-generation code lives under `drawing/`. Representative subfolders include:
-
-- `drawing/overview/`
-- `drawing/para_dist/`
-- `drawing/comp_analysis/`
-- `drawing/loss_curves/`
-- `drawing/attn_matrix/`
+```text
+scripts/                    geometry probing and small runners
+lm-evaluation-harness/       benchmark interventions and collectors
+training/                    scratch pretraining experiments
+compression/                 pruning and quantization analysis
+drawing/                     plotting code and lightweight figure data
+analysis/                    standalone diagnostics and exploratory checks
+```
 
 ## How to use this repository
 
