@@ -63,4 +63,4 @@ Prefer keeping reusable logic small here, or promoting it into `src/repgeo/` whe
 
 ## Compatibility note
 
-Older commands may still reference `representation-analysis/...`. Those paths remain available during the transition, but root-level locations should be treated as canonical.
+Older private commands may still reference a historical `representation-analysis/...` prefix. Public scripts should use the root-level paths in this repository.

@@ -1,6 +1,6 @@
 # Layer-wise Parallel/Perpendicular Decomposition
 
-Script: `representation-analysis/layerwise_para_perp_compare.py`
+Script: `compression/code/layerwise_para_perp_compare.py`
 
 `Delta` definition in this script:
 - `global`: `Delta_l = h_l^comp - h_l^dense`
@@ -9,8 +9,8 @@ Script: `representation-analysis/layerwise_para_perp_compare.py`
 ## Example: dropped (layer drop)
 
 ```bash
-cd third_party/Pruning-on-Representations/representation-analysis
-python layerwise_para_perp_compare.py \
+cd /path/to/Transformer-Geometry
+python compression/code/layerwise_para_perp_compare.py \
   --analysis_mode dropped \
   --effect_scope global \
   --model_name Qwen/Qwen2.5-7B-Instruct \
@@ -25,8 +25,8 @@ python layerwise_para_perp_compare.py \
 ## Example: pruned (Wanda/SparseGPT)
 
 ```bash
-cd third_party/Pruning-on-Representations/representation-analysis
-python layerwise_para_perp_compare.py \
+cd /path/to/Transformer-Geometry
+python compression/code/layerwise_para_perp_compare.py \
   --analysis_mode pruned \
   --compression_type prune \
   --effect_scope global \
@@ -39,8 +39,8 @@ python layerwise_para_perp_compare.py \
 ## Example: quantized (4-bit/8-bit)
 
 ```bash
-cd third_party/Pruning-on-Representations/representation-analysis
-python layerwise_para_perp_compare.py \
+cd /path/to/Transformer-Geometry
+python compression/code/layerwise_para_perp_compare.py \
   --analysis_mode pruned \
   --compression_type quant \
   --effect_scope global \
@@ -56,8 +56,8 @@ python layerwise_para_perp_compare.py \
 ## Example: local single-layer effect
 
 ```bash
-cd third_party/Pruning-on-Representations/representation-analysis
-python layerwise_para_perp_compare.py \
+cd /path/to/Transformer-Geometry
+python compression/code/layerwise_para_perp_compare.py \
   --analysis_mode pruned \
   --compression_type prune \
   --effect_scope local \
@@ -71,7 +71,7 @@ python layerwise_para_perp_compare.py \
 ## Outputs
 
 Saved under:
-`representation-analysis/outputs/layerwise_para_perp/<model_tag>__<method_name>/`
+`compression/outputs/layerwise_para_perp/<model_tag>__<method_name>/`
 
 - `layerwise_metrics.csv`: columns `method, layer, alpha, para_abs, perp_abs, perp_ratio`
 - `layerwise_metrics.csv`: columns `method, component, layer, alpha, para_abs, perp_abs, perp_ratio`
@@ -84,13 +84,13 @@ Saved under:
 ## Launcher Script
 
 Use:
-`scripts/compression_analysis/run_layerwise_para_perp_compare.sh`
+`compression/scripts/run_layerwise_para_perp_compare.sh`
 
 Edit variables at the top of the script, then run:
 
 ```bash
-cd /Users/bytedance/Documents/GitHub/MMEBarch/representation-analysis/demystifying-transformers
-bash scripts/compression_analysis/run_layerwise_para_perp_compare.sh
+cd /path/to/Transformer-Geometry
+bash compression/scripts/run_layerwise_para_perp_compare.sh
 ```
 
 The script prints:
@@ -106,12 +106,12 @@ tail -f <printed-log-path>
 ## Split Launchers
 
 Inter-layer (drop):
-- `scripts/compression_analysis/run_inter_layer_drop_para_perp.sh`
+- `compression/scripts/run_inter_layer_drop_para_perp.sh`
 
 Intra-layer (prune):
-- `scripts/compression_analysis/run_intra_layer_prune_para_perp.sh`
+- `compression/scripts/run_intra_layer_prune_para_perp.sh`
 
 Intra-layer (quant):
-- `scripts/compression_analysis/run_intra_layer_quant_para_perp.sh`
+- `compression/scripts/run_intra_layer_quant_para_perp.sh`
 
 Each launcher prints absolute `Logs:` and `PID file:` paths.

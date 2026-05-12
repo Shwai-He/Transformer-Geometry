@@ -5,6 +5,7 @@
 # Private paper workspace and local exports
 _NeurIPS_2026_/
 _NeurIPS_2026_.zip
+figs
 Demystifying Transformers through Representation Geometries.pdf
 paper_extract.txt
 model.text
@@ -13,6 +14,7 @@ model.text
 drawing/
 results/
 outputs/
+representation-analysis/
 _imports/
 archive/
 

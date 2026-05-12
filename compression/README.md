@@ -16,7 +16,6 @@ Use this directory for:
 - `docs/`: method notes and usage docs
 - `scripts/`: runnable shell launchers for experiments
 - `code/`: core Python implementation
-- `paper/`: local notes or draft text discussing compression geometry
 - `outputs/`: recommended place for focused outputs
 - `notes/`: ad-hoc notes and TODOs
 
@@ -35,4 +34,4 @@ Use this directory for:
 2. Configure one launcher under `scripts/`.
 3. Run and write new artifacts into `outputs/`.
 4. Use the visualization helpers in `code/` to summarize trends.
-5. Copy paper-ready figures or tables into `_NeurIPS_2026_/figs` or `_NeurIPS_2026_/results`.
+5. Move paper-ready figures or tables into the private paper workspace when preparing a manuscript.

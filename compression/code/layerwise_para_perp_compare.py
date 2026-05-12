@@ -567,7 +567,7 @@ def main():
     parser.add_argument('--prompt', type=str, default='')
     parser.add_argument('--max_prompts', type=int, default=32)
     parser.add_argument('--max_length', type=int, default=512)
-    parser.add_argument('--output_dir', type=str, default='representation-analysis/outputs/layerwise_para_perp')
+    parser.add_argument('--output_dir', type=str, default='compression/outputs/layerwise_para_perp')
     parser.add_argument('--load_in_4bit', action='store_true')
     parser.add_argument('--load_in_8bit', action='store_true')
     parser.add_argument('--bnb_4bit_quant_type', type=str, default='nf4', choices=['fp4', 'nf4'])

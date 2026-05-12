@@ -214,4 +214,4 @@ Citation information will be added after the paper metadata is public.
 
 ## Compatibility note
 
-`representation-analysis/` is retained only as a compatibility layer for older commands. New work should use the root-level paths directly.
+Older local experiments may have used a `representation-analysis/` prefix. Public entrypoints in this repository use the root-level workspaces shown above.
