@@ -196,7 +196,7 @@ def plot_orthogonal_error(df):
                 columnspacing=1.45,
             )
 
-            for suffix in ("pdf", "png"):
+            for suffix in ("pdf", "png", "svg"):
                 path = OUT_DIR / f"local_flip_compare-{comp}-{metric}.{suffix}"
                 fig.savefig(path, bbox_inches="tight", dpi=220 if suffix == "png" else None)
                 print(f"Saved: {path}")
@@ -269,7 +269,7 @@ def plot_parallel_error(df):
                 columnspacing=1.45,
             )
 
-            for suffix in ("pdf", "png"):
+            for suffix in ("pdf", "png", "svg"):
                 path = OUT_DIR / f"local_flip_compare-{comp}-{metric}.{suffix}"
                 fig.savefig(path, bbox_inches="tight", dpi=220 if suffix == "png" else None)
                 print(f"Saved: {path}")
@@ -345,7 +345,7 @@ def plot_baseline_update_ratio(df):
 
         axes[0].set_ylabel(ylabel)
 
-        for suffix in ("pdf", "png"):
+        for suffix in ("pdf", "png", "svg"):
             path = OUT_DIR / f"baseline_update_over_hidden_state.{suffix}"
             fig.savefig(path, bbox_inches="tight", dpi=220 if suffix == "png" else None)
             print(f"Saved: {path}")

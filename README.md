@@ -121,11 +121,14 @@ drawing/attn_matrix/
 
 ### Compression error geometry
 
-The compression experiments decompose pruning and quantization error into parallel and perpendicular parts. The example below shows that the direction-changing error is a useful descriptor of compression behavior.
+The compression experiments decompose pruning and quantization error into parallel and perpendicular parts. The paired attention-side views show that the direction-changing component separates pruning severity more clearly, while the parallel component gives the complementary rescaling view.
 
-<p align="center">
-  <img src="docs/assets/compression_attention_perp.svg" alt="Attention compression error decomposed by perpendicular component" width="620">
-</p>
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="docs/assets/compression_attention_perp.svg" alt="Attention compression error decomposed by perpendicular component" width="390"></td>
+    <td width="50%" align="center"><img src="docs/assets/compression_attention_para.svg" alt="Attention compression error decomposed by parallel component" width="390"></td>
+  </tr>
+</table>
 
 ```text
 # Run compression geometry analysis
