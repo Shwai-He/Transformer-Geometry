@@ -1,0 +1,56 @@
+\section{Analysis}
+\label{sec:analysis}
+
+\subsection{Structural Sources of Large Parallel Components}
+\label{sec:why}
+
+The prevalence of the parallel component is not only a learned artifact. It is
+also encouraged by the pre-norm residual design. At layer $l$, the residual
+norm can accumulate with depth:
+\begin{equation}
+  \|\hl{l}\| \approx \|\hl{0}\| + \sum_{k<l} \|\Dl{k}\|,
+\end{equation}
+while the block output $\Dl{l} = f^l(\LN(\hl{l}))$ is computed on a
+\emph{normalized} input with $\|\LN(\hl{l})\| \approx \sqrt{d}$,
+so $\|\Dl{l}\|$ need not grow with the residual norm. As $\|\hl{l}\|$ grows
+and $\|\Dl{l}\|$ remains comparatively bounded, the residual update becomes a
+smaller perturbation of a large vector. The $\LN$ operation removes the
+magnitude of $\hl{l}$ before passing it to $f^l$, but it preserves directional
+information. Learned block outputs can therefore remain correlated with the
+current residual direction even when their norms are controlled. This provides
+a structural reason to expect non-negligible parallel components across depth
+and block type.
+
+As a simple reference model, suppose $\Dl{l}$ is a random vector with fixed
+magnitude $\epsilon$ and a direction drawn uniformly from the unit sphere in
+$\mathbb{R}^d$. Under this model, the expected parallel ratio is:
+\begin{equation}
+  \mathbb{E}[\pr{l}{t}]
+    = \mathbb{E}\!\left[\frac{|\Dl{l} \cdot \hat{\hl{l}}|}{\|\Dl{l}\|}\right]
+    \approx \frac{1}{\sqrt{d}},
+\end{equation}
+\noindent
+which gives a natural baseline before any learned correlation with the hidden
+state is taken into account. Trained models can exceed this baseline when
+$f^l$'s output direction remains correlated with $\hl{l}$ through the
+normalization path. This toy-model argument is not intended as a strict theorem
+for trained transformers, but as a structural explanation for why substantial
+$\PR{l}$ is plausible under pre-norm residual accumulation.
+
+This argument applies equally to $\Attn$ and $\FFN$ blocks, explaining the
+universality of the phenomenon observed in Figure~\ref{fig:profiles}.
+
+\subsection{Parallel Component and Attention Diagonal: Empirical Validation}
+\label{sec:attn-diagonal-analysis}
+
+Section~\ref{sec:value-level} predicts that one source of the attention-side
+parallel component is the product of diagonal self-routing and value
+self-alignment. Empirically, across layers and models, the attention-only
+parallel ratio $\PR{l}$ tracks the mean diagonal attention weight
+$\mathbb{E}_{x,t}[\Adiag{t}]$ closely.
+
+This relationship supports the factorization in
+Eq.~\ref{eq:alpha-attn}: layers where tokens route more attention to
+themselves tend to produce larger attention-side parallel updates. The
+diagonal term is not the only possible source of parallel residual geometry,
+but it provides a measurable attention-side mechanism.

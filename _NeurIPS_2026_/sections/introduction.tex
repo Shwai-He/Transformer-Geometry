@@ -1,0 +1,98 @@
+\section{Introduction}
+\label{sec:intro}
+
+Transformer layers evolve representations by adding learned attention and MLP
+transformations to the current hidden state~\citep{vaswani2017attention,elhage2021mathematical}.
+This additive form gives each transformation two geometrically different
+roles: a parallel component that rescales the current state, and a
+perpendicular component that redirects it by adding content in a new direction.
+This view raises two questions about representation evolution. First, how much
+of a learned transformation preserves the current representation direction,
+and how much introduces direction-changing content? Second, if a parallel
+component is non-negligible, does it affect model behavior, and can it be
+modified or removed without disrupting the model? To answer these questions,
+we apply the same geometry in two spaces. In \emph{residual space}, we
+decompose the attention and MLP outputs that are added back to the hidden
+state, measuring how each module evolves the representation. In \emph{value
+space}, we analyze attention aggregation over projected values, providing an
+observation space for token flow and context aggregation before the output
+projection.
+
+We first build layerwise profiles across pretrained models and find that
+learned attention and MLP outputs contain substantial components parallel to
+the current hidden state. This indicates that direction-preserving
+transformations are not merely inherited from the additive identity path, even
+though attention and MLP blocks are nominally responsible for mixing tokens
+and transforming features.
+However, layerwise profiles alone do not establish how these components affect
+model behavior. We therefore use component-scaling experiments to test their
+functional role. When we manipulate the part of the attention aggregation aligned
+with the projected self-value, model behavior remains close to baseline over a
+broad scaling range. In contrast, analogous residual-space attention scaling
+is less stable, residual MLP-side scaling is more fragile, and perpendicular
+scaling is much more destructive, consistent with the role of perpendicular
+components in changing representation direction. Thus, \textit{parallel-component
+robustness is space-dependent}: it depends on the computational space in
+which that component is manipulated. This motivates a closer look at attention,
+where token routing and value aggregation define a distinct space for such
+manipulations.
+
+To explain how token flow contributes to the parallel component, we apply the
+same decomposition inside attention's value aggregation. This yields a
+factorization of the attention-side parallel coefficient into diagonal
+self-routing, value self-alignment, and cross-token terms. The diagonal term
+has a simple interpretation: self-attention carries the token's own projected
+value back into the aggregation, and this contribution becomes parallel when
+that value is aligned with the current representation. The value-space view
+therefore identifies the self-value direction as a natural coordinate for
+manipulating this self-value-parallel contribution before the output
+projection.
+
+This distinction matters experimentally. Value-space parallel removal targets
+the component aligned with the projected self-value while leaving the remaining
+value aggregation intact. Residual-space analogues instead measure parallelness
+after the output projection against a different reference direction. As a
+result, nominally similar diagonal or parallel-removal edits can produce very
+different zero-shot behavior, including in prior work on self-directed value
+flow~\citep{zhai2025xsa}.
+
+Finally, we evaluate whether this geometry extends beyond inference-time
+interventions. In compression, common post-training quantization and
+pruning settings introduce approximation error into layer
+transformations~\citep{Frantar2022GPTQAP,Lin2023AWQAW,Sun2023ASA}.
+We find that stronger compressed models have lower perpendicular error in
+their layer transformations, while parallel error is less discriminative. This
+yields a label-free diagnostic signal for compression: preserving
+perpendicular update geometry is more predictive of preserved behavior than
+preserving the parallel component. The relative robustness of value-space
+parallel manipulation also motivates a training-time test. In retained
+pretraining runs, suppressing attention-side self-value-parallel components
+changes the optimization trajectory and can improve average downstream scores.
+This is consistent with the view that self-value-parallel suppression can
+shift training pressure toward more direction-changing updates.
+Together, these results suggest that parallel/perpendicular geometry is not
+just a descriptive decomposition, but \textit{an organizing principle} for safe
+editing, compression diagnostics, and training-time intervention.
+
+\paragraph{Contributions.}
+\begin{itemize}
+  \item This work reveals that substantial direction-preserving parallel
+        components are widespread in learned attention and MLP transformations.
+        We further propose a two-space geometric decomposition in residual and
+        value spaces to measure their role in representation evolution and
+        localize their attention-side source.
+  \item In inference-time interventions, we identify a clear space dependence:
+        value-space manipulation remains closest to baseline, whereas
+        residual-space scaling is more fragile and perpendicular scaling is
+        substantially more disruptive.
+  \item The attention-side factorization decomposes the parallel contribution
+        into diagonal self-routing, value self-alignment, and cross-token
+        aggregation. This separates the self-value component from the
+        remaining context aggregation and explains why value-space and
+        residual-space edits lead to different zero-shot behavior.
+  \item Beyond inference-time editing, the same geometry provides practical
+        guidance for compression and training: lower perpendicular
+        transformation error tracks stronger compressed models, and
+        self-value-parallel suppression in retained pretraining runs shifts
+        optimization and can improve downstream performance.
+\end{itemize}

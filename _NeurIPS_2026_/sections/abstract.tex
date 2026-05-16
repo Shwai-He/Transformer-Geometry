@@ -1,0 +1,24 @@
+\begin{abstract}
+Transformer layers evolve representations through learned additive
+transformations that either preserve the current direction or introduce
+direction-changing content. We decompose each transformation into a parallel
+component and a perpendicular component, applying the same geometry in
+residual space and in attention value space. Across pretrained models, learned
+attention and MLP outputs contain substantial parallel components. These
+components are not uniformly redundant: inference-time scaling shows that
+robustness depends on which space is manipulated. Manipulating the part of
+attention aggregation aligned with the projected self-value remains close to
+baseline, whereas residual-space scaling is more fragile and perpendicular
+scaling is more disruptive. We explain this asymmetry with an attention-side
+factorization that separates diagonal self-routing, value self-alignment, and
+cross-token aggregation, showing why the projected self-value is the effective
+direction for stable value-space edits. The same geometry also supports two
+downstream uses. For compression, stronger compressed models have lower
+perpendicular error in layer transformations, while parallel error is less
+discriminative. For training, retained pretraining runs indicate that
+suppressing self-value-parallel components shifts optimization toward more
+direction-changing updates and improves average downstream scores. Taken
+together, this geometry is not only descriptive, but also a practical
+principle for transformer editing, compression diagnostics, and training-time
+intervention.
+\end{abstract}

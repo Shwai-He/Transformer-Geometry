@@ -1,0 +1,32 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We studied how transformer layers evolve representations by decomposing
+learned transformations into parallel and perpendicular components. Across
+pretrained models, learned attention and MLP outputs contain substantial
+direction-preserving parallel components, showing that rescaling-like behavior
+is not limited to the additive identity path. Their robustness is
+space-dependent: manipulating the attention aggregation aligned with the
+projected self-value remains closest to baseline, whereas residual-space
+scaling is more fragile and perpendicular scaling is more disruptive.
+
+The attention-side factorization separates diagonal self-routing, value
+self-alignment, and cross-token aggregation, explaining why value-space and
+residual-space edits can produce different behavior. The same geometry also
+supports downstream analysis: stronger compressed models have lower
+perpendicular transformation error, and retained pretraining runs indicate
+that suppressing self-value-parallel components can shift optimization and
+improve average downstream performance. Overall, parallel/perpendicular
+geometry provides a compact way to analyze not only the size of a layer
+transformation, but also whether it preserves or changes representation
+direction.
+
+\section{Limitations}
+\label{sec:limitations}
+
+Our analysis and experiments focus on the models, language tasks, and
+intervention settings studied here. Although the same geometric picture is consistent
+across the evaluated models, its behavior under other architectures, training
+regimes, or multimodal task distributions remains to be established. We also
+treat the proposed edits primarily as analysis tools; turning them into
+practical training or inference methods requires further validation.

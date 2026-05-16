@@ -1,0 +1,19 @@
+# Alpha/Gamma Ablation Casebook
+
+## ALPHA - Best 3 (lowest delta_ppl)
+
+- alpha=1 | prompt_idx=7 | delta_ppl=-76.50284635 | delta_loss=-0.45758200
+  - prompt: The committee rejected the proposal not because the measurements were noisy, but because the ablation changed two var...
+- alpha=0 | prompt_idx=7 | delta_ppl=-74.68158941 | delta_loss=-0.44386292
+  - prompt: The committee rejected the proposal not because the measurements were noisy, but because the ablation changed two var...
+- alpha=1 | prompt_idx=7 | delta_ppl=-58.28038249 | delta_loss=-0.32812405
+  - prompt: The committee rejected the proposal not because the measurements were noisy, but because the ablation changed two var...
+
+## ALPHA - Worst 3 (highest delta_ppl)
+
+- alpha=0 | prompt_idx=1 | delta_ppl=2516892.93520671 | delta_loss=10.67860794
+  - prompt: Instruction: Summarize the following policy memo in two sentences. Memo: The city plans to replace diesel buses with ...
+- alpha=1 | prompt_idx=1 | delta_ppl=1979038.21208916 | delta_loss=10.43820000
+  - prompt: Instruction: Summarize the following policy memo in two sentences. Memo: The city plans to replace diesel buses with ...
+- alpha=0 | prompt_idx=5 | delta_ppl=1712252.59586623 | delta_loss=9.23078489
+  - prompt: A researcher compares four interventions on the same validation set: baseline, attention-only projection removal, MLP...

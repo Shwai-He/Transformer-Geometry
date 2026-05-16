@@ -1,0 +1,90 @@
+\documentclass{article}
+
+% Track selection (uncomment one):
+\usepackage{neurips_2026}          % submission (default, double-blind)
+% \usepackage[main]{neurips_2026}  % camera-ready main track
+% \usepackage[preprint]{neurips_2026}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[final]{graphicx}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{CJKutf8}
+
+% Give TeX a little extra flexibility in narrow wrapfigure/wraptable columns.
+\setlength{\emergencystretch}{2em}
+
+% ---- notation macros ----
+\input{macros}
+
+% ---- paper metadata ----
+\title{Beyond Rescaling: A Geometric View of Representation Evolution in Transformers}
+
+\author{%
+  % [AUTHOR 1] \\
+  % [AFFILIATION] \\
+  % \texttt{email}
+  % \And
+  % [AUTHOR 2] \\
+  % [AFFILIATION] \\
+  % \texttt{email}
+}
+
+\definecolor{color1}{rgb}{0.1,0.7,0.8} % cyan
+\definecolor{color2}{rgb}{0.9,0.1,0.1} % red
+\definecolor{color3}{rgb}{0.7,0.3,0.7} % purple
+\definecolor{color4}{rgb}{0.3,0.3,0.7} % dark blue
+\definecolor{color5}{RGB}{8, 102, 3} % dark green
+\definecolor{color6}{rgb}{0.53, 0.66, 0.42} % light green
+
+\newcommand\sh[1]{\nbc{SH}{#1}{color3}}
+
+
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+\maketitle
+
+\input{sections/abstract}
+
+\input{sections/introduction}
+
+\input{sections/related_work}
+
+\input{sections/background}
+
+\input{sections/method}
+
+\input{sections/experiments}
+
+% \input{sections/discussion}
+
+\input{sections/conclusion}
+
+\begin{ack}
+Acknowledgments are omitted for anonymous submission.
+\end{ack}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\newpage
+\input{sections/appendix}
+
+\newpage
+\input{checklist.tex}
+
+\end{CJK*}
+\end{document}

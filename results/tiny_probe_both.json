@@ -1,0 +1,191 @@
+{
+  "summary": {
+    "z_post_median": 0.06305104494094849,
+    "dz_para_median": 0.0006269214209169149,
+    "dz_perp_median": 0.0009408338810317218,
+    "dz_para_dz_perp_log_median": -0.4698154926300049,
+    "n_layers_observed": 2
+  },
+  "predicted_next_token": " factors",
+  "layer_metrics": [
+    {
+      "layer": 0,
+      "z_post_norm": 0.062417104840278625,
+      "scale_gain_to_next": 1.010156512422229,
+      "dz_para_norm": 0.0006269214209169149,
+      "dz_perp_norm": 0.0009408338810317218,
+      "log_para_perp_ratio": -0.40594539046287537
+    },
+    {
+      "layer": 1,
+      "z_post_norm": 0.06305104494094849,
+      "scale_gain_to_next": 22.258391542614486,
+      "dz_para_norm": 0.7256532907485962,
+      "dz_perp_norm": 1.1608268022537231,
+      "log_para_perp_ratio": -0.4698154926300049
+    },
+    {
+      "layer": 2,
+      "z_post_norm": 1.4034148454666138,
+      "scale_gain_to_next": null,
+      "dz_para_norm": null,
+      "dz_perp_norm": null,
+      "log_para_perp_ratio": null
+    }
+  ],
+  "topk_changes": [
+    {
+      "layer": 0,
+      "topk_overlap": 5,
+      "topk_in": [
+        19244,
+        1572,
+        23611,
+        36176,
+        14210
+      ],
+      "topk_out": [
+        19244,
+        1572,
+        23611,
+        36176,
+        14210
+      ],
+      "max_prob_in": 1.999720188905485e-05,
+      "max_prob_out": 1.9998102288809605e-05
+    },
+    {
+      "layer": 1,
+      "topk_overlap": 0,
+      "topk_in": [
+        19244,
+        1572,
+        23611,
+        36176,
+        14210
+      ],
+      "topk_out": [
+        5087,
+        13584,
+        31685,
+        21516,
+        40169
+      ],
+      "max_prob_in": 1.9998102288809605e-05,
+      "max_prob_out": 2.2305639504338615e-05
+    }
+  ],
+  "sublayer_summary": {
+    "n_layers_observed": 2,
+    "n_sublayer_records": 4,
+    "dz_para_median": 1.4030632972717285,
+    "dz_perp_median": 3.321171607240103e-05,
+    "dz_para_dz_perp_log_median": 7.226779937744141,
+    "scale_gain_median": 2.4685050448169932e-05,
+    "topk_overlap_mean": 0.0
+  },
+  "sublayer_metrics": [
+    {
+      "layer": 0,
+      "stage": "attn",
+      "z_in_norm": 1.4033331871032715,
+      "z_out_norm": 3.46413507941179e-05,
+      "scale_gain": 2.4685050644048252e-05,
+      "dz_para_norm": 1.4033232927322388,
+      "dz_perp_norm": 3.321171607240103e-05,
+      "log_para_perp_ratio": 10.651451110839844,
+      "topk_overlap": 0,
+      "topk_in": [
+        5087,
+        13584,
+        31685,
+        21516,
+        40169
+      ],
+      "topk_out": [
+        581,
+        42657,
+        34007,
+        19244,
+        11494
+      ]
+    },
+    {
+      "layer": 0,
+      "stage": "mlp",
+      "z_in_norm": 1.4033390283584595,
+      "z_out_norm": 0.001103423535823822,
+      "scale_gain": 0.000786284364309699,
+      "dz_para_norm": 1.4037591218948364,
+      "dz_perp_norm": 0.001020333031192422,
+      "log_para_perp_ratio": 7.226779937744141,
+      "topk_overlap": 0,
+      "topk_in": [
+        5087,
+        13584,
+        31685,
+        21516,
+        40169
+      ],
+      "topk_out": [
+        5074,
+        33277,
+        367,
+        1253,
+        22072
+      ]
+    },
+    {
+      "layer": 1,
+      "stage": "attn",
+      "z_in_norm": 1.4030828475952148,
+      "z_out_norm": 3.064218981307931e-05,
+      "scale_gain": 2.1839187803911842e-05,
+      "dz_para_norm": 1.4030632972717285,
+      "dz_perp_norm": 2.360223516006954e-05,
+      "log_para_perp_ratio": 10.992827415466309,
+      "topk_overlap": 0,
+      "topk_in": [
+        5087,
+        13584,
+        31685,
+        21516,
+        40169
+      ],
+      "topk_out": [
+        45275,
+        12386,
+        31064,
+        44317,
+        25397
+      ]
+    },
+    {
+      "layer": 1,
+      "stage": "mlp",
+      "z_in_norm": 1.4030948877334595,
+      "z_out_norm": 0.001700532273389399,
+      "scale_gain": 0.0012119866505510657,
+      "dz_para_norm": 1.4025675058364868,
+      "dz_perp_norm": 0.0016167109133675694,
+      "log_para_perp_ratio": 6.7656660079956055,
+      "topk_overlap": 0,
+      "topk_in": [
+        5087,
+        13584,
+        31685,
+        21516,
+        40169
+      ],
+      "topk_out": [
+        12386,
+        45275,
+        31064,
+        30024,
+        27012
+      ]
+    }
+  ],
+  "granularity": "both",
+  "prompt": "Test prompt for sublayer capture."
+}

@@ -1,0 +1,4 @@
+setting,n_points,first_iter,last_iter,first_loss,last_loss,min_loss
+Baseline,44,505.0,4848.0,3.09946,2.731724,2.714624
+Parallel Removal (Value),44,505.0,4848.0,3.053495,2.710706,2.693111
+Parallel Gating (Value),45,500.0,4900.0,3.067737,2.696394,2.689454

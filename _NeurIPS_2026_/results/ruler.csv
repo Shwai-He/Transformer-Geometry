@@ -1,0 +1,17 @@
+model,model_label,setting,source_file,top_task,xsa_intervention_site,xsa_forward_op,xsa_forward_alpha,max_length,category,task,len_4096,avg
+Llama-3.2-3B,Llama-3.2-3B,none-4k_8k_16k_32k_64k_128k,ruler-none-4k_8k_16k_32k_64k_128k_2026-04-27T07-26-40.217044.json,ruler,xsa_middle_multihead,remove_parallel,1.0,131072,overall,ruler,87.3679,87.3679
+Llama-3.2-3B,Llama-3.2-3B,none-4k_8k_16k_32k_64k_128k,ruler-none-4k_8k_16k_32k_64k_128k_2026-04-27T12-25-44.086916.json,ruler,xsa_middle_multihead,remove_parallel,1.0,131072,overall,ruler,87.3679,87.3679
+Llama-3.2-3B,Llama-3.2-3B,none-4k_8k_16k_32k_64k_128k,ruler-none-4k_8k_16k_32k_64k_128k_2026-04-27T19-58-01.657444.json,ruler,xsa_middle_multihead,remove_parallel,1.0,131072,overall,ruler,87.3679,87.3679
+Llama-3.2-3B,Llama-3.2-3B,residual_attn-4k_8k_16k_32k_64k_128k,ruler-residual_attn-4k_8k_16k_32k_64k_128k_2026-04-29T14-06-48.461737.json,ruler,residual_output,remove_parallel,1.0,131072,overall,ruler,75.7431,75.7431
+Llama-3.2-3B,Llama-3.2-3B,residual_both-4k_8k_16k_32k_64k_128k,ruler-residual_both-4k_8k_16k_32k_64k_128k_2026-04-30T22-56-59.357853.json,ruler,residual_output,remove_parallel,1.0,131072,overall,ruler,70.9403,70.9403
+Llama-3.2-3B,Llama-3.2-3B,residual_mlp-4k_8k_16k_32k_64k_128k,ruler-residual_mlp-4k_8k_16k_32k_64k_128k_2026-04-30T05-41-27.585140.json,ruler,residual_output,remove_parallel,1.0,131072,overall,ruler,56.6256,56.6256
+Llama-3.2-3B,Llama-3.2-3B,xsa_middle-4k_8k_16k_32k_64k_128k,ruler-xsa_middle-4k_8k_16k_32k_64k_128k_2026-04-27T13-51-54.752599.json,ruler,xsa_middle,remove_parallel,1.0,131072,overall,ruler,87.0067,87.0067
+Llama-3.2-3B,Llama-3.2-3B,xsa_middle_multihead-4k_8k_16k_32k_64k_128k,ruler-xsa_middle_multihead-4k_8k_16k_32k_64k_128k_2026-04-28T22-39-47.232653.json,ruler,xsa_middle_multihead,remove_parallel,1.0,131072,overall,ruler,87.0067,87.0067
+Qwen3-1.7B,Qwen3-1.7B,none-4k_8k_16k_32k_64k_128k,ruler-none-4k_8k_16k_32k_64k_128k_2026-04-29T20-07-37.002263.json,ruler,xsa_middle_multihead,remove_parallel,1.0,131072,overall,ruler,88.0818,88.0818
+Qwen3-1.7B,Qwen3-1.7B,residual_attn-4k_8k_16k_32k_64k_128k,ruler-residual_attn-4k_8k_16k_32k_64k_128k_2026-05-01T00-57-34.075788.json,ruler,residual_output,remove_parallel,1.0,131072,overall,ruler,29.2851,29.2851
+Qwen3-1.7B,Qwen3-1.7B,residual_both-4k_8k_16k_32k_64k_128k,ruler-residual_both-4k_8k_16k_32k_64k_128k_2026-05-02T07-19-46.106478.json,ruler,residual_output,remove_parallel,1.0,131072,overall,ruler,18.0956,18.0956
+Qwen3-1.7B,Qwen3-1.7B,residual_mlp-4k_8k_16k_32k_64k_128k,ruler-residual_mlp-4k_8k_16k_32k_64k_128k_2026-05-01T14-43-28.154460.json,ruler,residual_output,remove_parallel,1.0,131072,overall,ruler,76.0679,76.0679
+Qwen3-1.7B,Qwen3-1.7B,xsa_middle_multihead-4k_8k_16k_32k_64k_128k,ruler-xsa_middle_multihead-4k_8k_16k_32k_64k_128k_2026-04-30T09-55-57.214665.json,ruler,xsa_middle_multihead,remove_parallel,1.0,131072,overall,ruler,87.9728,87.9728
+Qwen3-4B,Qwen3-4B,none-4k_8k_16k_32k_64k_128k,ruler-none-4k_8k_16k_32k_64k_128k_2026-05-03T08-04-02.034984.json,ruler,xsa_middle_multihead,remove_parallel,1.0,131072,overall,ruler,92.6708,92.6708
+Qwen3-4B,Qwen3-4B,residual_attn-4k_8k_16k_32k_64k_128k,ruler-residual_attn-4k_8k_16k_32k_64k_128k_2026-05-05T15-43-16.855118.json,ruler,residual_output,remove_parallel,1.0,131072,overall,ruler,50.9056,50.9056
+Qwen3-4B,Qwen3-4B,xsa_middle_multihead-4k_8k_16k_32k_64k_128k,ruler-xsa_middle_multihead-4k_8k_16k_32k_64k_128k_2026-05-04T11-13-56.309808.json,ruler,xsa_middle_multihead,remove_parallel,1.0,131072,overall,ruler,92.6315,92.6315

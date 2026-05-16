@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="267.6pt" height="267.6pt" viewBox="0 0 267.6 267.6" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-05-15T12:00:37.917505</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.7.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 267.6 
+L 267.6 267.6 
+L 267.6 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.2 260.4 
+L 260.4 260.4 
+L 260.4 7.2 
+L 7.2 7.2 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g clip-path="url(#paa2b27842f)">
+    <image xlink:href="data:image/png;base64,
+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" id="image371afcad34" transform="scale(1 -1) translate(0 -253.309091)" x="7.2" y="-7.090909" width="253.309091" height="253.309091"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 7.2 260.4 
+L 7.2 7.2 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <path d="M 35.333333 260.4 
+L 35.333333 7.2 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <path d="M 63.466667 260.4 
+L 63.466667 7.2 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <path d="M 91.6 260.4 
+L 91.6 7.2 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <path d="M 119.733333 260.4 
+L 119.733333 7.2 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <path d="M 147.866667 260.4 
+L 147.866667 7.2 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_7">
+      <path d="M 176 260.4 
+L 176 7.2 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_8">
+      <path d="M 204.133333 260.4 
+L 204.133333 7.2 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_9">
+      <path d="M 232.266667 260.4 
+L 232.266667 7.2 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_10">
+      <path d="M 260.4 260.4 
+L 260.4 7.2 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_11">
+      <path d="M 7.2 7.2 
+L 260.4 7.2 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_12">
+      <path d="M 7.2 35.333333 
+L 260.4 35.333333 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_13">
+      <path d="M 7.2 63.466667 
+L 260.4 63.466667 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_14">
+      <path d="M 7.2 91.6 
+L 260.4 91.6 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_15">
+      <path d="M 7.2 119.733333 
+L 260.4 119.733333 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_16">
+      <path d="M 7.2 147.866667 
+L 260.4 147.866667 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_17">
+      <path d="M 7.2 176 
+L 260.4 176 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_18">
+      <path d="M 7.2 204.133333 
+L 260.4 204.133333 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_19">
+      <path d="M 7.2 232.266667 
+L 260.4 232.266667 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_20">
+      <path d="M 7.2 260.4 
+L 260.4 260.4 
+" clip-path="url(#paa2b27842f)" style="fill: none; stroke: #ffffff; stroke-width: 2.1; stroke-linecap: square"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="paa2b27842f">
+   <rect x="7.2" y="7.2" width="253.2" height="253.2"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -1,0 +1,25 @@
+\section{Discussion}
+\label{sec:discussion}
+
+The practical implication of our analysis is that not all approximation error
+should be treated equally. For compression and sparse attention, an ideal
+algorithm would preserve the direction-changing part of a residual update while
+placing unavoidable error primarily in the parallel component. Error in this
+component mostly rescales the current representation, whereas perpendicular
+error changes its direction and is more closely associated with degradation in
+our experiments. This suggests a geometric criterion for future compression
+methods: in addition to total residual error, they should measure how much of
+that error lies in the perpendicular component.
+
+The same perspective also changes how we interpret training-time computation.
+If value-space parallel manipulation has limited inference-time effect, then
+repeatedly optimizing this self-value-parallel direction may not always be the
+most useful allocation of model capacity or gradient signal. The retained
+pretraining results in \S\ref{sec:pretraining} are consistent with this view:
+self-value-parallel suppression changes optimization, and value-space parallel
+removal gives the strongest average post-training improvement in the larger
+retained summaries.
+This does not imply that every residual-space parallel component is benign to
+remove. Rather, it highlights the central lesson of the paper: the
+importance of a parallel component depends on the space in which it is measured
+and manipulated.

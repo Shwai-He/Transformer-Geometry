@@ -1,0 +1,6 @@
+# 每行一个模型路径或 HuggingFace 模型名
+# 例如：
+# /path/to/local/model_a
+# /path/to/local/model_b
+# gpt2
+
