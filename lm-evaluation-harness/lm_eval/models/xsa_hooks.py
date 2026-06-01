@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from collections import defaultdict
 import logging
+import os
+import random
 from typing import Dict, List, Optional
 
 import torch
@@ -10,18 +12,26 @@ eval_logger = logging.getLogger(__name__)
 
 
 def _find_decoder_layers(model) -> List[torch.nn.Module]:
-    candidates = [
+    candidate_paths = [
         ("model", "layers"),
+        ("language_model", "model", "layers"),
+        ("language_model", "layers"),
+        ("text_model", "layers"),
         ("transformer", "h"),
         ("gpt_neox", "layers"),
     ]
-    for parent_name, layers_name in candidates:
-        parent = getattr(model, parent_name, None)
-        layers = getattr(parent, layers_name, None) if parent is not None else None
+    for path in candidate_paths:
+        current = model
+        for attr_name in path:
+            current = getattr(current, attr_name, None)
+            if current is None:
+                break
+        layers = current
         if layers is not None:
             return list(layers)
     raise ValueError(
-        "Could not find decoder layers. Expected model.layers, transformer.h, or gpt_neox.layers."
+        "Could not find decoder layers. Expected model.layers, language_model.model.layers, "
+        "text_model.layers, transformer.h, or gpt_neox.layers."
     )
 
 
@@ -44,7 +54,7 @@ def _get_token_mixer_kind_and_module(layer):
             candidates.append((attr_name, module))
 
     for _, module in candidates:
-        if hasattr(module, "v_proj") and hasattr(module, "o_proj"):
+        if hasattr(module, "v_proj") and (hasattr(module, "o_proj") or hasattr(module, "dense")):
             return "full_attention", module
     for _, module in candidates:
         if hasattr(module, "in_proj_qkv") and hasattr(module, "out_proj"):
@@ -102,16 +112,27 @@ def _project_parallel(y: torch.Tensor, ref: torch.Tensor, eps: float = 1e-6) -> 
     return proj.to(dtype=y.dtype)
 
 
+def _scale_like_batch(scale: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+    if scale.dim() == 0:
+        return scale.to(device=target.device, dtype=target.dtype)
+    if target.dim() > 0 and scale.shape[0] == target.shape[0]:
+        return scale.reshape((int(scale.shape[0]),) + (1,) * (target.dim() - 1)).to(
+            device=target.device,
+            dtype=target.dtype,
+        )
+    return scale.to(device=target.device, dtype=target.dtype)
+
+
 def _apply_parallel_op(
     y: torch.Tensor,
     ref: torch.Tensor,
     *,
     op: str = "remove_parallel",
-    alpha: float = 1.0,
+    alpha: float | torch.Tensor = 1.0,
 ) -> torch.Tensor:
     proj = _project_parallel(y, ref)
     op_norm = str(op).lower().strip()
-    alpha_value = float(alpha)
+    alpha_value = _scale_like_batch(alpha, proj) if isinstance(alpha, torch.Tensor) else float(alpha)
     if op_norm == "remove_parallel":
         return y - alpha_value * proj
     if op_norm == "keep_parallel":
@@ -131,6 +152,32 @@ def _replace_first_arg(args, kwargs, new_value):
     return args, new_kwargs
 
 
+def _get_attn_attr(attn_module, *names):
+    for name in names:
+        value = getattr(attn_module, name, None)
+        if value is not None:
+            return value
+    source = os.environ.get("XSA_ATTN_ATTR_SOURCE", "head_aware").lower().strip()
+    if source in {"module_only", "module", "legacy"}:
+        return None
+    if source == "phi" and not _is_phi_attention(attn_module):
+        return None
+    config = getattr(attn_module, "config", None)
+    if config is not None:
+        for name in names:
+            value = getattr(config, name, None)
+            if value is not None:
+                return value
+    return None
+
+
+def _is_phi_attention(attn_module) -> bool:
+    config = getattr(attn_module, "config", None)
+    model_type = str(getattr(config, "model_type", "") or "").lower()
+    module_name = attn_module.__class__.__name__.lower()
+    return model_type.startswith("phi") or "phi" in module_name
+
+
 def _expand_attn_value_ref(
     value: torch.Tensor, y_pre: torch.Tensor, attn_module
 ) -> Optional[torch.Tensor]:
@@ -141,14 +188,21 @@ def _expand_attn_value_ref(
     if value.shape[:2] != y_pre.shape[:2]:
         return None
 
-    head_dim = getattr(attn_module, "head_dim", None)
-    num_heads = getattr(attn_module, "num_heads", None)
-    num_key_value_heads = getattr(attn_module, "num_key_value_heads", None)
-    if head_dim is None or num_heads is None or num_key_value_heads is None:
+    expansion_mode = os.environ.get("XSA_VALUE_REF_EXPANSION", "head_aware").lower().strip()
+    use_head_aware = expansion_mode in {"head_aware", "auto", "config_fallback", "auto_phi"} or (
+        expansion_mode == "phi" and _is_phi_attention(attn_module)
+    )
+    if not use_head_aware:
         if y_pre.size(-1) % value.size(-1) != 0:
             return None
         group = y_pre.size(-1) // value.size(-1)
         return value.repeat_interleave(group, dim=-1)
+
+    head_dim = _get_attn_attr(attn_module, "head_dim")
+    num_heads = _get_attn_attr(attn_module, "num_heads", "num_attention_heads", "n_heads", "heads")
+    num_key_value_heads = _get_attn_attr(attn_module, "num_key_value_heads", "num_kv_heads", "n_kv_heads", "kv_heads")
+    if head_dim is None or num_heads is None or num_key_value_heads is None:
+        return None
 
     if value.size(-1) != num_key_value_heads * head_dim:
         return None
@@ -164,8 +218,8 @@ def _expand_attn_value_ref(
 
 
 def _remove_parallel_attn_multihead(y_pre: torch.Tensor, ref: torch.Tensor, attn_module):
-    head_dim = getattr(attn_module, "head_dim", None)
-    num_heads = getattr(attn_module, "num_heads", None)
+    head_dim = _get_attn_attr(attn_module, "head_dim")
+    num_heads = _get_attn_attr(attn_module, "num_heads", "num_attention_heads")
     return _apply_parallel_multihead(
         y_pre,
         ref,
@@ -200,7 +254,7 @@ def _apply_parallel_multihead(
     num_heads: Optional[int],
     head_dim: Optional[int],
     op: str = "remove_parallel",
-    alpha: float = 1.0,
+    alpha: float | torch.Tensor = 1.0,
 ):
     if head_dim is None or num_heads is None:
         return _apply_parallel_op(y_pre, ref, op=op, alpha=alpha), _remove_parallel_and_stats(y_pre, ref)[1]
@@ -214,6 +268,56 @@ def _apply_parallel_multihead(
     _, stats = _remove_parallel_and_stats(y_heads, ref_heads)
     new_heads = _apply_parallel_op(y_heads, ref_heads, op=op, alpha=alpha)
     return new_heads.reshape_as(y_pre), stats
+
+
+def _sample_layer_scales(
+    *,
+    mode: str,
+    n_layers: int,
+    seed: int,
+    alpha: float,
+    para_scale_min: float,
+    para_scale_max: float,
+):
+    rng = random.Random(int(seed))
+    mode = str(mode).lower().strip()
+    layer_alpha = {}
+    if mode.startswith("sample_"):
+        mode = "none"
+    for layer_idx in range(n_layers):
+        para_scale = 1.0 - float(alpha)
+        if mode == "layer_para_uniform":
+            para_scale = rng.uniform(float(para_scale_min), float(para_scale_max))
+        if mode == "layer_para_choice":
+            para_scale = rng.choice([float(para_scale_min), float(para_scale_max)])
+        layer_alpha[layer_idx] = 1.0 - para_scale
+    return layer_alpha
+
+
+def _sample_batch_alpha(
+    *,
+    mode: str,
+    rng: random.Random,
+    ref: torch.Tensor,
+    default_alpha: float,
+    para_scale_min: float,
+    para_scale_max: float,
+) -> torch.Tensor | float:
+    mode = str(mode).lower().strip()
+    if not mode.startswith("sample_"):
+        return float(default_alpha)
+    if ref.dim() == 0:
+        return float(default_alpha)
+    batch = int(ref.shape[0])
+    if mode == "sample_para_uniform":
+        scales = [rng.uniform(float(para_scale_min), float(para_scale_max)) for _ in range(batch)]
+    elif mode == "sample_para_choice":
+        scales = [rng.choice([float(para_scale_min), float(para_scale_max)]) for _ in range(batch)]
+    else:
+        raise ValueError(f"Unsupported sample scale mode={mode!r}")
+    alpha = torch.tensor([1.0 - scale for scale in scales], device=ref.device, dtype=torch.float32)
+    view_shape = (batch,) + (1,) * (ref.dim() - 1)
+    return alpha.reshape(view_shape)
 
 
 def _extract_linear_value_ref(mixed_qkv: torch.Tensor, linear_module) -> Optional[torch.Tensor]:
@@ -310,6 +414,10 @@ class QwenXSAForwardHooks:
         intervention_site: str = "xsa_middle",
         xsa_forward_op: str = "remove_parallel",
         xsa_forward_alpha: float = 1.0,
+        xsa_layer_scale_mode: str = "none",
+        xsa_layer_scale_seed: int = 0,
+        xsa_layer_para_scale_min: float = -20.0,
+        xsa_layer_para_scale_max: float = 20.0,
         track_stats: bool = False,
         track_layerwise_stats: bool = False,
     ):
@@ -329,6 +437,23 @@ class QwenXSAForwardHooks:
         self.intervention_site = intervention_site
         self.xsa_forward_op = str(xsa_forward_op).lower().strip()
         self.xsa_forward_alpha = float(xsa_forward_alpha)
+        self.xsa_layer_scale_mode = str(xsa_layer_scale_mode).lower().strip()
+        valid_layer_scale_modes = {
+            "none",
+            "layer_para_uniform",
+            "layer_para_choice",
+            "sample_para_uniform",
+            "sample_para_choice",
+        }
+        if self.xsa_layer_scale_mode not in valid_layer_scale_modes:
+            raise ValueError(
+                "xsa_layer_scale_mode must be one of "
+                f"{'/'.join(sorted(valid_layer_scale_modes))}, got {xsa_layer_scale_mode}"
+            )
+        self.xsa_layer_scale_seed = int(xsa_layer_scale_seed)
+        self.xsa_layer_para_scale_min = float(xsa_layer_para_scale_min)
+        self.xsa_layer_para_scale_max = float(xsa_layer_para_scale_max)
+        self.sample_rng = random.Random(self.xsa_layer_scale_seed)
         if self.xsa_forward_op not in {
             "remove_parallel",
             "keep_parallel",
@@ -343,6 +468,14 @@ class QwenXSAForwardHooks:
         self.track_layerwise_stats = bool(track_layerwise_stats)
         self.layers = _find_decoder_layers(model)
         n_layers = len(self.layers)
+        self.layer_alpha = _sample_layer_scales(
+            mode=self.xsa_layer_scale_mode,
+            n_layers=n_layers,
+            seed=self.xsa_layer_scale_seed,
+            alpha=self.xsa_forward_alpha,
+            para_scale_min=self.xsa_layer_para_scale_min,
+            para_scale_max=self.xsa_layer_para_scale_max,
+        )
         lo = max(0, int(start_layer), int(skip_first_n))
         hi = n_layers if int(end_layer) < 0 else min(n_layers, int(end_layer))
         hi = min(hi, max(0, n_layers - int(skip_last_n)))
@@ -361,6 +494,16 @@ class QwenXSAForwardHooks:
             "track_layerwise_stats": self.track_layerwise_stats,
             "xsa_forward_op": self.xsa_forward_op,
             "xsa_forward_alpha": self.xsa_forward_alpha,
+            "xsa_layer_scale_mode": self.xsa_layer_scale_mode,
+            "xsa_layer_scale_seed": self.xsa_layer_scale_seed,
+            "xsa_layer_para_scale_min": self.xsa_layer_para_scale_min,
+            "xsa_layer_para_scale_max": self.xsa_layer_para_scale_max,
+            "xsa_layer_para_scales": {
+                str(idx): 1.0 - self.layer_alpha[idx] for idx in sorted(self.active_layer_indices)
+            },
+            "xsa_sample_scale_granularity": (
+                "per_forward_batch_item" if self.xsa_layer_scale_mode.startswith("sample_") else "none"
+            ),
             "intervention_pair": (
                 "x_to_y_post"
                 if self.intervention_site == "residual_output"
@@ -379,6 +522,18 @@ class QwenXSAForwardHooks:
             enabled=self.track_stats,
             track_layerwise=self.track_layerwise_stats,
         )
+
+    def _alpha_for_layer(self, layer_idx: int, ref: Optional[torch.Tensor] = None) -> float | torch.Tensor:
+        if self.xsa_layer_scale_mode.startswith("sample_") and isinstance(ref, torch.Tensor):
+            return _sample_batch_alpha(
+                mode=self.xsa_layer_scale_mode,
+                rng=self.sample_rng,
+                ref=ref,
+                default_alpha=self.xsa_forward_alpha,
+                para_scale_min=self.xsa_layer_para_scale_min,
+                para_scale_max=self.xsa_layer_para_scale_max,
+            )
+        return float(self.layer_alpha.get(layer_idx, self.xsa_forward_alpha))
 
     def _record_stats(self, branch: str, layer_idx: int, stats: Dict[str, torch.Tensor]) -> None:
         for name, value in stats.items():
@@ -410,7 +565,7 @@ class QwenXSAForwardHooks:
             if self.target in {"attn", "both"}:
                 if mixer_kind == "full_attention" and self.intervention_site == "residual_output":
                     v_proj = getattr(mixer_module, "v_proj", None)
-                    o_proj = getattr(mixer_module, "o_proj", None)
+                    o_proj = getattr(mixer_module, "o_proj", None) or getattr(mixer_module, "dense", None)
                     if v_proj is not None and o_proj is not None:
                         def v_proj_stats_hook(_mod, _args, _kwargs, output, _idx=layer_idx):
                             if isinstance(output, torch.Tensor):
@@ -445,7 +600,7 @@ class QwenXSAForwardHooks:
                             attn_out,
                             residual,
                             op=self.xsa_forward_op,
-                            alpha=self.xsa_forward_alpha,
+                            alpha=self._alpha_for_layer(_idx, residual),
                         )
                         self._record_stats("attn", _idx, stats)
                         self._record_stats("attn_post_o_proj", _idx, stats)
@@ -458,7 +613,7 @@ class QwenXSAForwardHooks:
                     self.handles.append(mixer_module.register_forward_hook(attn_hook, with_kwargs=True))
                 elif mixer_kind == "full_attention":
                     v_proj = getattr(mixer_module, "v_proj", None)
-                    o_proj = getattr(mixer_module, "o_proj", None)
+                    o_proj = getattr(mixer_module, "o_proj", None) or getattr(mixer_module, "dense", None)
                     if v_proj is None or o_proj is None:
                         raise ValueError(
                             f"Layer {layer_idx} attention lacks v_proj/o_proj; cannot run {self.intervention_site}."
@@ -483,16 +638,16 @@ class QwenXSAForwardHooks:
                                 y_pre,
                                 ref,
                                 op=self.xsa_forward_op,
-                                alpha=self.xsa_forward_alpha,
+                                alpha=self._alpha_for_layer(_idx, ref),
                             )
                         else:
                             new_y_pre, stats = _apply_parallel_multihead(
                                 y_pre,
                                 ref,
-                                num_heads=getattr(_attn, "num_heads", None),
-                                head_dim=getattr(_attn, "head_dim", None),
+                                num_heads=_get_attn_attr(_attn, "num_heads", "num_attention_heads"),
+                                head_dim=_get_attn_attr(_attn, "head_dim"),
                                 op=self.xsa_forward_op,
-                                alpha=self.xsa_forward_alpha,
+                                alpha=self._alpha_for_layer(_idx, ref),
                             )
                         self._record_stats("attn", _idx, stats)
                         self._record_stats("attn_pre_o_proj", _idx, stats)
@@ -539,7 +694,7 @@ class QwenXSAForwardHooks:
                             linear_out,
                             residual,
                             op=self.xsa_forward_op,
-                            alpha=self.xsa_forward_alpha,
+                            alpha=self._alpha_for_layer(_idx, residual),
                         )
                         self._record_stats("linear", _idx, stats)
                         self._record_stats("linear_post_out_proj", _idx, stats)
@@ -577,7 +732,7 @@ class QwenXSAForwardHooks:
                                 y_pre,
                                 value,
                                 op=self.xsa_forward_op,
-                                alpha=self.xsa_forward_alpha,
+                                alpha=self._alpha_for_layer(_idx, value),
                             )
                         else:
                             new_y_pre, stats = _apply_parallel_multihead(
@@ -586,7 +741,7 @@ class QwenXSAForwardHooks:
                                 num_heads=getattr(_mixer, "num_v_heads", None),
                                 head_dim=getattr(_mixer, "head_v_dim", None),
                                 op=self.xsa_forward_op,
-                                alpha=self.xsa_forward_alpha,
+                                alpha=self._alpha_for_layer(_idx, value),
                             )
                         self._record_stats("linear", _idx, stats)
                         self._record_stats("linear_pre_out_proj", _idx, stats)
@@ -623,7 +778,7 @@ class QwenXSAForwardHooks:
                         mlp_out,
                         residual,
                         op=self.xsa_forward_op,
-                        alpha=self.xsa_forward_alpha,
+                        alpha=self._alpha_for_layer(_idx, residual),
                     )
                     self._record_stats("mlp", _idx, stats)
                     if isinstance(output, tuple):

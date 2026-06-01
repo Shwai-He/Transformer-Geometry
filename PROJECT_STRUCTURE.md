@@ -14,6 +14,7 @@ src/repgeo/                   # reusable geometry/intervention Python code
 scripts/                      # small repo-level utilities
 notebooks/                    # exploratory notebooks
 docs/assets/                  # lightweight public SVG assets for README/docs
+archive/drawing_legacy/       # older drawing branches kept for reference
 ```
 
 ## Active experiment workspaces

@@ -1,19 +1,58 @@
-# Local environment
+# Local environments and caches
 .venv/
 .DS_Store
+__pycache__/
+*.py[cod]
+*.so
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.claude/
+.deps/
+.filelist.txt
 
-# Private paper workspace and local exports
+# Private paper workspaces and local exports
 _NeurIPS_2026_/
 _NeurIPS_2026_.zip
-figs
+_EMNLP_2026_/
+_EMNLP_2026_legacy/
+_arXiv__Transformer_Geometry/
+figs/
+figs 2/
 Demystifying Transformers through Representation Geometries.pdf
+emnlp_2026.pdf
 paper_extract.txt
 model.text
 
-# Private plotting code and experiment artifacts
-drawing/
-results/
+# Local experiment artifacts
+runs/
+logs/
 outputs/
+results/
+compression/outputs/
+training/outputs/
+lm-evaluation-harness/outputs/
+lm-evaluation-harness/lm-evaluation-harness/
+lm-evaluation-harness/scripts/unused_for_compression_20260523/cache/
+
+# Local checkpoints, datasets, and binary exports
+/models/
+/hf/
+/checkpoints/
+*.ckpt
+*.pth
+*.pt
+*.bin
+*.safetensors
+*.parquet
+*.zip
+*.tar
+*.tar.gz
+*.pdf
+*.docx
+
+# Legacy/private local workspaces
 representation-analysis/
 _imports/
 archive/

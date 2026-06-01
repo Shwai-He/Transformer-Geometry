@@ -1,0 +1,254 @@
+kind	imported_path	current_path	current_exists	migration_state	hash_match	note
+dir	neurips_supplement_anonymous_code	neurips_supplement_anonymous_code	no	missing_current		
+file	neurips_supplement_anonymous_code/README.md	README.md	yes	diverged	no	Archived supplement root.
+dir	neurips_supplement_anonymous_code/analysis_core	analysis	yes	mapped		Archived analysis-core snapshot.
+dir	neurips_supplement_anonymous_code/analysis_core/scripts	scripts	yes	mapped		Archived script set; active counterpart lives in scripts/.
+file	neurips_supplement_anonymous_code/analysis_core/scripts/extract_value_pre_ratio_summary.py	scripts/extract_value_pre_ratio_summary.py	yes	diverged	no	Archived script set; active counterpart lives in scripts/.
+file	neurips_supplement_anonymous_code/analysis_core/scripts/run_batch_probe.py	scripts/run_batch_probe.py	yes	synced	yes	Archived script set; active counterpart lives in scripts/.
+file	neurips_supplement_anonymous_code/analysis_core/scripts/run_generation_probe.py	scripts/run_generation_probe.py	yes	synced	yes	Archived script set; active counterpart lives in scripts/.
+file	neurips_supplement_anonymous_code/analysis_core/scripts/run_models.sh	scripts/run_models.sh	yes	synced	yes	Archived script set; active counterpart lives in scripts/.
+file	neurips_supplement_anonymous_code/analysis_core/scripts/run_models_groups.sh	scripts/run_models_groups.sh	yes	synced	yes	Archived script set; active counterpart lives in scripts/.
+file	neurips_supplement_anonymous_code/analysis_core/scripts/run_models_on_gpu_groups.py	scripts/run_models_on_gpu_groups.py	yes	synced	yes	Archived script set; active counterpart lives in scripts/.
+file	neurips_supplement_anonymous_code/analysis_core/scripts/run_models_on_single_gpus.py	scripts/run_models_on_single_gpus.py	yes	synced	yes	Archived script set; active counterpart lives in scripts/.
+file	neurips_supplement_anonymous_code/analysis_core/scripts/run_probe.py	scripts/run_probe.py	yes	synced	yes	Archived script set; active counterpart lives in scripts/.
+file	neurips_supplement_anonymous_code/analysis_core/scripts/run_value_pre_ratio_probe.sh	scripts/run_value_pre_ratio_probe.sh	yes	diverged	no	Archived script set; active counterpart lives in scripts/.
+dir	neurips_supplement_anonymous_code/analysis_core/src	analysis/src	no	missing_current		Archived analysis-core snapshot.
+dir	neurips_supplement_anonymous_code/analysis_core/src/repgeo	src/repgeo	yes	mapped		Archived repgeo package; active counterpart lives in src/repgeo/.
+file	neurips_supplement_anonymous_code/analysis_core/src/repgeo/__init__.py	src/repgeo/__init__.py	yes	synced	yes	Archived repgeo package; active counterpart lives in src/repgeo/.
+file	neurips_supplement_anonymous_code/analysis_core/src/repgeo/analyzer.py	src/repgeo/analyzer.py	yes	diverged	no	Archived repgeo package; active counterpart lives in src/repgeo/.
+file	neurips_supplement_anonymous_code/analysis_core/src/repgeo/residual_scale_fx_patch.py	src/repgeo/residual_scale_fx_patch.py	yes	synced	yes	Archived repgeo package; active counterpart lives in src/repgeo/.
+file	neurips_supplement_anonymous_code/analysis_core/src/repgeo/trainer_integration.py	src/repgeo/trainer_integration.py	yes	synced	yes	Archived repgeo package; active counterpart lives in src/repgeo/.
+dir	neurips_supplement_anonymous_code/compression	compression	yes	mapped		Archived compression snapshot.
+dir	neurips_supplement_anonymous_code/compression/code	compression/code	yes	mapped		Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/code/aggregate_all_local_results.py	compression/code/aggregate_all_local_results.py	yes	synced	yes	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/code/compare_dense_quant_diff.py	compression/code/compare_dense_quant_diff.py	yes	synced	yes	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/code/compare_dense_quant_params.py	compression/code/compare_dense_quant_params.py	yes	synced	yes	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/code/export_awq_dequantized_dense.py	compression/code/export_awq_dequantized_dense.py	yes	synced	yes	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/code/generation_forward_utils.py	compression/code/generation_forward_utils.py	yes	synced	yes	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/code/layerwise_para_perp_compare.py	compression/code/layerwise_para_perp_compare.py	yes	diverged	no	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/code/summarize_local_setting_no_plot.py	compression/code/summarize_local_setting_no_plot.py	yes	synced	yes	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/code/track_layer_updates_baseline.py	compression/code/track_layer_updates_baseline.py	yes	synced	yes	Archived compression snapshot.
+dir	neurips_supplement_anonymous_code/compression/docs	compression/docs	yes	mapped		Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/docs/README_layerwise_para_perp.md	compression/docs/README_layerwise_para_perp.md	yes	diverged	no	Archived compression snapshot.
+dir	neurips_supplement_anonymous_code/compression/scripts	compression/scripts	yes	mapped		Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_aggregate_all_local_results.sh	compression/scripts/run_aggregate_all_local_results.sh	yes	diverged	no	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_compare_dense_quant_diff.sh	compression/scripts/run_compare_dense_quant_diff.sh	yes	diverged	no	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_compare_dense_quant_params.sh	compression/scripts/run_compare_dense_quant_params.sh	yes	diverged	no	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_compare_dense_wanda_params.sh	compression/scripts/run_compare_dense_wanda_params.sh	yes	diverged	no	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_export_awq_dequantized_dense.sh	compression/scripts/run_export_awq_dequantized_dense.sh	yes	diverged	no	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_inter_layer_drop_para_perp.sh	compression/scripts/run_inter_layer_drop_para_perp.sh	yes	synced	yes	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_intra_layer_prune_para_perp.sh	compression/scripts/run_intra_layer_prune_para_perp.sh	yes	diverged	no	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_intra_layer_quant_para_perp.sh	compression/scripts/run_intra_layer_quant_para_perp.sh	yes	diverged	no	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_layerwise_para_perp_compare.sh	compression/scripts/run_layerwise_para_perp_compare.sh	yes	synced	yes	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_local_sweep_prune_para_perp.sh	compression/scripts/run_local_sweep_prune_para_perp.sh	yes	diverged	no	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_local_sweep_quant_para_perp.sh	compression/scripts/run_local_sweep_quant_para_perp.sh	yes	diverged	no	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_para_perp_settings_gpu_farm.sh	compression/scripts/run_para_perp_settings_gpu_farm.sh	yes	diverged	no	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_summarize_local_all_settings.sh	compression/scripts/run_summarize_local_all_settings.sh	yes	diverged	no	Archived compression snapshot.
+file	neurips_supplement_anonymous_code/compression/scripts/run_track_layer_updates_baseline.sh	compression/scripts/run_track_layer_updates_baseline.sh	yes	diverged	no	Archived compression snapshot.
+dir	neurips_supplement_anonymous_code/evaluation_scripts	lm-evaluation-harness	yes	mapped		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/collect_xsa_lm_eval_results.py	lm-evaluation-harness/collect_xsa_lm_eval_results.py	no	missing_current		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/collect_xsa_lm_eval_results.sh	lm-evaluation-harness/collect_xsa_lm_eval_results.sh	no	missing_current		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/collect_xsa_lm_eval_ruler_results.py	lm-evaluation-harness/collect_xsa_lm_eval_ruler_results.py	no	missing_current		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/collect_xsa_lm_eval_ruler_results.sh	lm-evaluation-harness/collect_xsa_lm_eval_ruler_results.sh	no	missing_current		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/run_lm_eval_attn_diag_batch.sh	lm-evaluation-harness/run_lm_eval_attn_diag_batch.sh	no	missing_current		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/run_lm_eval_attn_diag_setting.sh	lm-evaluation-harness/run_lm_eval_attn_diag_setting.sh	no	missing_current		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/run_lm_eval_nanogpt_xsa_paper_gpu_farm.sh	lm-evaluation-harness/run_lm_eval_nanogpt_xsa_paper_gpu_farm.sh	no	missing_current		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/run_lm_eval_nanogpt_xsa_paper_single_gpu.sh	lm-evaluation-harness/run_lm_eval_nanogpt_xsa_paper_single_gpu.sh	no	missing_current		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/run_lm_eval_xsa_batch.sh	lm-evaluation-harness/run_lm_eval_xsa_batch.sh	no	missing_current		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/run_lm_eval_xsa_gpu_farm.sh	lm-evaluation-harness/run_lm_eval_xsa_gpu_farm.sh	no	missing_current		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/run_lm_eval_xsa_multihead_batch.sh	lm-evaluation-harness/run_lm_eval_xsa_multihead_batch.sh	no	missing_current		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/run_lm_eval_xsa_setting.sh	lm-evaluation-harness/run_lm_eval_xsa_setting.sh	no	missing_current		Archived evaluation snapshot.
+file	neurips_supplement_anonymous_code/evaluation_scripts/run_lm_eval_xsa_variants_batch.sh	lm-evaluation-harness/run_lm_eval_xsa_variants_batch.sh	no	missing_current		Archived evaluation snapshot.
+dir	neurips_supplement_anonymous_code/pretraining_nanogpt	training	yes	mapped		Archived training snapshot.
+dir	neurips_supplement_anonymous_code/pretraining_nanogpt/config	training/config	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/config/train_xsa_0p7b.py	training/config/train_xsa_0p7b.py	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/config/train_xsa_1p4b.py	training/config/train_xsa_1p4b.py	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/config/train_xsa_2p7b.py	training/config/train_xsa_2p7b.py	no	missing_current		Archived training snapshot.
+dir	neurips_supplement_anonymous_code/pretraining_nanogpt/core	training/core	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/core/configurator.py	training/core/configurator.py	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/core/model.py	training/core/model.py	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/core/residual_patch.py	training/core/residual_patch.py	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/core/residual_patch_core.py	training/core/residual_patch_core.py	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/core/train.py	training/core/train.py	no	missing_current		Archived training snapshot.
+dir	neurips_supplement_anonymous_code/pretraining_nanogpt/scripts	training/scripts	yes	mapped		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/scripts/run_0p7b_xsa.sh	training/scripts/run_0p7b_xsa.sh	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/scripts/run_1p4b_xsa.sh	training/scripts/run_1p4b_xsa.sh	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/scripts/run_2p7b_xsa.sh	training/scripts/run_2p7b_xsa.sh	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/scripts/train_attn_diag.sh	training/scripts/train_attn_diag.sh	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/scripts/train_baseline.sh	training/scripts/train_baseline.sh	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/scripts/train_residual.sh	training/scripts/train_residual.sh	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/scripts/train_residual_wx.sh	training/scripts/train_residual_wx.sh	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/scripts/train_xsa_forward_only_residual.sh	training/scripts/train_xsa_forward_only_residual.sh	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/scripts/train_xsa_forward_value.sh	training/scripts/train_xsa_forward_value.sh	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/pretraining_nanogpt/scripts/train_xsa_forward_value_preproj.sh	training/scripts/train_xsa_forward_value_preproj.sh	no	missing_current		Archived training snapshot.
+file	neurips_supplement_anonymous_code/requirements.txt	requirements.txt	yes	diverged	no	Archived supplement root.
+dir	neurips_supplement_anonymous_code/value_based_editing	analysis	yes	mapped		Archived value-editing snapshot.
+file	neurips_supplement_anonymous_code/value_based_editing/forward_utils.py	analysis/utils/forward_utils.py	yes	synced	yes	Archived value-editing snapshot.
+file	neurips_supplement_anonymous_code/value_based_editing/generation_forward_utils.py	analysis/utils/generation_forward_utils.py	yes	synced	yes	Archived value-editing snapshot.
+file	neurips_supplement_anonymous_code/value_based_editing/qwen_xsa_forward_ablation.py	analysis/forward_geometry/qwen_xsa_forward_ablation.py	yes	synced	yes	Archived value-editing snapshot.
+file	neurips_supplement_anonymous_code/value_based_editing/qwen_xsa_forward_generate.py	analysis/forward_geometry/qwen_xsa_forward_generate.py	yes	synced	yes	Archived value-editing snapshot.
+file	neurips_supplement_anonymous_code/value_based_editing/run_xsa_compare_middle_ppl.sh	analysis/forward_geometry/run_xsa_compare_middle_ppl.sh	yes	diverged	no	Archived value-editing snapshot.
+file	neurips_supplement_anonymous_code/value_based_editing/run_xsa_forward_ablation.sh	analysis/forward_geometry/run_xsa_forward_ablation.sh	yes	diverged	no	Archived value-editing snapshot.
+file	neurips_supplement_anonymous_code/value_based_editing/run_xsa_forward_generate.sh	analysis/forward_geometry/run_xsa_forward_generate.sh	yes	diverged	no	Archived value-editing snapshot.
+file	neurips_supplement_anonymous_code/value_based_editing/run_xsa_para_ablation.sh	analysis/forward_geometry/run_xsa_para_ablation.sh	yes	diverged	no	Archived value-editing snapshot.
+file	neurips_supplement_anonymous_code/value_based_editing/run_xsa_perp_ablation.sh	analysis/forward_geometry/run_xsa_perp_ablation.sh	yes	diverged	no	Archived value-editing snapshot.
+file	neurips_supplement_anonymous_code/value_based_editing/summarize_alpha_gamma_ablation.py	analysis/forward_geometry/summarize_alpha_gamma_ablation.py	yes	diverged	no	Archived value-editing snapshot.
+file	neurips_supplement_anonymous_code/value_based_editing/summarize_para_perp_ppl_ablation.py	analysis/forward_geometry/summarize_para_perp_ppl_ablation.py	yes	diverged	no	Archived value-editing snapshot.
+dir	representation-analysis	representation-analysis	yes	mapped		Mirror wrapper root.
+file	representation-analysis/nanogpt/check_nanogpt_gamma_ckpt.py	analysis/nanogpt/check_nanogpt_gamma_ckpt.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/nanogpt/cleanup_invalid_nanogpt_checkpoints.py	analysis/nanogpt/cleanup_invalid_nanogpt_checkpoints.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/model_compare/compare_generation_metrics.py	analysis/model_compare/compare_generation_metrics.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/model_compare/compare_mcq_subspace_metrics.py	analysis/model_compare/compare_mcq_subspace_metrics.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/model_compare/double_check_drop_eval.py	analysis/model_compare/double_check_drop_eval.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/utils/download_wandb_history.py	analysis/utils/download_wandb_history.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+dir	representation-analysis/drawing	drawing	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/README.md	drawing/README.md	yes	synced	yes	Archived drawing subtree.
+dir	representation-analysis/drawing/attn_matrix	drawing/attn_matrix	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/compare_three_attention_maps.ipynb	drawing/attn_matrix/compare_three_attention_maps.ipynb	yes	diverged	no	Archived drawing subtree.
+dir	representation-analysis/drawing/attn_matrix/data	drawing/attn_matrix/data	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/data/README.md	drawing/attn_matrix/data/README.md	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/replot_from_saved_data.ipynb	drawing/attn_matrix/replot_from_saved_data.ipynb	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/replot_from_saved_data.py	drawing/attn_matrix/replot_from_saved_data.py	yes	synced	yes	Archived drawing subtree.
+dir	representation-analysis/drawing/attn_matrix/server	drawing/attn_matrix/server	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/server/nanogpt_attention_utils.py	drawing/attn_matrix/server/nanogpt_attention_utils.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/server/qwen_attn_x_parallel_removal_viz.py	drawing/attn_matrix/server/qwen_attn_x_parallel_removal_viz.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/server/qwen_xsa_forward_ablation.py	drawing/attn_matrix/server/qwen_xsa_forward_ablation.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/server/qwen_xsa_single_layer_flip_viz.py	drawing/attn_matrix/server/qwen_xsa_single_layer_flip_viz.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/server/run_qwen_attn_all_heads_viz.sh	drawing/attn_matrix/server/run_qwen_attn_all_heads_viz.sh	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/server/run_qwen_attn_x_parallel_removal_viz.sh	drawing/attn_matrix/server/run_qwen_attn_x_parallel_removal_viz.sh	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/server/run_qwen_xsa_all_heads_viz.sh	drawing/attn_matrix/server/run_qwen_xsa_all_heads_viz.sh	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/server/run_qwen_xsa_single_layer_flip_viz.sh	drawing/attn_matrix/server/run_qwen_xsa_single_layer_flip_viz.sh	yes	synced	yes	Archived drawing subtree.
+dir	representation-analysis/drawing/attn_matrix/source	drawing/attn_matrix/source	yes	mapped		Archived drawing subtree.
+dir	representation-analysis/drawing/attn_matrix/source/qwen3-4b	drawing/attn_matrix/source/qwen3-4b	yes	mapped		Archived drawing subtree.
+dir	representation-analysis/drawing/attn_matrix/source/qwen3-4b/layer19	drawing/attn_matrix/source/qwen3-4b/layer19	yes	mapped		Archived drawing subtree.
+dir	representation-analysis/drawing/attn_matrix/source/qwen3-4b/layer19/attn	drawing/attn_matrix/source/qwen3-4b/layer19/attn	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/source/qwen3-4b/layer19/attn/h6_plot_bundle.json	drawing/attn_matrix/source/qwen3-4b/layer19/attn/h6_plot_bundle.json	yes	synced	yes	Archived drawing subtree.
+dir	representation-analysis/drawing/attn_matrix/source/qwen3-4b/layer19/xsa	drawing/attn_matrix/source/qwen3-4b/layer19/xsa	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/source/qwen3-4b/layer19/xsa/h6_plot_bundle.json	drawing/attn_matrix/source/qwen3-4b/layer19/xsa/h6_plot_bundle.json	yes	synced	yes	Archived drawing subtree.
+dir	representation-analysis/drawing/attn_matrix/source/qwen3.5-4b	drawing/attn_matrix/source/qwen3.5-4b	yes	mapped		Archived drawing subtree.
+dir	representation-analysis/drawing/attn_matrix/source/qwen3.5-4b/layer17	drawing/attn_matrix/source/qwen3.5-4b/layer17	yes	mapped		Archived drawing subtree.
+dir	representation-analysis/drawing/attn_matrix/source/qwen3.5-4b/layer17/attn	drawing/attn_matrix/source/qwen3.5-4b/layer17/attn	yes	mapped		Archived drawing subtree.
+dir	representation-analysis/drawing/attn_matrix/source/qwen3.5-4b/layer17/xsa	drawing/attn_matrix/source/qwen3.5-4b/layer17/xsa	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/attn_matrix/source/qwen3.5-4b/layer17/xsa/layer_19_plot_bundle.json	drawing/attn_matrix/source/qwen3.5-4b/layer17/xsa/layer_19_plot_bundle.json	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/common.py	drawing/common.py	yes	diverged	no	Archived drawing subtree.
+dir	representation-analysis/drawing/comp_analysis	drawing/comp_analysis	yes	mapped		Archived drawing subtree.
+dir	representation-analysis/drawing/comp_analysis/data	drawing/comp_analysis/data	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/comp_analysis/data/README.md	drawing/comp_analysis/data/README.md	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/comp_analysis/data/all_settings_master.tsv	drawing/comp_analysis/data/all_settings_master.tsv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/comp_analysis/data/all_settings_master_v2.tsv	drawing/comp_analysis/data/all_settings_master_v2.tsv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/comp_analysis/plot_local_flip_compare_v1.ipynb	drawing/comp_analysis/plot_local_flip_compare_v1.ipynb	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/comp_analysis/plot_local_flip_compare_v2.ipynb	drawing/comp_analysis/plot_local_flip_compare_v2.ipynb	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/comp_analysis/plot_local_flip_compare_v2.py	drawing/comp_analysis/plot_local_flip_compare_v2.py	yes	diverged	no	Archived drawing subtree.
+dir	representation-analysis/drawing/embedded_data	drawing/embedded_data	yes	mapped		Archived drawing subtree.
+dir	representation-analysis/drawing/embedded_data/data	drawing/embedded_data/data	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/embedded_data/data/README.md	drawing/embedded_data/data/README.md	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/embedded_data/paper_Qwen3-30B-A3B_hidden_both_block_para_perp_sampled_layers.py	drawing/embedded_data/paper_Qwen3-30B-A3B_hidden_both_block_para_perp_sampled_layers.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/embedded_data/paper_Qwen3-4B-Instruct-2507_hidden_both_block_para_perp_sampled_layers.py	drawing/embedded_data/paper_Qwen3-4B-Instruct-2507_hidden_both_block_para_perp_sampled_layers.py	yes	synced	yes	Archived drawing subtree.
+dir	representation-analysis/drawing/loss_curves	drawing/loss_curves	yes	mapped		Archived drawing subtree.
+dir	representation-analysis/drawing/loss_curves/data	drawing/loss_curves/data	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/data/194m.csv	drawing/loss_curves/data/194m.csv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/data/1p4_baseline.csv	drawing/loss_curves/data/1p4_baseline.csv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/data/1p4_gate.csv	drawing/loss_curves/data/1p4_gate.csv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/data/1p4_xsa.csv	drawing/loss_curves/data/1p4_xsa.csv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/data/296m.csv	drawing/loss_curves/data/296m.csv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/data/436m.csv	drawing/loss_curves/data/436m.csv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/data/528m.csv	drawing/loss_curves/data/528m.csv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/data/README.md	drawing/loss_curves/data/README.md	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/data/loss_csv_by_size_raw3_cleaned.csv	drawing/loss_curves/data/loss_csv_by_size_raw3_cleaned.csv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/plot_loss_1p4_gate_vs_xsa.ipynb	drawing/loss_curves/plot_loss_1p4_gate_vs_xsa.ipynb	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/plot_loss_1p4_gate_vs_xsa.py	drawing/loss_curves/plot_loss_1p4_gate_vs_xsa.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/plot_loss_csv_cross_size_latest.ipynb	drawing/loss_curves/plot_loss_csv_cross_size_latest.ipynb	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/plot_loss_csv_multirun.py	drawing/loss_curves/plot_loss_csv_multirun.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/plot_loss_csv_sizes_overview.ipynb	drawing/loss_curves/plot_loss_csv_sizes_overview.ipynb	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/plot_loss_csv_sizes_overview.py	drawing/loss_curves/plot_loss_csv_sizes_overview.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/plot_loss_curves_296m.ipynb	drawing/loss_curves/plot_loss_curves_296m.ipynb	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/plot_loss_curves_296m.py	drawing/loss_curves/plot_loss_curves_296m.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/plot_loss_from_cleaned_csv.ipynb	drawing/loss_curves/plot_loss_from_cleaned_csv.ipynb	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/loss_curves/plot_loss_from_cleaned_csv.py	drawing/loss_curves/plot_loss_from_cleaned_csv.py	yes	synced	yes	Archived drawing subtree.
+dir	representation-analysis/drawing/overview	drawing/overview	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/overview/89eecf17c392142de1a894079806f710.png	drawing/overview/89eecf17c392142de1a894079806f710.png	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/overview/89eecf17c392142de1a894079806f710.svg	drawing/overview/89eecf17c392142de1a894079806f710.svg	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/overview/c77cf8abcefccf5434b4491917ece895.png	drawing/overview/c77cf8abcefccf5434b4491917ece895.png	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/overview/c77cf8abcefccf5434b4491917ece895.svg	drawing/overview/c77cf8abcefccf5434b4491917ece895.svg	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/overview/vectorize_pngs_to_svg.ipynb	drawing/overview/vectorize_pngs_to_svg.ipynb	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/overview/vectorize_pngs_to_svg.py	drawing/overview/vectorize_pngs_to_svg.py	yes	synced	yes	Archived drawing subtree.
+dir	representation-analysis/drawing/para_ablation	drawing/para_ablation	yes	mapped		Archived drawing subtree.
+dir	representation-analysis/drawing/para_ablation/data	drawing/para_ablation/data	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/para_ablation/data/README.md	drawing/para_ablation/data/README.md	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/para_ablation/data/alpha_gamma_pareto.tsv	drawing/para_ablation/data/alpha_gamma_pareto.tsv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/para_ablation/data/alpha_gamma_summary.tsv	drawing/para_ablation/data/alpha_gamma_summary.tsv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/para_ablation/data/alpha_perp_grid_summary.tsv	drawing/para_ablation/data/alpha_perp_grid_summary.tsv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/para_ablation/data/para_ppl_summary.tsv	drawing/para_ablation/data/para_ppl_summary.tsv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/para_ablation/data/para_ppl_summary_v2.tsv	drawing/para_ablation/data/para_ppl_summary_v2.tsv	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/para_ablation/data/perp_ppl_summary.tsv	drawing/para_ablation/data/perp_ppl_summary.tsv	yes	synced	yes	Archived drawing subtree.
+dir	representation-analysis/drawing/para_ablation/old	drawing/para_ablation/old	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/para_ablation/old/plot_xsa_ablation_summary.ipynb	drawing/para_ablation/old/plot_xsa_ablation_summary.ipynb	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/para_ablation/old/plot_xsa_ablation_summary.py	drawing/para_ablation/old/plot_xsa_ablation_summary.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/para_ablation/plot_para_ppl_summary.ipynb	drawing/para_ablation/plot_para_ppl_summary.ipynb	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/para_ablation/plot_para_ppl_summary.py	drawing/para_ablation/plot_para_ppl_summary.py	yes	synced	yes	Archived drawing subtree.
+dir	representation-analysis/drawing/para_dist	drawing/para_dist	yes	mapped		Archived drawing subtree.
+dir	representation-analysis/drawing/para_dist/data	drawing/para_dist/data	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/para_dist/data/README.md	drawing/para_dist/data/README.md	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/para_dist/paper_Qwen3-30B-A3B_hidden_both_block_para_perp_sampled_layers.png	drawing/para_dist/paper_Qwen3-30B-A3B_hidden_both_block_para_perp_sampled_layers.png	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/para_dist/paper_Qwen3-30B-A3B_hidden_both_block_para_perp_sampled_layers.py	drawing/para_dist/paper_Qwen3-30B-A3B_hidden_both_block_para_perp_sampled_layers.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/para_dist/paper_Qwen3-4B-Instruct-2507_hidden_both_block_para_perp_sampled_layers.png	drawing/para_dist/paper_Qwen3-4B-Instruct-2507_hidden_both_block_para_perp_sampled_layers.png	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/para_dist/paper_Qwen3-4B-Instruct-2507_hidden_both_block_para_perp_sampled_layers.py	drawing/para_dist/paper_Qwen3-4B-Instruct-2507_hidden_both_block_para_perp_sampled_layers.py	yes	synced	yes	Archived drawing subtree.
+dir	representation-analysis/drawing/para_dist/v2	drawing/para_dist/v2	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/para_dist/v2/paper_Qwen3-30B-A3B_hidden_both_block_para_perp_sampled_layers.py	drawing/para_dist/v2/paper_Qwen3-30B-A3B_hidden_both_block_para_perp_sampled_layers.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/para_dist/v2/paper_Qwen3-4B-Instruct-2507_hidden_both_block_para_perp_sampled_layers.py	drawing/para_dist/v2/paper_Qwen3-4B-Instruct-2507_hidden_both_block_para_perp_sampled_layers.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/plot_paper_para_perp_sampled_layers.py	drawing/plot_paper_para_perp_sampled_layers.py	yes	diverged	no	Archived drawing subtree.
+dir	representation-analysis/drawing/probe_steps_viz	drawing/probe_steps_viz	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/probe_steps_viz/common.py	drawing/probe_steps_viz/common.py	yes	synced	yes	Archived drawing subtree.
+dir	representation-analysis/drawing/probe_steps_viz/data	drawing/probe_steps_viz/data	yes	mapped		Archived drawing subtree.
+file	representation-analysis/drawing/probe_steps_viz/data/README.md	drawing/probe_steps_viz/data/README.md	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/drawing/probe_steps_viz/plot_paper_para_perp_sampled_layers.py	drawing/probe_steps_viz/plot_paper_para_perp_sampled_layers.py	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/probe_steps_viz/plot_prompt_agg_dzratio_step_grid.py	drawing/probe_steps_viz/plot_prompt_agg_dzratio_step_grid.py	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/probe_steps_viz/plot_prompt_agg_para_perp_step_grid.py	drawing/probe_steps_viz/plot_prompt_agg_para_perp_step_grid.py	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/probe_steps_viz/plot_prompt_agg_para_residual_step_grid.py	drawing/probe_steps_viz/plot_prompt_agg_para_residual_step_grid.py	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/probe_steps_viz/plot_prompt_layerwise_para_ratios_range.py	drawing/probe_steps_viz/plot_prompt_layerwise_para_ratios_range.py	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/probe_steps_viz/plot_prompt_layerwise_scale_gain_range.py	drawing/probe_steps_viz/plot_prompt_layerwise_scale_gain_range.py	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/probe_steps_viz/plot_prompt_layerwise_scale_gain_range_sum.py	drawing/probe_steps_viz/plot_prompt_layerwise_scale_gain_range_sum.py	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/probe_steps_viz/plot_prompt_layerwise_znorm_dznorm_range.py	drawing/probe_steps_viz/plot_prompt_layerwise_znorm_dznorm_range.py	yes	diverged	no	Archived drawing subtree.
+file	representation-analysis/drawing/visualize_xsa_ablation_sweeps.py	drawing/visualize_xsa_ablation_sweeps.py	yes	synced	yes	Archived drawing subtree.
+file	representation-analysis/model_compare/dropping_cosine.py	analysis/model_compare/dropping_cosine.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/gsm_math/eval_single_token_math.py	analysis/gsm_math/eval_single_token_math.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/gsm_math/eval_single_token_math_wanda.py	analysis/gsm_math/eval_single_token_math_wanda.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/utils/forward_utils.py	analysis/utils/forward_utils.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/utils/generation_forward_utils.py	analysis/utils/generation_forward_utils.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/gsm_math/gsm8k_dualpath_eval.py	analysis/gsm_math/gsm8k_dualpath_eval.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/gsm_math/gsm8k_free_budget_eval.py	analysis/gsm_math/gsm8k_free_budget_eval.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/gsm_math/gsm8k_free_budget_fewshot_eval.py	analysis/gsm_math/gsm8k_free_budget_fewshot_eval.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/gsm_math/gsm8k_masked_prefix_eval.py	analysis/gsm_math/gsm8k_masked_prefix_eval.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/gsm_math/gsm8k_wanda_dualpath_eval.py	analysis/gsm_math/gsm8k_wanda_dualpath_eval.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/nanogpt/layerwise_sim_lm_random_init.py	analysis/nanogpt/layerwise_sim_lm_random_init.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/model_compare/masked_teacher_drop_eval.py	analysis/model_compare/masked_teacher_drop_eval.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/model_compare/masked_teacher_wanda_eval.py	analysis/model_compare/masked_teacher_wanda_eval.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/nanogpt/nanogpt_attention_utils.py	analysis/nanogpt/nanogpt_attention_utils.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/utils/plot_wandb_history.py	analysis/utils/plot_wandb_history.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/utils/prepare_text_dataset_jsonl.py	analysis/utils/prepare_text_dataset_jsonl.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/forward_geometry/qwen_attn_x_parallel_removal_viz.py	analysis/forward_geometry/qwen_attn_x_parallel_removal_viz.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/visualization/qwen_xsa_attention_matrix_viz.py	analysis/visualization/qwen_xsa_attention_matrix_viz.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/forward_geometry/qwen_xsa_forward_ablation.py	analysis/forward_geometry/qwen_xsa_forward_ablation.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/forward_geometry/qwen_xsa_forward_generate.py	analysis/forward_geometry/qwen_xsa_forward_generate.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/visualization/qwen_xsa_single_layer_flip_viz.py	analysis/visualization/qwen_xsa_single_layer_flip_viz.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/utils/remove_empty_dirs.py	analysis/utils/remove_empty_dirs.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/nanogpt/run_nanogpt_attn_x_parallel_removal_viz.sh	analysis/nanogpt/run_nanogpt_attn_x_parallel_removal_viz.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/nanogpt/run_nanogpt_xsa_attention_matrix_viz.sh	analysis/nanogpt/run_nanogpt_xsa_attention_matrix_viz.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/nanogpt/run_nanogpt_xsa_batch_flip_viz.sh	analysis/nanogpt/run_nanogpt_xsa_batch_flip_viz.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/nanogpt/run_nanogpt_xsa_single_layer_flip_viz.sh	analysis/nanogpt/run_nanogpt_xsa_single_layer_flip_viz.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/visualization/run_qwen_attn_x_parallel_removal_viz.sh	analysis/visualization/run_qwen_attn_x_parallel_removal_viz.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/visualization/run_qwen_attn_x_parallel_removal_viz_single_gpu.sh	analysis/visualization/run_qwen_attn_x_parallel_removal_viz_single_gpu.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/visualization/run_qwen_xsa_attention_matrix_viz.sh	analysis/visualization/run_qwen_xsa_attention_matrix_viz.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/visualization/run_qwen_xsa_attention_matrix_viz_single_gpu.sh	analysis/visualization/run_qwen_xsa_attention_matrix_viz_single_gpu.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/visualization/run_qwen_xsa_single_layer_flip_viz.sh	analysis/visualization/run_qwen_xsa_single_layer_flip_viz.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/visualization/run_qwen_xsa_single_layer_flip_viz_single_gpu.sh	analysis/visualization/run_qwen_xsa_single_layer_flip_viz_single_gpu.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/run_summarize_para_perp_ppl_ablation.sh	analysis/run_summarize_para_perp_ppl_ablation.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/forward_geometry/run_xsa_compare_middle_ppl.sh	analysis/forward_geometry/run_xsa_compare_middle_ppl.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/forward_geometry/run_xsa_forward_ablation.sh	analysis/forward_geometry/run_xsa_forward_ablation.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/forward_geometry/run_xsa_forward_generate.sh	analysis/forward_geometry/run_xsa_forward_generate.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/forward_geometry/run_xsa_para_ablation.sh	analysis/forward_geometry/run_xsa_para_ablation.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/forward_geometry/run_xsa_perp_ablation.sh	analysis/forward_geometry/run_xsa_perp_ablation.sh	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/forward_geometry/summarize_alpha_gamma_ablation.py	analysis/forward_geometry/summarize_alpha_gamma_ablation.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/forward_geometry/summarize_para_perp_ppl_ablation.py	analysis/forward_geometry/summarize_para_perp_ppl_ablation.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/model_compare/transition_layerwise_compare.py	analysis/model_compare/transition_layerwise_compare.py	yes	synced	yes	Archived analysis-script root; active counterpart lives in analysis/.
+file	representation-analysis/forward_geometry/visualize_xsa_ablation_sweeps.py	analysis/forward_geometry/visualize_xsa_ablation_sweeps.py	yes	diverged	no	Archived analysis-script root; active counterpart lives in analysis/.

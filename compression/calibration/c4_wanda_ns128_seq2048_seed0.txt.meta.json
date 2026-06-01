@@ -1,0 +1,11 @@
+{
+  "source": "allenai/c4",
+  "data_file": "https://huggingface.co/datasets/allenai/c4/resolve/main/en/c4-train.00000-of-01024.json.gz",
+  "local_shard": "/beacon-projects/traumallm/.cache/huggingface/c4_wanda_shard/c4-train.00000-of-01024.json.gz",
+  "nsamples": 128,
+  "seqlen": 2048,
+  "seed": 0,
+  "scanned_rows": 4179,
+  "model_name_or_path": "/beacon-projects/traumallm/.cache/huggingface/models--Qwen--Qwen3-0.6B-Base/snapshots/da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+  "output_file": "/beacon-projects/traumallm/shwaihe/Transformer-Geometry/compression/calibration/c4_wanda_ns128_seq2048_seed0.txt"
+}

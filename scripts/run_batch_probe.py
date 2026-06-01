@@ -21,6 +21,13 @@ def main() -> None:
     )
     parser.add_argument("--top_k", type=int, default=5)
     parser.add_argument("--device", type=str, default=None)
+    parser.add_argument(
+        "--device_map",
+        type=str,
+        default=None,
+        choices=["auto", "balanced", "balanced_low_0", "sequential"],
+        help="Optional HF device_map for multi-GPU sharding.",
+    )
     parser.add_argument("--dtype", type=str, default="auto", choices=["auto", "fp16", "bf16"])
     parser.add_argument("--output", type=str, default="results/batch_probe_result.json")
     args = parser.parse_args()
@@ -40,6 +47,7 @@ def main() -> None:
     analyzer = GeometryAnalyzer(
         model_name_or_path=args.model_name_or_path,
         device=args.device,
+        device_map=args.device_map,
         dtype=args.dtype,
     )
 

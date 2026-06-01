@@ -31,7 +31,7 @@ Primary code locations:
 - `lm-evaluation-harness/lm_eval/models/attn_diag_hooks.py`: diagonal-edit hooks.
 - `lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh`: single-setting runner.
 - `lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh`: diagonal-removal runner.
-- `analysis/qwen_xsa_forward_ablation.py`: direct forward ablations and geometry inspection.
+- `analysis/forward_geometry/qwen_xsa_forward_ablation.py`: direct forward ablations and geometry inspection.
 
 ## 3. General-task and long-context evaluation
 
@@ -54,8 +54,8 @@ Primary code locations:
 
 - `training/`: training-side workspace.
 - `lm-evaluation-harness/scripts/run_lm_eval_nanogpt_*.sh`: evaluation of training-produced checkpoints.
-- `analysis/check_nanogpt_gamma_ckpt.py`, `analysis/cleanup_invalid_nanogpt_checkpoints.py`: checkpoint-side diagnostics.
-- `analysis/download_wandb_history.py`, `analysis/plot_wandb_history.py`: training trace inspection.
+- `analysis/nanogpt/check_nanogpt_gamma_ckpt.py`, `analysis/nanogpt/cleanup_invalid_nanogpt_checkpoints.py`: checkpoint-side diagnostics.
+- `analysis/utils/download_wandb_history.py`, `analysis/utils/plot_wandb_history.py`: training trace inspection.
 
 ## 5. Compression diagnostics
 

@@ -474,7 +474,19 @@ def _build_hierarchy_info(
 
 def make_table(result_dict, column: str = "results", sort_results: bool = False):
     """Generate table of results."""
-    from pytablewriter import LatexTableWriter, MarkdownTableWriter
+    try:
+        from pytablewriter import LatexTableWriter, MarkdownTableWriter
+    except ModuleNotFoundError:
+        lines = ["|Task|Metric|Value|", "|---|---:|---:|"]
+        for task_name, metrics in result_dict.get(column, {}).items():
+            for metric_name, value in metrics.items():
+                if metric_name == "alias" or metric_name.endswith("_stderr"):
+                    continue
+                if isinstance(value, (int, float)):
+                    lines.append(f"|{task_name}|{metric_name}|{value:.4f}|")
+                else:
+                    lines.append(f"|{task_name}|{metric_name}|{value}|")
+        return "\n".join(lines)
 
     column_name = "Groups" if column == "groups" else "Tasks"
 

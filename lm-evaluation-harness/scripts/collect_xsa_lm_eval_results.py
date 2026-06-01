@@ -38,7 +38,8 @@ TASK_METRICS = {
     "arc_challenge":   "acc_norm,none",
     "hellaswag":       "acc_norm,none",
     "mmlu":            "acc,none",
-    "gsm8k":           "exact_match,strict-match",
+    "gsm8k":           "exact_match,flexible-extract",
+    "gsm8k_cot":       "exact_match,flexible-extract",
     "humaneval":       "pass@1,create_test",
     "nq_open":         "exact_match,remove_whitespace",
     "drop":            "f1,none",
@@ -48,6 +49,16 @@ TASK_METRICS = {
 
 # Optional fallback aliases for metric-key differences across lm-eval versions.
 TASK_METRIC_ALIASES = {
+    "gsm8k": [
+        "exact_match,flexible-extract",
+        "exact_match,strict-match",
+        "exact_match,none",
+    ],
+    "gsm8k_cot": [
+        "exact_match,flexible-extract",
+        "exact_match,strict-match",
+        "exact_match,none",
+    ],
     "mbpp": [
         "pass@1,sanitized",
         "pass@1,none",

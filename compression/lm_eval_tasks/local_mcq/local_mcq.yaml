@@ -1,0 +1,19 @@
+task: local_mcq
+dataset_path: json
+dataset_kwargs:
+  data_files:
+    validation: /beacon-projects/traumallm/shwaihe/Transformer-Geometry/compression/lm_eval_tasks/local_mcq/local_mcq.jsonl
+output_type: multiple_choice
+validation_split: validation
+doc_to_text: "Question: {{question}}\nAnswer:"
+doc_to_target: "{{label}}"
+doc_to_choice: "{{choices}}"
+metric_list:
+  - metric: acc
+    aggregation: mean
+    higher_is_better: true
+  - metric: acc_norm
+    aggregation: mean
+    higher_is_better: true
+metadata:
+  version: 1.0

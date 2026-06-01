@@ -8,7 +8,10 @@ from collections.abc import Iterable
 from typing import Callable, List, Optional, Sequence, TypeVar
 
 import numpy as np
-import sacrebleu
+try:
+    import sacrebleu
+except ModuleNotFoundError:
+    sacrebleu = None
 
 from lm_eval.api.registry import register_aggregation, register_metric
 
@@ -95,6 +98,8 @@ def bleu(items):
     refs = list(zip(*items))[0]
     preds = list(zip(*items))[1]
     refs, preds = _sacreformat(refs, preds)
+    if sacrebleu is None:
+        raise ModuleNotFoundError("sacrebleu is required for BLEU metrics")
     return sacrebleu.corpus_bleu(preds, refs).score
 
 
@@ -110,6 +115,8 @@ def chrf(items):
     refs = list(zip(*items))[0]
     preds = list(zip(*items))[1]
     refs, preds = _sacreformat(refs, preds)
+    if sacrebleu is None:
+        raise ModuleNotFoundError("sacrebleu is required for chrF metrics")
     return sacrebleu.corpus_chrf(preds, refs).score
 
 
@@ -126,6 +133,8 @@ def ter(items):
     refs = list(zip(*items))[0]
     preds = list(zip(*items))[1]
     refs, preds = _sacreformat(refs, preds)
+    if sacrebleu is None:
+        raise ModuleNotFoundError("sacrebleu is required for TER metrics")
     return sacrebleu.corpus_ter(preds, refs).score
 
 

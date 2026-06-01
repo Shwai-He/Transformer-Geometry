@@ -9,6 +9,7 @@ from typing import List
 
 import matplotlib.pyplot as plt
 import torch
+import torch.nn as nn
 import transformers
 from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
@@ -74,6 +75,8 @@ def get_runtime_meta(args, quant_method):
         "load_in_8bit": bool(args.load_in_8bit),
         "quant_method_from_config": quant_method,
         "strict_quant_loading": bool(getattr(args, "strict_quant_loading", False)),
+        "fake_quant_bits": int(getattr(args, "fake_quant_bits", 0)),
+        "fake_quant_group_size": int(getattr(args, "fake_quant_group_size", 128)),
     }
     return meta
 
@@ -94,6 +97,44 @@ def read_prompts(args) -> List[str]:
         'John has twice as many books as Mary. Together they have 18 books. How many books does John have?',
         'Which animal is a mammal? Choose the correct answer: a) Snake b) Frog c) Dog d) Lizard',
     ]
+
+
+def load_layer_drop_selection(config_path: str, component: str, drop_count: int) -> tuple[list[int], list[int]]:
+    if not config_path:
+        return [], []
+    with open(config_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    recs = data.get("recommendations", {})
+    key = f"drop_{int(drop_count)}"
+    component = str(component or "both").lower()
+    attn = recs.get("attn", {}).get(key, []) if component in {"attn", "both", "all"} else []
+    mlp = recs.get("mlp", {}).get(key, []) if component in {"mlp", "both", "all"} else []
+    return [int(x) for x in attn], [int(x) for x in mlp]
+
+
+def detect_quant_method(model_name: str) -> str | None:
+    try:
+        cfg = AutoConfig.from_pretrained(model_name, trust_remote_code=True)
+        qcfg = getattr(cfg, "quantization_config", None)
+        if isinstance(qcfg, dict):
+            method = qcfg.get("quant_method")
+            return str(method).lower() if method else None
+    except Exception:
+        pass
+
+    if os.path.isdir(model_name):
+        cfg_path = os.path.join(model_name, 'config.json')
+        if os.path.isfile(cfg_path):
+            try:
+                with open(cfg_path, 'r', encoding='utf-8') as f:
+                    cfg_json = json.load(f)
+                qcfg = cfg_json.get('quantization_config', {})
+                if isinstance(qcfg, dict):
+                    method = qcfg.get('quant_method')
+                    return str(method).lower() if method else None
+            except Exception:
+                pass
+    return None
 
 
 def get_hidden_last_token(model, input_ids, attention_mask):
@@ -405,18 +446,7 @@ def load_quantized_model(model_name, args):
     }
 
     # Detect quantization method declared in model config (if present).
-    quant_method = None
-    if os.path.isdir(model_name):
-        cfg_path = os.path.join(model_name, 'config.json')
-        if os.path.isfile(cfg_path):
-            try:
-                with open(cfg_path, 'r', encoding='utf-8') as f:
-                    cfg_json = json.load(f)
-                qcfg = cfg_json.get('quantization_config', {})
-                if isinstance(qcfg, dict):
-                    quant_method = qcfg.get('quant_method')
-            except Exception:
-                pass
+    quant_method = detect_quant_method(model_name)
 
     # AWQ models should be loaded via AWQ path, not BitsAndBytes 4bit args.
     if isinstance(quant_method, str) and quant_method.lower() == 'awq':
@@ -514,6 +544,37 @@ def load_quantized_model(model_name, args):
             return m, "fallback_non_quantized", quant_method
 
 
+def fake_quantize_linear_weight_(weight: torch.Tensor, bits: int, group_size: int) -> None:
+    if bits <= 0:
+        return
+    if bits < 2:
+        raise ValueError(f"fake quant bits must be >= 2, got {bits}")
+    qmax = float((1 << (bits - 1)) - 1)
+    group_size = int(group_size)
+    if group_size <= 0:
+        group_size = weight.shape[1]
+    with torch.no_grad():
+        w = weight.data
+        orig_dtype = w.dtype
+        for start in range(0, w.shape[1], group_size):
+            end = min(start + group_size, w.shape[1])
+            chunk = w[:, start:end].float()
+            scale = chunk.abs().amax(dim=1, keepdim=True).clamp_min(1e-8) / qmax
+            q = torch.round(chunk / scale).clamp(-qmax, qmax)
+            w[:, start:end] = (q * scale).to(orig_dtype)
+
+
+def apply_fake_weight_quant_(model: torch.nn.Module, bits: int, group_size: int) -> dict:
+    modules = 0
+    weights = 0
+    for module in model.modules():
+        if isinstance(module, nn.Linear):
+            fake_quantize_linear_weight_(module.weight, bits=bits, group_size=group_size)
+            modules += 1
+            weights += module.weight.numel()
+    return {"modules": modules, "weights": weights, "bits": bits, "group_size": group_size}
+
+
 def save_plot(layer_ids, ys_by_method, ylabel, title, save_path):
     plt.figure(figsize=(9, 4.5))
     for method_name, ys in ys_by_method.items():
@@ -561,6 +622,7 @@ def main():
     parser.add_argument('--model_tag', type=str, default=None)
     parser.add_argument('--pruned_model_name', type=str, default=None)
     parser.add_argument('--dropped_root_path', type=str, default='you_dropped_root_path')
+    parser.add_argument('--layer_drop_config', type=str, default='', help='Selection JSON produced by layer-drop geometry selectors.')
     parser.add_argument('--target_layer', type=str, default='attn', choices=['attn', 'mlp', 'all'])
     parser.add_argument('--drop_n', type=int, default=0)
     parser.add_argument('--prompts_file', type=str, default='')
@@ -573,6 +635,8 @@ def main():
     parser.add_argument('--bnb_4bit_quant_type', type=str, default='nf4', choices=['fp4', 'nf4'])
     parser.add_argument('--bnb_4bit_compute_dtype', type=str, default='float16', choices=['float16', 'bfloat16', 'float32'])
     parser.add_argument('--strict_quant_loading', action='store_true', help='Fail if quant model cannot be loaded via quant path.')
+    parser.add_argument('--fake_quant_bits', type=int, default=0, help='Dependency-free symmetric weight-only fake quantization bits for the compressed model.')
+    parser.add_argument('--fake_quant_group_size', type=int, default=128, help='Column group size for fake weight quantization; <=0 means full row.')
     args = parser.parse_args()
     if args.effect_scope == 'local' and args.focus_layer < 0:
         raise ValueError('--focus_layer is required when --effect_scope=local')
@@ -605,26 +669,33 @@ def main():
 
     quant_load_path = None
     quant_method = None
+    fake_quant_meta = None
     if args.compare_mode == 'dual_model':
         if args.compression_type == 'quant':
-            is_awq = False
-            if os.path.isdir(args.pruned_model_name):
-                cfg_path = os.path.join(args.pruned_model_name, 'config.json')
-                if os.path.isfile(cfg_path):
-                    try:
-                        with open(cfg_path, 'r', encoding='utf-8') as f:
-                            cfg_json = json.load(f)
-                        qcfg = cfg_json.get('quantization_config', {})
-                        is_awq = isinstance(qcfg, dict) and str(qcfg.get('quant_method', '')).lower() == 'awq'
-                    except Exception:
-                        is_awq = False
+            quant_method_hint = detect_quant_method(args.pruned_model_name)
+            is_awq = isinstance(quant_method_hint, str) and quant_method_hint.lower() == 'awq'
 
-            if not is_awq:
+            if args.fake_quant_bits > 0:
+                print(
+                    f"[INFO] Applying dependency-free fake weight quantization: "
+                    f"bits={args.fake_quant_bits} group_size={args.fake_quant_group_size}"
+                )
+                model_comp = AutoModelForCausalLM.from_pretrained(args.pruned_model_name, trust_remote_code=True).to(device).eval()
+                fake_quant_meta = apply_fake_weight_quant_(
+                    model_comp,
+                    bits=args.fake_quant_bits,
+                    group_size=args.fake_quant_group_size,
+                )
+                quant_load_path = "fake_weight_quant"
+                quant_method = f"fake_int{args.fake_quant_bits}"
+            elif not is_awq:
                 if args.load_in_4bit and args.load_in_8bit:
                     raise ValueError('Use only one of --load_in_4bit / --load_in_8bit')
                 if not args.load_in_4bit and not args.load_in_8bit:
                     raise ValueError('For quant mode, specify --load_in_4bit or --load_in_8bit')
-            model_comp, quant_load_path, quant_method = load_quantized_model(args.pruned_model_name, args)
+                model_comp, quant_load_path, quant_method = load_quantized_model(args.pruned_model_name, args)
+            else:
+                model_comp, quant_load_path, quant_method = load_quantized_model(args.pruned_model_name, args)
         else:
             model_comp = AutoModelForCausalLM.from_pretrained(args.pruned_model_name, trust_remote_code=True).to(device).eval()
     else:
@@ -635,7 +706,14 @@ def main():
             # load drop lists from config.json.
             cfg = {}
             dropped_root = (args.dropped_root_path or "").strip()
-            if dropped_root and dropped_root != "-":
+            if args.layer_drop_config:
+                drop_attn_list, drop_mlp_list = load_layer_drop_selection(
+                    args.layer_drop_config,
+                    args.target_layer,
+                    args.drop_n,
+                )
+                cfg = {"drop_attn_list": drop_attn_list, "drop_mlp_list": drop_mlp_list}
+            elif dropped_root and dropped_root != "-":
                 if args.target_layer in ['attn', 'mlp']:
                     dropped_model_path = (
                         f"{dropped_root}/{model_tag}-layer_drop_{args.target_layer}-discrete-drop{args.drop_n}/checkpoint"
@@ -839,6 +917,7 @@ def main():
 
     meta = get_runtime_meta(args, quant_method)
     meta["quant_load_path"] = quant_load_path
+    meta["fake_quant_meta"] = fake_quant_meta
     with open(os.path.join(out_dir, "run_meta.json"), "w", encoding="utf-8") as f:
         json.dump(meta, f, indent=2)
 

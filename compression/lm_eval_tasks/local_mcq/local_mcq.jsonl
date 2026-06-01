@@ -1,0 +1,4 @@
+{"question": "A cat is a type of", "choices": ["planet", "animal", "metal", "language"], "label": 1}
+{"question": "Water freezes at low temperature into", "choices": ["ice", "fire", "sand", "steam"], "label": 0}
+{"question": "The capital city of France is", "choices": ["Berlin", "Paris", "Madrid", "Rome"], "label": 1}
+{"question": "A triangle has how many sides?", "choices": ["two", "three", "four", "five"], "label": 1}

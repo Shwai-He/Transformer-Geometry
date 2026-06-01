@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  Public codebase for studying transformer computation through parallel and perpendicular update geometry.
+  Private research codebase for studying transformer computation through parallel and perpendicular update geometry.
 </p>
 
 <p align="center">
@@ -28,7 +28,7 @@
 
 This repository supports experiments for a ***geometric view of transformer computation***. The central decomposition separates each module update into a ***parallel*** component, which mostly rescales the current representation, and a ***perpendicular*** component, which changes direction. We compare ***residual-space*** and ***value-space*** versions of this decomposition and use them to study editing, compression, and optimization behavior.
 
-This public release focuses on ***runnable code, scripts, lightweight plotting data, and exported figure assets***. Large raw outputs, private drafting materials, local model paths, and Overleaf-specific files are intentionally not included.
+This private research workspace focuses on ***runnable code, scripts, lightweight plotting data, and exported figure assets***. Large raw outputs, drafting workspaces, local model paths, and Overleaf-specific files are intentionally not included in git.
 
 ## What You Can Run Here
 
@@ -229,6 +229,20 @@ python drawing/loss_curves/plot_loss_csv_sizes_overview.py
 ```
 
 For a paper-to-code index, use [`PAPER_CODE_MAP.md`](PAPER_CODE_MAP.md). For workspace-specific details, use the README files under `lm-evaluation-harness/scripts/`, `training/`, `compression/`, and `analysis/`.
+
+## Technical reproduction extras
+
+The repository also keeps a small set of technical-reproduction utilities that are separate from the paper mainline:
+
+- `scripts/reproduce_technical.py`
+- `scripts/reproduce_technical_batch.py`
+- `scripts/plot_technical.py`
+- `scripts/plot_technical_batch.py`
+- `src/repgeo/technical_reproduction.py`
+
+Their sample prompts and outputs live under `results/technical_prompts.txt` and `results/tinygpt2_technical_repro_batch.*`.
+
+Older paper exports and local notes are parked under `archive/local_exports/`, and the old PPT backup helper now lives at `archive/backup_ppt.sh`.
 
 ## Related documentation
 

@@ -91,16 +91,54 @@ class SublayerTraceCollector:
             self.handles.append(layer.mlp.register_forward_hook(mlp_hook))
 
 
+def _zero_first_output(output):
+    if isinstance(output, tuple):
+        if not output:
+            return output
+        first = output[0]
+        if torch.is_tensor(first):
+            return (torch.zeros_like(first),) + output[1:]
+        return output
+    if torch.is_tensor(output):
+        return torch.zeros_like(output)
+    return output
+
+
+def _close_layer_drop_hooks(model):
+    handles = getattr(model, "_layer_drop_hook_handles", [])
+    for handle in handles:
+        try:
+            handle.remove()
+        except Exception:
+            pass
+    model._layer_drop_hook_handles = []
+
+
 def apply_drop_masks(model, target_layer, drop_attn_list=None, drop_mlp_list=None, drop_n=None):
     drop_attn_set = set(drop_attn_list or [])
     drop_mlp_set = set(drop_mlp_list or [])
+    target = str(target_layer or "").lower()
+    hook_handles = []
+    _close_layer_drop_hooks(model)
     for idx, layer in enumerate(model.model.layers):
+        drop_attn = idx in drop_attn_set if target in {"attn", "all"} else False
+        drop_mlp = idx in drop_mlp_set if target in {"mlp", "all"} else False
         if hasattr(layer, "drop_attn"):
-            layer.drop_attn = idx in drop_attn_set if "attn" in target_layer else False
+            layer.drop_attn = drop_attn
+        elif drop_attn:
+            attn = getattr(layer, "self_attn", None) or getattr(layer, "attn", None) or getattr(layer, "attention", None)
+            if attn is not None:
+                hook_handles.append(attn.register_forward_hook(lambda _m, _a, out: _zero_first_output(out)))
         if hasattr(layer, "drop_mlp"):
-            layer.drop_mlp = idx in drop_mlp_set if "mlp" in target_layer else False
+            layer.drop_mlp = drop_mlp
+        elif drop_mlp:
+            mlp = getattr(layer, "mlp", None)
+            if mlp is not None:
+                hook_handles.append(mlp.register_forward_hook(lambda _m, _a, out: _zero_first_output(out)))
         if drop_n is not None and hasattr(layer, "drop_n"):
             layer.drop_n = drop_n
+    model._layer_drop_hook_handles = hook_handles
+    return hook_handles
 
 
 def _build_logits_warpers(temperature=0.0, top_k=0, top_p=1.0):

@@ -9,6 +9,13 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
+EMNLP_FONT_RC = {
+    "font.family": "serif",
+    "font.serif": ["Times New Roman", "Times", "Nimbus Roman No9 L", "DejaVu Serif"],
+    "mathtext.fontset": "stix",
+    "pdf.fonttype": 42,
+    "ps.fonttype": 42,
+}
 
 # File-first configuration.
 DRAWING_DIR = Path(__file__).absolute().parent
@@ -43,6 +50,7 @@ def _plot_overview(rows: list[dict[str, float]], out_path: Path) -> None:
     delta_both = _values(rows, "mean_per_text_delta_ppl_residual_both", "avg_delta_ppl_residual_both")
 
     plt.rcParams.update({
+        **EMNLP_FONT_RC,
         "axes.labelsize": 14,
         "xtick.labelsize": 12,
         "ytick.labelsize": 12,

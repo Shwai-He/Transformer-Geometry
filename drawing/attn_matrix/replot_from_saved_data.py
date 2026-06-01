@@ -12,6 +12,13 @@ from matplotlib import colors
 from matplotlib.patches import Rectangle
 import numpy as np
 
+plt.rcParams.update({
+    'font.family': 'serif',
+    'font.serif': ['Times New Roman', 'Times', 'Nimbus Roman No9 L', 'DejaVu Serif'],
+    'mathtext.fontset': 'stix',
+    'pdf.fonttype': 42,
+    'ps.fonttype': 42,
+})
 
 SHARED_VALUE_CMAP = 'viridis'
 

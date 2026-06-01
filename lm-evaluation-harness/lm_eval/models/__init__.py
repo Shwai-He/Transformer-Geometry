@@ -32,6 +32,8 @@ MODEL_MAPPING = {
     "hf": "lm_eval.models.huggingface:HFLM",
     "hf-audiolm-qwen": "lm_eval.models.hf_audiolm:HFAudioLM",
     "hf-auto": "lm_eval.models.huggingface:HFLM",
+    "hf-geo-prune": "lm_eval.models.hf_geo_prune:HFGeoPruneLM",
+    "hf-layer-drop": "lm_eval.models.hf_layer_drop:HFLayerDropLM",
     "hf-xsa": "lm_eval.models.hf_xsa:HFXSALM",
     "hf-mistral3": "lm_eval.models.mistral3:Mistral3LM",
     "hf-multimodal": "lm_eval.models.hf_vlms:HFMultimodalLM",
