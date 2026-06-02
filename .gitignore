@@ -24,6 +24,7 @@ MAPPING_MANIFEST.tsv
 PAPER_CODE_MAP.md
 PROJECT_STRUCTURE.md
 drawing/
+docs/
 figs/
 figs 2/
 Demystifying Transformers through Representation Geometries.pdf
