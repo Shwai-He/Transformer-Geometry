@@ -26,7 +26,7 @@ when it becomes shared infrastructure.
 - If a script is a benchmark launcher, it should usually live under `lm-evaluation-harness/scripts/`.
 - If a script is specifically for pretraining or optimization runs, it should usually live under `training/`.
 - If a script is specifically for compression geometry, it should usually live under `compression/`.
-- If a script directly generates a paper figure, consider placing the editable source under `drawing/` and only keeping lightweight analysis helpers here.
+- Keep private plotting workspaces outside git; this tree should stay focused on reusable analysis helpers and experiment runners.
 - If logic becomes reusable across multiple scripts, move it into `src/repgeo/`
   or `analysis/utils/` depending on whether it is project infrastructure or a
   local analysis helper.

@@ -18,6 +18,12 @@ _NeurIPS_2026_.zip
 _EMNLP_2026_/
 _EMNLP_2026_legacy/
 _arXiv__Transformer_Geometry/
+DRAWING_CATALOG.md
+MAPPING_MANIFEST.md
+MAPPING_MANIFEST.tsv
+PAPER_CODE_MAP.md
+PROJECT_STRUCTURE.md
+drawing/
 figs/
 figs 2/
 Demystifying Transformers through Representation Geometries.pdf
@@ -59,3 +65,15 @@ archive/
 
 # Optional local checklists
 EXPERIMENT_CHECKLIST.md
+
+# Private plotting and visualization workspaces
+notebooks/
+compression/notebooks/
+scripts/probe_steps_viz/
+scripts/plot_*.py
+analysis/visualization/
+analysis/utils/plot_wandb_history.py
+analysis/forward_geometry/*viz.py
+analysis/forward_geometry/visualize_*.py
+compression/code/visualize_*.py
+compression/scripts/run_visualize_*.sh

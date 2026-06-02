@@ -28,7 +28,7 @@
 
 This repository supports experiments for a ***geometric view of transformer computation***. The central decomposition separates each module update into a ***parallel*** component, which mostly rescales the current representation, and a ***perpendicular*** component, which changes direction. We compare ***residual-space*** and ***value-space*** versions of this decomposition and use them to study editing, compression, and optimization behavior.
 
-This private research workspace focuses on ***runnable code, scripts, lightweight plotting data, and exported figure assets***. Large raw outputs, drafting workspaces, local model paths, and Overleaf-specific files are intentionally not included in git.
+This private research workspace focuses on ***runnable code, experiment scripts, and exported figure assets***. Large raw outputs, plotting workspaces, drafting workspaces, local model paths, and Overleaf-specific files are intentionally not included in git.
 
 ## What You Can Run Here
 
@@ -37,7 +37,6 @@ This private research workspace focuses on ***runnable code, scripts, lightweigh
 - **Benchmark evaluation**: evaluate edited models on general tasks and long-context RULER through the included lm-evaluation-harness fork.
 - **Training-time intervention**: inspect scratch pretraining runs that suppress or rescale parallel updates.
 - **Compression diagnostics**: decompose pruning and quantization error into parallel and perpendicular components.
-- **Figure reproduction**: regenerate selected paper plots from lightweight saved summaries.
 
 ## Installation
 
@@ -57,11 +56,11 @@ For model-scale benchmark runs, install the backend packages required by your lo
 
 ## Selected figures and code
 
-The figures below are exported from the paper experiments as ***SVG assets*** for quick browsing. Each block gives the local entrypoints that reproduce the figure or the corresponding experiment.
+The figures below are exported from the paper experiments as ***SVG assets*** for quick browsing. Code blocks list the corresponding experiment entrypoints, not the private plotting workspace.
 
 ### Component structure across depth
 
-These profiles measure how much transformer updates ***preserve the current direction versus change it*** across depth. The plotting scripts use saved probe summaries, while the probe runners regenerate the underlying activations.
+These profiles measure how much transformer updates ***preserve the current direction versus change it*** across depth. The probe runners regenerate the underlying activations and summaries.
 
 > **Key result:** transformer updates contain both rescaling-aligned and direction-changing structure across depth, and the profile remains visible across model scales.
 
@@ -77,10 +76,6 @@ These profiles measure how much transformer updates ***preserve the current dire
 </table>
 
 ```text
-# Plot saved component profiles
-drawing/para_dist/
-drawing/embedded_data/
-
 # Regenerate geometry probes
 scripts/run_probe.py
 scripts/run_batch_probe.py
@@ -104,10 +99,6 @@ These ablations manually scale ***parallel or perpendicular components*** and me
 </table>
 
 ```text
-# Plot scaling summaries
-drawing/para_ablation/plot_para_ppl_summary.py
-drawing/para_ablation/data/
-
 # Run intervention evaluations
 lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh
 lm-evaluation-harness/scripts/run_lm_eval_attn_removal_batch.sh
@@ -115,7 +106,7 @@ lm-evaluation-harness/scripts/run_lm_eval_attn_removal_batch.sh
 
 ### Attention diagonal editing
 
-This view compares attention maps after ***value-space and residual-space diagonal edits***. The hook code implements the edit, and the drawing code replots saved attention-map bundles.
+This view compares attention maps after ***value-space and residual-space diagonal edits***. The hook code implements the edit used to produce these diagnostics.
 
 > **Key result:** edits that look similar as scalar diagonal controls can behave differently depending on whether the constraint is solved in value space or residual space.
 
@@ -131,9 +122,6 @@ This view compares attention maps after ***value-space and residual-space diagon
 lm-evaluation-harness/lm_eval/models/attn_diag_hooks.py
 lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh
 
-# Replot saved attention maps
-drawing/attn_matrix/replot_from_saved_data.py
-drawing/attn_matrix/
 ```
 
 ### Compression error geometry
@@ -156,11 +144,6 @@ The compression experiments decompose ***pruning and quantization error*** into 
 ```text
 # Run compression geometry analysis
 compression/code/layerwise_para_perp_compare.py
-compression/code/visualize_local_sweep_compare.py
-
-# Recreate paper plot
-drawing/comp_analysis/plot_local_flip_compare_v2.py
-drawing/comp_analysis/data/all_settings_master_v2.tsv
 ```
 
 ### Training-time parallel removal
@@ -177,10 +160,8 @@ The training experiments test whether ***suppressing parallel updates changes op
 </p>
 
 ```text
-# Training workspace and loss plots
+# Training workspace
 training/
-drawing/loss_curves/plot_loss_csv_sizes_overview.py
-drawing/loss_curves/data/
 
 # Post-training evaluation
 lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh
@@ -193,15 +174,12 @@ lm-evaluation-harness/scripts/collect_nanogpt_lm_eval_results.py
 lm-evaluation-harness/     benchmark evaluation and intervention runners
 training/                  training-side experiments and optimization studies
 compression/               pruning and quantization geometry analysis
-drawing/                   editable plotting code and figure assets
 analysis/                  standalone diagnostic and visualization scripts
 scripts/                   small repo-level runners and probes
 src/repgeo/                reusable geometry and intervention utilities
-notebooks/                 exploratory notebooks
-results/                   non-paper intermediate outputs and local artifacts
 ```
 
-***Lightweight summaries*** used to regenerate README and paper-style figures live under `drawing/*/data/`. Full benchmark logs, model checkpoints, raw activations, and private paper exports are excluded from the public repository.
+Full benchmark logs, plotting workspaces, model checkpoints, raw activations, and private paper exports are excluded from git.
 
 ## Quick Usage
 
@@ -221,14 +199,9 @@ bash lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh
 
 # Compression geometry
 bash compression/scripts/run_layerwise_para_perp_compare.sh
-
-# Figure regeneration examples
-python drawing/para_ablation/plot_para_ppl_summary.py
-python drawing/comp_analysis/plot_local_flip_compare_v2.py
-python drawing/loss_curves/plot_loss_csv_sizes_overview.py
 ```
 
-For a paper-to-code index, use [`PAPER_CODE_MAP.md`](PAPER_CODE_MAP.md). For workspace-specific details, use the README files under `lm-evaluation-harness/scripts/`, `training/`, `compression/`, and `analysis/`.
+For workspace-specific details, use the README files under `lm-evaluation-harness/scripts/`, `training/`, `compression/`, and `analysis/`.
 
 ## Technical reproduction extras
 
@@ -236,18 +209,12 @@ The repository also keeps a small set of technical-reproduction utilities that a
 
 - `scripts/reproduce_technical.py`
 - `scripts/reproduce_technical_batch.py`
-- `scripts/plot_technical.py`
-- `scripts/plot_technical_batch.py`
 - `src/repgeo/technical_reproduction.py`
 
-Their sample prompts and outputs live under `results/technical_prompts.txt` and `results/tinygpt2_technical_repro_batch.*`.
-
-Older paper exports and local notes are parked under `archive/local_exports/`, and the old PPT backup helper now lives at `archive/backup_ppt.sh`.
+Generated sample prompts and outputs are treated as local artifacts and are not tracked.
 
 ## Related documentation
 
-- `PAPER_CODE_MAP.md`: maps paper claims to code locations
-- `PROJECT_STRUCTURE.md`: repository structure policy
 - `lm-evaluation-harness/scripts/README.md`: evaluation launcher guide
 - `training/README.md`: training workspace notes
 - `compression/README.md`: compression workspace notes
