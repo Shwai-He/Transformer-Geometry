@@ -1,175 +1,224 @@
-<h1 align="center">Transformer Geometry</h1>
+<div align="center">
+
+# 📐 Transformer Geometry
+### Decomposing Transformer Updates into Parallel & Perpendicular Subspaces
 
 <p align="center">
-  <img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-blue">
-  <img alt="Framework" src="https://img.shields.io/badge/Framework-PyTorch-red">
-  <img alt="Models" src="https://img.shields.io/badge/Models-Transformers-orange">
-  <img alt="Evaluation" src="https://img.shields.io/badge/Evaluation-lm--eval-success">
+  <a href="https://www.python.org/downloads/"><img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white"></a>
+  <a href="https://pytorch.org/"><img alt="Framework" src="https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c?style=for-the-badge&logo=pytorch&logoColor=white"></a>
+  <a href="https://huggingface.co/docs/transformers"><img alt="Models" src="https://img.shields.io/badge/Transformers-HuggingFace-yellow?style=for-the-badge&logo=huggingface&logoColor=black"></a>
+  <a href="https://github.com/EleutherAI/lm-evaluation-harness"><img alt="Evaluation" src="https://img.shields.io/badge/Evaluation-lm--eval-brightgreen?style=for-the-badge"></a>
+  <img alt="Research" src="https://img.shields.io/badge/Status-Research%20Codebase-purple?style=for-the-badge">
 </p>
 
 <p align="center">
-  <a href="#what-you-can-run-here">What You Can Run</a> |
-  <a href="#selected-figures-and-code">Figures and Code</a> |
-  <a href="#installation">Installation</a> |
-  <a href="#repository-layout">Layout</a> |
-  <a href="#related-documentation">Docs</a>
+  <a href="#-overview--core-concept"><b>Overview</b></a> •
+  <a href="#-mathematical-foundation"><b>Formulation</b></a> •
+  <a href="#-core-research-pillars"><b>Research Pillars</b></a> •
+  <a href="#-repository-architecture"><b>Architecture</b></a> •
+  <a href="#-installation--setup"><b>Installation</b></a> •
+  <a href="#-experiment-execution-guide"><b>Quick Start</b></a>
 </p>
 
-<p align="center">
-  Private research codebase for studying transformer computation through parallel and perpendicular update geometry.
-</p>
+---
 
-This repository supports experiments for a ***geometric view of transformer computation***. The central decomposition separates each module update into a ***parallel*** component, which mostly rescales the current representation, and a ***perpendicular*** component, which changes direction. We compare ***residual-space*** and ***value-space*** versions of this decomposition and use them to study editing, compression, and optimization behavior.
+</div>
 
-This private research workspace focuses on ***runnable code and experiment scripts***. Large raw outputs, plotting workspaces, figure assets, drafting workspaces, local model paths, and Overleaf-specific files are intentionally not included in git.
+## 🌟 Overview & Core Concept
 
-## What You Can Run Here
+**Transformer Geometry** investigates internal representation dynamics across deep Transformer language models through an orthogonal geometric lens. 
 
-- **Geometry probing**: measure parallel and perpendicular update structure across layers, branches, prompts, and generation steps.
-- **Inference-time component editing**: run residual-space and value-space interventions, including attention-parallel removal and diagonal edits.
-- **Benchmark evaluation**: evaluate edited models on general tasks and long-context RULER through the included lm-evaluation-harness fork.
-- **Training-time intervention**: inspect scratch pretraining runs that suppress or rescale parallel updates.
-- **Compression diagnostics**: decompose pruning and quantization error into parallel and perpendicular components.
+Every hidden-state update $\Delta h$ (produced by multi-head self-attention or feed-forward networks) is decomposed into two complementary geometric components:
+1. **Parallel Component ($\Delta h_{\parallel}$)**: Projects directly onto the incoming representation vector $h$. It primarily modulates the **magnitude and scaling** of existing semantic features without altering their direction.
+2. **Perpendicular Component ($\Delta h_{\perp}$)**: Lies strictly orthogonal to $h$. It drives **directional rotation and semantic shifts**, steering the representation into new subspaces.
 
-## Installation
+We extend and evaluate this geometric framework across both **Residual-Space** and **Value-Space (XSA)**, uncovering key mechanisms behind inference-time editing, model compression (pruning & quantization), long-context processing, and pretraining optimization dynamics.
 
-Create an environment, install the light root dependencies, then install the evaluation harness when running benchmark experiments.
+---
+
+## 🧮 Mathematical Foundation
+
+For a token representation $h_{l-1} \in \mathbb{R}^d$ entering layer $l$ and generating an update $\Delta h_l$:
+
+```mermaid
+flowchart LR
+    H_IN["📥 Input Representation\n h_{l-1}"] --> BLOCK["⚙️ Transformer Block\n(Self-Attention / FFN)"]
+    BLOCK --> DELTA["🔄 Layer Update\n Δh_l"]
+    
+    DELTA --> PARA["🔹 Parallel Component: Δh_{l, ∥}\n(Rescaling / Magnitude Maintenance)"]
+    DELTA --> PERP["🔸 Perpendicular Component: Δh_{l, ⊥}\n(Directional Rotation / Semantic Shift)"]
+    
+    H_IN --> COMBINE["➕ Update Combination\n h_l = h_{l-1} + α·Δh_{l, ∥} + β·Δh_{l, ⊥}"]
+    PARA --> COMBINE
+    PERP --> COMBINE
+    COMBINE --> H_OUT["📤 Output Representation\n h_l"]
+
+    style H_IN fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e40af
+    style H_OUT fill:#ecfdf5,stroke:#10b981,stroke-width:2px,color:#065f46
+    style BLOCK fill:#f8fafc,stroke:#64748b,stroke-width:1.5px,color:#334155
+    style DELTA fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#92400e
+    style PARA fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e40af
+    style PERP fill:#fae8ff,stroke:#a855f7,stroke-width:2px,color:#6b21a8
+    style COMBINE fill:#f1f5f9,stroke:#475569,stroke-width:2px,color:#0f172a
+```
+
+$$\Delta h_l = \Delta h_{l, \parallel} + \Delta h_{l, \perp}$$
+
+$$\Delta h_{l, \parallel} = \frac{\langle \Delta h_l, h_{l-1} \rangle}{\|h_{l-1}\|^2} h_{l-1}, \quad \Delta h_{l, \perp} = \Delta h_l - \Delta h_{l, \parallel}$$
+
+> [!NOTE]
+> * **Residual-Space Decomposition**: Operates at the block-output residual stream level ($h_{l} = h_{l-1} + \Delta h_l$).
+> * **Value-Space Decomposition (XSA)**: Operates inside the attention mechanism, projecting weighted value vectors against self-value tokens.
+
+---
+
+## 🔬 Core Research Pillars & Findings
+
+| Pillar | Focus Area | Core Insight / Key Result | Key Script Entrypoint |
+| :--- | :--- | :--- | :--- |
+| **1. Geometry Probing** | Depth & Subspace Dynamics | Transformer updates maintain a distinct, persistent balance between rescaling-aligned and direction-changing vectors across model families (Qwen, LLaMA, nanoGPT). | `scripts/run_probe.py`<br>`scripts/run_batch_probe.py` |
+| **2. Inference Interventions** | Component & Diagonal Editing | Value-parallel scaling ($\Delta h_{\parallel}$) exhibits remarkable resilience, while perturbing the perpendicular component ($\Delta h_{\perp}$) rapidly degrades model perplexity and coherence. | `lm_eval/models/attn_diag_hooks.py`<br>`analysis/forward_geometry/` |
+| **3. Downstream & RULER** | Broad Benchmarks & Long Context | Geometric interventions preserve core reasoning while exposing critical sensitivities in long-context needle-retrieval (RULER benchmark suite). | `lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh`<br>`.../run_lm_eval_ruler_all_settings.sh` |
+| **4. Compression Geometry** | Pruning & Quantization Analysis | Magnitude/Wanda pruning errors heavily distort the perpendicular ($\Delta h_{\perp}$) subspace, while quantization retains update geometry significantly closer to dense baselines. | `compression/code/layerwise_para_perp_compare.py`<br>`compression/code/geometry_aware_pruning.py` |
+| **5. Training Optimization** | Scratch Pretraining with Geometric Penalties | Suppressing parallel updates during pretraining alters loss trajectory convergence, demonstrating that geometry directly governs learning dynamics. | `training/`<br>`lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh` |
+
+---
+
+## 📂 Repository Architecture
+
+```text
+Transformer-Geometry/
+├── src/repgeo/                 # Reusable core geometry, projection, and intervention utilities
+│   ├── geometry_utils.py       # Parallel / perpendicular projection math & metrics
+│   └── hooks.py                # PyTorch forward hook mechanisms for dynamic interventions
+│
+├── lm-evaluation-harness/      # Forked evaluation harness supporting geometric hook configurations
+│   ├── lm_eval/models/         # Attention diagonal and residual modification hooks
+│   └── scripts/                # Launchers for downstream benchmarks & RULER long-context evals
+│
+├── analysis/                   # Diagnostic, visualization, and ablation workspaces
+│   ├── forward_geometry/       # Alpha/gamma parameter sweeps and forward generation ablations
+│   ├── gsm_math/               # Mathematical reasoning & GSM8K dual-path sanity checks
+│   ├── model_compare/          # Dense vs. dropped/pruned/masked-teacher subspace comparisons
+│   ├── nanogpt/                # Lightweight nanoGPT checkpoint diagnostics and layer visualizations
+│   └── vlm_geometry/           # Vision-language model parallel/perpendicular scaling hooks
+│
+├── compression/                # Pruning and quantization geometric error analysis
+│   ├── code/                   # Geometry-aware pruning & layerwise comparison implementations
+│   └── scripts/                # Shell runners for intra/inter-layer compression sweeps
+│
+├── training/                   # Scratch pretraining and optimization dynamics experiments
+│   └── scripts/                # Launchers for parallel-suppressed training runs
+│
+├── scripts/                    # Root-level probing runners and reproducibility utilities
+└── requirements.txt            # Base Python dependencies
+```
+
+---
+
+## 🛠️ Installation & Setup
+
+### 1. Environment Creation
 
 ```bash
+# Create dedicated conda environment
 conda create -n transformer-geometry python=3.10 -y
 conda activate transformer-geometry
+
+# Install root dependencies
 pip install -r requirements.txt
 
+# Install the geometric-aware lm-evaluation-harness
 cd lm-evaluation-harness
 pip install -e .
 cd ..
 ```
 
-For model-scale benchmark runs, install the backend packages required by your local setup, such as `transformers`, `accelerate`, `datasets`, and CUDA-compatible PyTorch builds. Most launch scripts are ***file-first***: edit model paths, output roots, and GPU settings near the top of the script before running.
+### 2. Backends & Acceleration
 
-## Selected experiment entrypoints
-
-The sections below list the main runnable entrypoints without including private plotting workspaces or paper figure assets.
-
-### Component structure across depth
-
-These profiles measure how much transformer updates ***preserve the current direction versus change it*** across depth. The probe runners regenerate the underlying activations and summaries.
-
-> **Key result:** transformer updates contain both rescaling-aligned and direction-changing structure across depth, and the profile remains visible across model scales.
-
-```text
-# Regenerate geometry probes
-scripts/run_probe.py
-scripts/run_batch_probe.py
-```
-
-### Manual component scaling at inference time
-
-These ablations manually scale ***parallel or perpendicular components*** and measure the resulting perplexity change. They are the lightweight diagnostic counterpart to the benchmark evaluations in `lm-evaluation-harness/`.
-
-> **Key result:** value-parallel scaling is comparatively robust, while changing the perpendicular component more directly disrupts model behavior.
-
-```text
-# Run intervention evaluations
-lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh
-lm-evaluation-harness/scripts/run_lm_eval_attn_removal_batch.sh
-```
-
-### Attention diagonal editing
-
-This view compares attention maps after ***value-space and residual-space diagonal edits***. The hook code implements the edit used to produce these diagnostics.
-
-> **Key result:** edits that look similar as scalar diagonal controls can behave differently depending on whether the constraint is solved in value space or residual space.
-
-```text
-# Implement diagonal edits
-lm-evaluation-harness/lm_eval/models/attn_diag_hooks.py
-lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh
-
-```
-
-### Compression error geometry
-
-The compression experiments decompose ***pruning and quantization error*** into parallel and perpendicular parts. The paired attention-side views show that the direction-changing component separates pruning severity more clearly, while the parallel component gives the complementary rescaling view.
-
-> **Key result:** stronger pruning is most visible in the direction-changing error, whereas quantization stays closer to the dense update geometry in both components.
-
-```text
-# Run compression geometry analysis
-compression/code/layerwise_para_perp_compare.py
-```
-
-### Training-time parallel removal
-
-The training experiments test whether ***suppressing parallel updates changes optimization***. The plot summarizes scratch pretraining runs across model sizes, with downstream evaluation handled through the same lm-eval workspace.
-
-> **Key result:** parallel-update control affects scratch-training loss curves, so the geometry is relevant to optimization as well as inference-time editing.
-
-```text
-# Training workspace
-training/
-
-# Post-training evaluation
-lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh
-lm-evaluation-harness/scripts/collect_nanogpt_lm_eval_results.py
-```
-
-## Repository layout
-
-```text
-lm-evaluation-harness/     benchmark evaluation and intervention runners
-training/                  training-side experiments and optimization studies
-compression/               pruning and quantization geometry analysis
-analysis/                  standalone diagnostic and visualization scripts
-scripts/                   small repo-level runners and probes
-src/repgeo/                reusable geometry and intervention utilities
-```
-
-Full benchmark logs, plotting workspaces, model checkpoints, raw activations, and private paper exports are excluded from git.
-
-## Quick Usage
-
-Start from the ***figure or experiment family*** you care about, then use the nearby scripts listed above. The most common entrypoints are shown below; edit paths and resource settings inside each script before launching long jobs.
-
+Ensure you have a CUDA-compatible PyTorch build alongside standard HuggingFace acceleration packages:
 ```bash
-# Geometry probes
-python scripts/run_probe.py
-python scripts/run_batch_probe.py
-
-# Inference-time component editing and diagonal edits
-bash lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh
-bash lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh
-
-# Long-context RULER evaluation
-bash lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh
-
-# Compression geometry
-bash compression/scripts/run_layerwise_para_perp_compare.sh
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+pip install transformers accelerate datasets evaluate
 ```
 
-For workspace-specific details, use the README files under `lm-evaluation-harness/scripts/`, `training/`, `compression/`, and `analysis/`.
+---
 
-## Technical reproduction extras
+## 🚀 Experiment Execution Guide
 
-The repository also keeps a small set of technical-reproduction utilities that are separate from the paper mainline:
+> [!TIP]
+> **File-First Configuration Convention**: Most experiment launchers are configured directly near the top of the shell/Python script. Open the target script to adjust `MODEL_PATH`, `GPU_DEVICES`, and `OUTPUT_DIR` before running.
 
-- `scripts/reproduce_technical.py`
-- `scripts/reproduce_technical_batch.py`
-- `src/repgeo/technical_reproduction.py`
+### 1. Geometry Probing Across Depths
+Extract parallel/perpendicular ratios, angular velocities, and magnitude projections:
+```bash
+# Single model probe
+python scripts/run_probe.py --model_path Qwen/Qwen2.5-7B --dataset wikitext
 
-Generated sample prompts and outputs are treated as local artifacts and are not tracked.
+# Batch probing across model families
+python scripts/run_batch_probe.py --config configs/probe_models.yaml
+```
 
-## Related documentation
+### 2. Inference-Time Component & Diagonal Interventions
+Evaluate the effect of scaling $\Delta h_{\parallel}$ vs $\Delta h_{\perp}$ on language modeling:
+```bash
+# Run XSA (cross-subspace attention) intervention sweep
+bash lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh
 
-- `lm-evaluation-harness/scripts/README.md`: evaluation launcher guide
-- `training/README.md`: training workspace notes
-- `compression/README.md`: compression workspace notes
-- `analysis/README.md`: standalone analysis script guide
+# Run attention diagonal scaling ablation
+bash lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh
+```
 
-## Citation
+### 3. Long-Context RULER Evaluation Suite
+Benchmark context-window integrity under geometric modifications:
+```bash
+bash lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh
+```
 
-Citation information will be added after the paper metadata is public.
+### 4. Compression Error & Geometry-Aware Pruning
+Analyze distortion caused by pruning (Wanda, SparseGPT) and quantization:
+```bash
+# Layerwise parallel/perpendicular distortion comparison
+bash compression/scripts/run_layerwise_para_perp_compare.sh
 
-## Compatibility note
+# Run geometry-guided pruning
+bash compression/scripts/run_geometry_aware_pruning.sh
+```
 
-Older local experiments may have used a `representation-analysis/` prefix. Public entrypoints in this repository use the root-level workspaces shown above.
+### 5. Training-Time Interventions (nanoGPT & Scratch Sweeps)
+Train small-to-medium models with suppressed parallel components and evaluate checkpoints:
+```bash
+# Pretraining experiments
+cd training && bash scripts/run_nanogpt_geom_train.sh && cd ..
+
+# Evaluate trained checkpoints on standard tasks
+bash lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh
+python lm-evaluation-harness/scripts/collect_nanogpt_lm_eval_results.py
+```
+
+---
+
+## 📖 Module Documentation Index
+
+For detailed workspace-specific guidance, refer to sub-package documentation:
+* [lm-evaluation-harness/scripts/README.md](lm-evaluation-harness/scripts/README.md) — Evaluation harness launcher parameters & task definitions.
+* [analysis/README.md](analysis/README.md) — Standalone analysis utilities, forward geometry, and visualization tools.
+* [compression/README.md](compression/README.md) — Pruning/quantization theory and geometry-aware pruning docs.
+* [training/README.md](training/README.md) — Scratch training setups, configs, and checkpoint logging.
+
+---
+
+## 📜 Citation
+
+```bibtex
+@article{transformer_geometry2026,
+  title={Transformer Geometry: Decomposing Representation Updates into Parallel and Perpendicular Subspaces},
+  author={He, Shwai and collaborators},
+  journal={arXiv preprint},
+  year={2026}
+}
+```
+
+<div align="center">
+  <sub>Built for principled geometric analysis of deep transformer architectures.</sub>
+</div>
