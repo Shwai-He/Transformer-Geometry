@@ -7,8 +7,8 @@
   <a href="https://www.python.org/downloads/"><img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white"></a>
   <a href="https://pytorch.org/"><img alt="Framework" src="https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c?style=for-the-badge&logo=pytorch&logoColor=white"></a>
   <a href="https://huggingface.co/docs/transformers"><img alt="Models" src="https://img.shields.io/badge/Transformers-HuggingFace-yellow?style=for-the-badge&logo=huggingface&logoColor=black"></a>
+  <a href="https://2026.emnlp.org/"><img alt="EMNLP 2026" src="https://img.shields.io/badge/Accepted%20to-EMNLP%202026-success?style=for-the-badge&logo=googlescholar"></a>
   <a href="https://github.com/EleutherAI/lm-evaluation-harness"><img alt="Evaluation" src="https://img.shields.io/badge/Evaluation-lm--eval-brightgreen?style=for-the-badge"></a>
-  <img alt="Research" src="https://img.shields.io/badge/Status-Research%20Codebase-purple?style=for-the-badge">
 </p>
 
 <p align="center">
@@ -211,10 +211,10 @@ For detailed workspace-specific guidance, refer to sub-package documentation:
 ## 📜 Citation
 
 ```bibtex
-@article{transformer_geometry2026,
+@inproceedings{he2026transformer_geometry,
   title={Transformer Geometry: Decomposing Representation Updates into Parallel and Perpendicular Subspaces},
   author={He, Shwai and collaborators},
-  journal={arXiv preprint},
+  booktitle={Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing (EMNLP)},
   year={2026}
 }
 ```
