@@ -1,0 +1,39 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\textit{This geometric decomposition suggests practical uses beyond the intervention
+analysis, especially for diagnosing compression error and interpreting
+training-time allocation.}
+
+\paragraph{Compression diagnostics.}
+Approximation error should not be viewed only as an overall residual magnitude.
+In our results, perpendicular error is the more fragile component: perturbations
+that change the update direction are more damaging than direction-preserving
+errors. However, the near-identity between total- and perpendicular-error
+rankings is matched by a norm-controlled isotropic null, so perpendicular error
+should not be presented as independent predictive information beyond total
+magnitude. Its appropriate role here is a component-resolved diagnostic whose
+functional meaning is calibrated by the controlled edits.
+
+\paragraph{Practical screening workflow.}
+For a proposed edit or compression rule, we recommend four steps: (1) specify
+the exact intervention location and reference direction; (2) use matched
+directional ablations to determine which component is sensitive at that
+location; (3) compare the candidate's orientation with total-error magnitude
+and an appropriate matched null; and (4) use geometry as a screening diagnostic
+before validating the selected configuration on the downstream task. The
+layer/head results add an important guardrail: prevalence alone is not a
+universal ranking rule because sensitivity varies with depth and joint head
+effects are non-additive.
+
+\paragraph{Training-time allocation.}
+Inference-time edits suggest that value-space parallel components can be
+suppressed with comparatively little behavioral change, whereas perpendicular
+changes are more fragile. The training runs test whether suppressing this route
+changes how optimization allocates learning pressure across the remaining
+updates. The full-scale single V-Para runs improve average downstream score,
+whereas an early matched three-seed study improves validation loss but not the
+six-task downstream average. We therefore treat the training result as evidence
+that the constraint changes optimization, not as a replicated downstream-gain
+claim or convergence theorem. Checkpoint-level geometry further supports
+operation-dependent co-adaptation in the tested setting.

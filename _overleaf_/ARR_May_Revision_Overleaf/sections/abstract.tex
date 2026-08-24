@@ -1,0 +1,20 @@
+\begin{abstract}
+Transformer layers evolve representations through learned additive
+transformations that combine direction-preserving and direction-changing
+effects. We study this geometry by decomposing learned updates into parallel and
+perpendicular components. Across pretrained models, we find substantial learned
+parallel components, showing that direction-preserving behavior is not confined
+to the residual identity path. To test whether these components are redundant or
+behaviorally important, we apply the decomposition to residual-space updates and
+to value aggregation inside attention. Inference-time edits reveal a consistent
+asymmetry: perpendicular edits are disruptive, while parallel edits are
+comparatively more redundant, especially for the self-value-aligned component of
+attention aggregation in value space. As supporting applications, we use the
+same decomposition to diagnose compression error and construct matched
+component-weighted pruning variants that preserve downstream quality across five
+models. In from-scratch pretraining, suppressing value-space parallel attention
+components lowers fixed-validation loss in all 12 matched architecture--seed
+pairs; larger single-run studies also improve average downstream scores. Overall,
+editing provides the central causal evidence, while compression and training test
+how the same geometry can inform diagnosis and intervention.
+\end{abstract}

@@ -1,0 +1,220 @@
+\section{Method}
+\label{sec:method}
+
+We instantiate the decomposition from \S\ref{sec:decomp} in two spaces:
+the residual stream, where it defines a block-level observable, and the
+attention value space, where it isolates an attention-side source of parallel
+updates. These two views lead to the component-scaling interventions used in
+the experiments. Figure~\ref{fig:overview} summarizes the resulting analysis
+pipeline and how it connects to editing, compression, and pretraining.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.99\textwidth]{figs/overview/parallel_updates_main_figure_analysis_v11_midline_arrows.pdf}
+  \caption{\textbf{Overview of the method and its downstream use.}
+           We first measure residual-update geometry at the block level, then
+           analyze attention aggregation in value space before output
+           projection. This yields a unified component-scaling form for value-
+           and residual-space edits, which we use in the experiments on
+           inference-time editing, compression error, and pretraining
+           behavior.}
+  \label{fig:overview}
+\end{figure*}
+
+% ------------------------------------------------------------------
+\subsection{Residual-Level Decomposition}
+\label{sec:residual-level}
+
+\paragraph{Instantiation.}
+Set $\Delta = \Du{l}{t}$ (the residual update of block $f^l$ at token $t$)
+and $\mathbf{z} = \hz{l}{t}$ (the pre-update hidden state).
+For the bounded intervention and localization diagnostic, we report
+calibration-corpus averages of the per-token fraction of update magnitude in
+the parallel component:
+\begin{equation}
+  \begin{aligned}
+  \pr{l}{t}
+    &= r\!\left(\Du{l}{t},\,\hz{l}{t}\right)
+     = \frac{|\alpha^l_t|\,\|\hz{l}{t}\|}{\|\Du{l}{t}\|},\\
+  \alpha^l_t
+    &= \frac{\Du{l}{t}\!\cdot\!\hz{l}{t}}{\|\hz{l}{t}\|^2}.
+  \end{aligned}
+  \label{eq:para-ratio}
+\end{equation}
+This residual-level view serves as the shared observable for the rest of the
+paper. Figure~\ref{fig:profiles} instead displays the complementary unbounded
+ratio \(\|\Delta_{\parallel}\|/\|\Delta_{\perp}\|\); the two quantities are
+not numerically interchangeable. The resulting diagnostic is block-agnostic.
+We apply it to
+(i)~the $\Attn$ sub-layer output,
+(ii)~the $\FFN$ sub-layer output, and
+(iii)~their joint effect at the transformer-block level.
+
+% ------------------------------------------------------------------
+\subsection{Value-Space Decomposition}
+\label{sec:value-level}
+
+\paragraph{Instantiation.}
+Inside attention, each source token $s$ is mapped to a value vector
+$\mathbf{v}_s=W_V\hz{}{s}$. For query token $t$, attention aggregates
+these value vectors before the output projection:
+\begin{equation}
+  \mathbf{o}_t=\sum_{s\le t} A_{ts}\mathbf{v}_s .
+  \label{eq:value-aggregation}
+\end{equation}
+Here $\mathbf{o}_t$ denotes the pre-$W_O$ attention output in value space.
+We decompose this aggregate relative to the token's own value direction:
+\begin{equation}
+  \mathbf{o}_{t,\parallel}
+    = \frac{\mathbf{o}_t^\top\mathbf{v}_t}{\|\mathbf{v}_t\|^2}\mathbf{v}_t,
+  \qquad
+  \mathbf{o}_{t,\perp}=\mathbf{o}_t-\mathbf{o}_{t,\parallel}.
+  \label{eq:value-space-decomp}
+\end{equation}
+This value-space view measures how much of the pre-projection attention message
+follows the self-value direction versus other value-space directions.
+Residual-level geometry alone cannot identify this structure because the
+output projection has already mixed the aggregated value message into the
+residual stream.
+
+\paragraph{Raw and exclude-self variants.}
+Equation~\ref{eq:value-space-decomp} defines the \emph{raw} variant, which
+decomposes the complete value aggregate. Our primary \emph{exclude-self}
+variant instead separates the direct self message from the non-self context:
+\begin{equation}
+  \begin{aligned}
+  \mathbf{o}_t
+    &= \underbrace{A_{tt}\mathbf{v}_t}_{\mathbf{d}_t\;\text{(self)}}
+     + \underbrace{\sum_{s<t}A_{ts}\mathbf{v}_s}_{\mathbf{c}_t\;\text{(non-self)}},\\
+  \mathbf{c}_{t,\parallel}
+    &= \frac{\mathbf{c}_t^\top\mathbf{v}_t}{\|\mathbf{v}_t\|^2}\mathbf{v}_t,
+  \qquad
+  \mathbf{c}_{t,\perp}=\mathbf{c}_t-\mathbf{c}_{t,\parallel}.
+  \end{aligned}
+  \label{eq:exclude-self-decomp}
+\end{equation}
+We scale only this non-self decomposition and then restore the unchanged self
+message:
+\begin{equation}
+  \widetilde{\mathbf{o}}^{\mathrm{excl}}_t
+    = \mathbf{d}_t
+      +s^{(\parallel)}\mathbf{c}_{t,\parallel}
+      +s^{(\perp)}\mathbf{c}_{t,\perp}.
+  \label{eq:exclude-self-scaling}
+\end{equation}
+Thus, ``exclude-self'' names the aggregate being decomposed: it neither masks
+the self-attention edge nor renormalizes the attention row. For multi-head
+attention, this split and decomposition are applied independently within each
+head before $W_O$.
+
+We apply this value-space analysis specifically to attention. The feed-forward
+block also produces residual-level parallel and perpendicular components, but
+its intermediate activation has a different channel dimension and is not an
+attention aggregation space. We therefore treat MLP outputs at the residual
+level, while using value-space decomposition for attention-side updates.
+
+% ------------------------------------------------------------------
+\subsection{Component Scaling and Diagonal Form}
+\label{sec:closed-form-control}
+
+For the raw value-space and residual-space interventions at query position
+$t$, we express component suppression or amplification with a general
+parallel-perpendicular rescaling form:
+\begin{equation}
+  \begin{aligned}
+  \mathbf{y}_t
+    &= \sum_{s\le t} A_{ts}\mathbf{m}_s,\\
+  \mathbf{y}_{t,\parallel}
+    &= \frac{\mathbf{y}_t^\top\mathbf{r}_t}{\|\mathbf{r}_t\|^2}\mathbf{r}_t,
+  \qquad
+  \mathbf{y}_{t,\perp}=\mathbf{y}_t-\mathbf{y}_{t,\parallel}.
+  \end{aligned}
+  \label{eq:unified-component-decomp}
+\end{equation}
+where $\mathbf{m}_s$ is the message vector being aggregated and
+$\mathbf{r}_t$ is the reference vector whose direction is used to define parallelness. The
+value- and residual-space interventions use different choices of these
+quantities
+($\Delta_t^{\Attn}$ denotes the post-$W_O$ attention branch output):
+\begin{equation}
+  \begin{aligned}
+    \text{V-space:}\quad
+    &\mathbf{m}_s=\mathbf{v}_s,\quad
+      \mathbf{r}_t=\mathbf{v}_t,\\
+    &\mathbf{y}_t=\mathbf{o}_t,\quad
+      \widetilde{\mathbf{y}}_t=\widetilde{\mathbf{o}}_t,\\
+    \text{Res. space:}\quad
+    &\mathbf{m}_s=W_O\mathbf{v}_s,\quad
+      \mathbf{r}_t=\hz{}{t},\\
+    &\mathbf{y}_t=\Delta_t^{\Attn},\quad
+      \widetilde{\mathbf{y}}_t=\widetilde{\Delta}_t^{\Attn}.
+  \end{aligned}
+  \label{eq:component-scaling-choices}
+\end{equation}
+For multi-head attention, the value-space quantities are defined separately
+for each head before $W_O$. In the residual-space equations,
+$\mathbf{v}_s$ denotes the concatenated per-head value message and $W_O$ maps
+that concatenation into the residual stream. Consequently, the residual-space
+diagonal coefficient is layer-level rather than attributable to one head after
+head mixing by $W_O$.
+The edited output is then
+\begin{equation}
+  \widetilde{\mathbf{y}}_t(s^{(\parallel)},s^{(\perp)})
+    = s^{(\parallel)}\mathbf{y}_{t,\parallel}
+      + s^{(\perp)}\mathbf{y}_{t,\perp}.
+  \label{eq:unified-component-scaling}
+\end{equation}
+The unedited baseline is
+$s^{(\parallel)}=s^{(\perp)}=1$; parallel removal sets
+$s^{(\parallel)}=0,s^{(\perp)}=1$.
+For exclude-self value-space scaling, the same rescaling is applied to
+$\mathbf{y}_t=\mathbf{c}_t$ and the fixed $\mathbf{d}_t$ is added afterward,
+as in Eq.~\ref{eq:exclude-self-scaling}.
+
+A useful consequence is that a parallel-only edit can be implemented as a
+change to the attention diagonal. When $s^{(\perp)}=1$, the edit only changes
+the coefficient of the component along $\mathbf{r}_t$. From
+Eq.~\ref{eq:unified-component-decomp}, this coefficient is
+\[
+  c_t=\frac{\mathbf{y}_t^\top\mathbf{r}_t}{\|\mathbf{r}_t\|^2},
+  \qquad
+  \mathbf{y}_{t,\parallel}=c_t\mathbf{r}_t .
+\]
+Scaling the parallel component changes this coefficient by
+$(s^{(\parallel)}-1)c_t$. If we keep off-diagonal weights fixed and only edit
+the diagonal attention entry, then
+$\widetilde{\mathbf{y}}_t=\mathbf{y}_t+\Delta A_{tt}\mathbf{m}_t$. Matching
+the resulting coefficient along $\mathbf{r}_t$ gives
+\begin{equation}
+  \Delta A_{tt}
+    = (s^{(\parallel)}-1)
+      \frac{\mathbf{y}_t^\top\mathbf{r}_t}{\mathbf{m}_t^\top\mathbf{r}_t}.
+  \label{eq:generic-diagonal-closed-form}
+\end{equation}
+Substituting the two choices in Eq.~\ref{eq:component-scaling-choices} into
+Eq.~\ref{eq:generic-diagonal-closed-form} gives
+\begin{equation}
+  \begin{aligned}
+  \Delta A_{tt}^{\mathrm{val,raw}}
+    &= (s^{(\parallel)}-1)
+       \frac{(\sum_{s\le t} A_{ts}\mathbf{v}_s)^\top\mathbf{v}_t}
+            {\|\mathbf{v}_t\|^2},\\
+  \Delta A_{tt}^{\mathrm{val,excl}}
+    &= (s^{(\parallel)}-1)
+       \frac{(\sum_{s<t} A_{ts}\mathbf{v}_s)^\top\mathbf{v}_t}
+            {\|\mathbf{v}_t\|^2},\\
+  \Delta A_{tt}^{\mathrm{res}}
+    &= (s^{(\parallel)}-1)
+       \frac{(\sum_{s\le t} A_{ts}W_O\mathbf{v}_s)^\top\hz{}{t}}
+            {(W_O\mathbf{v}_t)^\top\hz{}{t}}.
+  \end{aligned}
+  \label{eq:space-diagonal-closed-form}
+\end{equation}
+Thus parallel scaling in either space can be written as an effective diagonal
+change while keeping the off-diagonal messages fixed. For the exclude-self
+variant, this diagonal correction is determined only by the non-self aggregate;
+the original $A_{tt}\mathbf{v}_t$ term remains present, and no row
+renormalization is performed. The residual-space formula solves a different
+scalar constraint because its diagonal message $W_O\mathbf{v}_t$ is generally
+not the residual reference direction $\hz{}{t}$;
+Appendix~\ref{app:method} discusses this distinction.

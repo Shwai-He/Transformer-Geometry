@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}
+
+% EMNLP / ACL final layout.
+\usepackage{acl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{placeins}
+
+\setlength{\emergencystretch}{1.5em}
+\setlength{\titlebox}{6.2cm}
+
+% ---- notation macros ----
+\input{macros}
+
+% ---- paper metadata ----
+\title{
+Disentangling Representation Evolution in Transformers through Directional Decomposition}
+
+\author{
+  Shwai He$^{1}$\thanks{\, Work done during internship at ByteDance.} \quad
+  Haichao Zhang$^{2}$ \quad
+  Shen Yan$^{3}$ \\[2pt]
+  $^{1}$University of Maryland, College Park \quad
+  $^{2}$Northeastern University \quad
+  $^{3}$ByteDance \\[2pt]
+  \texttt{\small shwaihe@umd.edu} \quad
+  \texttt{\small zhang.haich@northeastern.edu}
+}
+
+\hypersetup{
+  pdftitle={Disentangling Representation Evolution in Transformers through Directional Decomposition},
+  pdfauthor={Shwai He, Haichao Zhang, and Shen Yan}
+}
+
+\definecolor{color1}{rgb}{0.1,0.7,0.8} % cyan
+\definecolor{color2}{rgb}{0.9,0.1,0.1} % red
+\definecolor{color3}{rgb}{0.7,0.3,0.7} % purple
+\definecolor{color4}{rgb}{0.3,0.3,0.7} % dark blue
+\definecolor{color5}{RGB}{8, 102, 3} % dark green
+\definecolor{color6}{rgb}{0.53, 0.66, 0.42} % light green
+
+\newcommand\sh[1]{\nbc{SH}{#1}{color3}}
+
+
+\begin{document}
+
+\maketitle
+
+\input{sections/abstract}
+
+\input{sections/introduction}
+
+\input{sections/related_work}
+
+\input{sections/background}
+
+\input{sections/method}
+
+\input{sections/experiments}
+
+\input{sections/discussion}
+
+\input{sections/conclusion}
+
+\bibliography{references}
+
+\clearpage
+\raggedbottom
+\input{sections/appendix}
+
+\end{document}

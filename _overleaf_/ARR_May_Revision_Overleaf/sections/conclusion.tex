@@ -1,0 +1,32 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We decompose transformer updates into parallel and perpendicular components.
+Across pretrained models, targeted edits show that robustness depends on both
+the representation space and reference direction: self-value-aligned attention
+components are comparatively stable, whereas residual-space and perpendicular
+edits are more fragile. Compression diagnosis and value-parallel pretraining
+demonstrate supporting uses of this geometry.
+
+\section*{Limitations}
+\label{sec:limitations}
+
+Our evidence is limited to the evaluated decoder-only models, text tasks,
+intervention sites, and training budgets; the same sensitivities may not hold
+for other architectures, modalities, long-context distributions, or fully
+trained models. The decomposition is also reference- and site-dependent:
+attention supplies a natural current-token value reference, whereas an MLP has
+no canonical internal analogue, making the appendix study a scoped diagnostic.
+Finally, these edits are analysis tools rather than deployment-ready methods.
+The matched-seed training study improves early validation loss without a stable
+downstream gain, so we make no general efficiency or performance claim.
+
+\section*{Broader Impact}
+
+Directional decomposition provides a concrete tool for auditing representation
+change and screening compression or interventions before downstream evaluation.
+This screening requires no retraining. Average stability does not imply safety:
+components can remain essential for particular prompts, tasks, or contexts, and
+small edits can silently alter behavior. Geometry cannot replace task-specific
+testing or human review. We do not evaluate bias, privacy, security, or
+high-stakes use, and these tools could also enable targeted manipulation.
