@@ -1,0 +1,21 @@
+{
+  "model": "/beacon-projects/traumallm/.cache/huggingface/hub/models--Qwen--Qwen3-1.7B/snapshots/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "layers": [
+    4,
+    14,
+    23
+  ],
+  "num_heads": 16,
+  "removed_fraction": 1.0,
+  "samples": 128,
+  "tokens": 19526.0,
+  "baseline_loss": 3.433308935941981,
+  "baseline_ppl": 30.978980804297322,
+  "single_head_count": 48,
+  "single_head_delta_loss_mean": 0.0004763759665266191,
+  "single_head_delta_loss_min": -0.014059904302276216,
+  "single_head_delta_loss_max": 0.03875751802084437,
+  "single_head_improved_count": 25,
+  "single_head_degraded_count": 23,
+  "single_head_near_zero_count": 0
+}

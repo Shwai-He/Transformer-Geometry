@@ -1,0 +1,14 @@
+{
+  "models": [
+    "qwen3_0p6b",
+    "qwen3_1p7b",
+    "qwen3_4b",
+    "qwen3_8b"
+  ],
+  "bootstrap_resamples": 5000,
+  "sign_flip_permutations": 10000,
+  "seed": 2026,
+  "head_rows": 288,
+  "layer_rows": 12,
+  "figure": "_overleaf_/ARR_May_Revision_Overleaf/figs/per_head_causal_sensitivity_fullrem/head_delta_loss.pdf"
+}
