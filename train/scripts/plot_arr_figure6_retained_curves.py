@@ -9,11 +9,11 @@ from collections import defaultdict
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 
 
-SIZE_ORDER = ("194m", "296m", "436m", "528m")
+SIZE_ORDER = ("296m", "436m", "528m")
 SIZE_COLORS = {
-    "194m": "#1f77b4",
     "296m": "#ff7f0e",
     "436m": "#2ca02c",
     "528m": "#d62728",
@@ -24,21 +24,33 @@ METHODS = (
     ("Value-Space Rotation", "V-Para Rem.", ":"),
 )
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parents[1]
+LOCAL_INPUT = SCRIPT_DIR / "loss_csv_by_size_raw3_cleaned.csv"
+DEFAULT_INPUT = (
+    LOCAL_INPUT
+    if LOCAL_INPUT.is_file()
+    else REPO_ROOT
+    / "analysis/visualization/loss_curves/data/loss_csv_by_size_raw3_cleaned.csv"
+)
+DEFAULT_OUTPUT_DIR = (
+    SCRIPT_DIR / "output"
+    if LOCAL_INPUT.is_file()
+    else REPO_ROOT / "results/figures/loss_curves_corrected"
+)
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input",
         type=Path,
-        default=Path(
-            "analysis/visualization/loss_curves/data/"
-            "loss_csv_by_size_raw3_cleaned.csv"
-        ),
+        default=DEFAULT_INPUT,
     )
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("results/figures/loss_curves_corrected"),
+        default=DEFAULT_OUTPUT_DIR,
     )
     return parser.parse_args()
 
@@ -81,7 +93,7 @@ def plot(
             "ps.fonttype": 42,
         }
     )
-    fig, axes = plt.subplots(1, 4, figsize=(14.5, 3.1), constrained_layout=False)
+    fig, axes = plt.subplots(1, 3, figsize=(11.0, 3.1), constrained_layout=False)
 
     for panel, (ax, size) in enumerate(zip(axes, SIZE_ORDER, strict=True)):
         color = SIZE_COLORS[size]
@@ -97,6 +109,8 @@ def plot(
             )
         ax.set_xlabel(f"({chr(ord('a') + panel)}) {size.upper()}")
         ax.set_ylabel("Validation loss")
+        ax.xaxis.set_major_locator(MaxNLocator(nbins=5, integer=True))
+        ax.yaxis.set_major_locator(MaxNLocator(nbins=5))
         ax.grid(alpha=0.25, linestyle=":")
         ax.legend(frameon=True, loc="upper right")
         ax.tick_params(direction="out", length=3, width=0.8)

@@ -39,6 +39,8 @@ perpendicular,value,0.75,20.699715531454807,-1.3360270211794862,eval/lm-evaluati
 perpendicular,value,1.0,22.035742552634293,0.0,eval/lm-evaluation-harness/outputs/xsa_ppl_perp_retained_scale_qwen1p7b_20260711/by_model/qwen3_1p7b/kv2_group/perp_1p0/exclude_self/wikitext_2026-07-11T04-29-43.672231.json
 perpendicular,value,1.25,25.714164163487535,3.678421610853242,eval/lm-evaluation-harness/outputs/xsa_ppl_perp_retained_scale_qwen1p7b_20260711/by_model/qwen3_1p7b/kv2_group/perp_1p25/exclude_self/wikitext_2026-07-11T04-30-32.249842.json
 perpendicular,value,1.5,33.61304297134894,11.577300418714646,eval/lm-evaluation-harness/outputs/xsa_ppl_perp_retained_scale_qwen1p7b_20260711/by_model/qwen3_1p7b/kv2_group/perp_1p5/exclude_self/wikitext_2026-07-11T04-32-47.538411.json
+perpendicular,value,1.75,63.62883799154049,41.5930954389062,beacon-returned-unverified:figure3-perpendicular-scale-1p75
+perpendicular,value,2.0,234.7146746154103,212.678932062776,beacon-returned-unverified:figure3-perpendicular-scale-2p0
 perpendicular,residual_attn,0.0,79483.38555756267,79461.33645150243,eval/lm-evaluation-harness/outputs/xsa_figure3_matched_residual_20260809/by_model/qwen3_1p7b/residual_attn/wikitext-residual_attn_perp_edit0_2026-08-09T19-55-45.688411.json
 perpendicular,residual_attn,0.25,837.7908055362034,815.7416994759653,eval/lm-evaluation-harness/outputs/xsa_figure3_matched_residual_20260809/by_model/qwen3_1p7b/residual_attn/wikitext-residual_attn_perp_edit0p25_2026-08-09T19-56-15.273353.json
 perpendicular,residual_attn,0.5,40.51863831123961,18.46953225100157,eval/lm-evaluation-harness/outputs/xsa_figure3_matched_residual_20260809/by_model/qwen3_1p7b/residual_attn/wikitext-residual_attn_perp_edit0p5_2026-08-09T19-56-12.030462.json

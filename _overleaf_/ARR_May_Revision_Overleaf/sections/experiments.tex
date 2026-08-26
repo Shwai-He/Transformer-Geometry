@@ -19,7 +19,7 @@ $A_{tt}\mathbf{v}_t$ fixed, decompose only the non-self aggregate, and do not
 renormalize attention.
 
 \paragraph{Pretraining setup and calibration.}
-For pretraining, we train GPT-style models from 194M to 528M parameters from
+For pretraining, we train GPT-style models from 241M to 528M parameters from
 scratch on standard next-token prediction, with baseline and parallel-removal
 variants. We also run larger 1.4B and 2.7B models for downstream evaluation
 (Table~\ref{tab:pretraining-summary}). Full hyperparameters are in
@@ -45,7 +45,9 @@ behavior is to direct parallel and perpendicular edits at inference time.
            with residual-space attention and MLP variants. Every curve uses
            the full 62-document WikiText evaluator and edits all decoder layers
            except the first; all three parallel curves use the same eleven
-           retained scales from $-1$ to $3$. Each point reports
+           retained scales from $-1$ to $3$. On the perpendicular axis, the
+           value-space sweep extends through scale $2$, while the residual
+           controls end at scale $1.5$. Each point reports
            $\Delta\mathrm{PPL}=\mathrm{PPL}_{\mathrm{edited}}-
            \mathrm{PPL}_{\mathrm{baseline}}$ relative to its corresponding
            scale-1 hook-on no-op. Both panels use a symmetric-log vertical
@@ -68,6 +70,9 @@ is still far more sensitive to sign reversal, while Residual(MLP) is far more
 sensitive to strong positive amplification. Suppressing the perpendicular
 component is substantially more disruptive, especially for Residual(MLP),
 although a narrow neighborhood around the no-op can contain small improvements.
+The extended value-space sweep also rises to $\Delta\mathrm{PPL}=41.59$ at
+scale $1.75$ and $212.68$ at scale $2$, confirming that this local neighborhood
+does not imply robustness under strong perpendicular amplification.
 Thus, the sweep supports both a directional asymmetry and a coordinate-system
 distinction: robustness is not inherent to parallelness alone, but depends on
 which object is edited and which parts of the update are preserved.
@@ -120,7 +125,8 @@ context contribution.
 \paragraph{Long-context robustness.}
 \begin{table}[t]
   \caption{\textbf{RULER evaluation on Llama-3.2-3B.}
-  Mean over 13 RULER tasks. Parentheses show change from the matched baseline.
+  Mean over 13 RULER tasks. Parentheses show change from the matched baseline,
+  computed before displayed scores are rounded.
   Retained scale 0 is full parallel removal and 0.5 retains half; Excl.-self
   preserves the direct self contribution. All reported cells use complete
   13-task aggregates.}
@@ -280,8 +286,8 @@ the gated scale diagnostic.
   \caption{\textbf{Training-time parallel removal changes validation-loss
   trajectories across model sizes.}
   Curves show the retained single-run trajectories for baseline training,
-  residual-space Attn Para-Rem., and value-space V-Para Rem. from 194M to
-  528M parameters.}
+  residual-space Attn Para-Rem., and value-space V-Para Rem. for the 296M,
+  436M, and 528M models.}
   \label{fig:pretraining}
 \end{figure*}
 

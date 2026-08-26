@@ -13,6 +13,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FixedLocator
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -35,7 +36,7 @@ DEFAULT_OUTPUT = (
     / "ppl_component_scaling_corrected.pdf"
 )
 EXPECTED_VALUE_CSV = {
-    "perpendicular": {0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5},
+    "perpendicular": {0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0},
 }
 EXPECTED_PARALLEL = {-1.0, -0.5, 0.0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 2.5, 3.0}
 EXPECTED_RESIDUAL = {
@@ -47,6 +48,55 @@ SERIES = [
     ("residual_attn", "Residual(Attn)", "#ff7f0e", "s", "--"),
     ("residual_mlp", "Residual(MLP)", "#2ca02c", "^", "-."),
 ]
+
+
+def load_source_manifest(
+    path: Path,
+) -> dict[str, dict[str, list[dict[str, object]]]]:
+    """Load the paper's lightweight, already-audited plotting bundle.
+
+    This mode intentionally does not claim to revalidate the original lm-eval
+    JSONs.  It makes the publication asset reproducible when those large raw
+    output trees are unavailable, while retaining their relative paths in the
+    manifest for provenance and later source-level verification.
+    """
+    panels: dict[str, dict[str, list[dict[str, object]]]] = {
+        axis: {key: [] for key, *_ in SERIES}
+        for axis in ("parallel", "perpendicular")
+    }
+    with path.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            axis = row["panel"]
+            series = row["series"]
+            if axis not in panels or series not in panels[axis]:
+                raise ValueError(f"Unexpected panel/series in {path}: {axis}/{series}")
+            panels[axis][series].append(
+                {
+                    "scale": round(float(row["scale"]), 8),
+                    "ppl": float(row["ppl"]),
+                    "delta_ppl": float(row["delta_ppl"]),
+                    "source": row["source"],
+                }
+            )
+
+    for axis, series_rows in panels.items():
+        for series, rows in series_rows.items():
+            expected = (
+                EXPECTED_VALUE_CSV[axis]
+                if axis == "perpendicular" and series == "value"
+                else EXPECTED_PARALLEL
+                if axis == "parallel"
+                else EXPECTED_RESIDUAL[axis]
+            )
+            observed = [float(row["scale"]) for row in rows]
+            if len(observed) != len(set(observed)):
+                raise ValueError(f"Duplicate {axis}/{series} scales in {path}: {observed}")
+            _assert_scales(f"{axis}/{series}", set(observed), expected)
+            noop = next(row for row in rows if float(row["scale"]) == 1.0)
+            if abs(float(noop["delta_ppl"])) > 1e-9:
+                raise ValueError(f"{axis}/{series} scale-1 no-op failed: {noop}")
+            rows.sort(key=lambda row: float(row["scale"]))
+    return panels
 
 
 def _assert_scales(label: str, observed: set[float], expected: set[float]) -> None:
@@ -241,20 +291,31 @@ def main() -> None:
         "--value-parallel-root", type=Path, default=DEFAULT_VALUE_PARALLEL_ROOT
     )
     parser.add_argument("--residual-root", type=Path, default=DEFAULT_RESIDUAL_ROOT)
+    parser.add_argument(
+        "--source-manifest",
+        type=Path,
+        help=(
+            "Replot directly from a previously audited *_sources.csv bundle; "
+            "raw lm-eval JSON validation is skipped in this mode."
+        ),
+    )
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
 
-    value = load_value_rows(args.value_source)
-    value["parallel"] = load_value_parallel_rows(args.value_parallel_root)
-    residual = load_residual_rows(args.residual_root)
-    panels = {
-        axis: {
-            "value": value[axis],
-            "residual_attn": residual["residual_attn"][axis],
-            "residual_mlp": residual["residual_mlp"][axis],
+    if args.source_manifest is not None:
+        panels = load_source_manifest(args.source_manifest)
+    else:
+        value = load_value_rows(args.value_source)
+        value["parallel"] = load_value_parallel_rows(args.value_parallel_root)
+        residual = load_residual_rows(args.residual_root)
+        panels = {
+            axis: {
+                "value": value[axis],
+                "residual_attn": residual["residual_attn"][axis],
+                "residual_mlp": residual["residual_mlp"][axis],
+            }
+            for axis in ("parallel", "perpendicular")
         }
-        for axis in ("parallel", "perpendicular")
-    }
 
     plt.rcParams.update(
         {
@@ -272,13 +333,21 @@ def main() -> None:
     figure, axes = plt.subplots(1, 2, figsize=(8.9, 3.8))
     draw_panel(axes[0], panels["parallel"])
     draw_panel(axes[1], panels["perpendicular"])
-    axes[0].set_title("(a) Parallel-component scaling")
-    axes[1].set_title("(b) Perpendicular-component scaling")
+    axes[0].set_title("(a) Parallel scaling")
+    axes[1].set_title("(b) Perpendicular scaling")
     axes[0].set_xlabel(r"Parallel retained scale $s_{\parallel}$")
     axes[1].set_xlabel(r"Perpendicular retained scale $s_{\perp}$")
     axes[0].set_ylabel(r"$\Delta$PPL (matched no-op $=0$)")
     axes[0].set_xlim(-1.1, 3.1)
-    axes[1].set_xlim(-0.05, 1.55)
+    axes[1].set_xlim(-0.05, 2.05)
+    axes[1].set_xticks([0.0, 0.5, 1.0, 1.5, 2.0])
+    # Symlog's default locator labels every decade, which is visually crowded
+    # at the paper's two-column scale. Keep the zero and negative-unit anchors,
+    # then label only alternating positive decades.
+    axes[0].yaxis.set_major_locator(FixedLocator([-1.0, 0.0, 1e2, 1e4, 1e6]))
+    axes[1].yaxis.set_major_locator(
+        FixedLocator([-1.0, 0.0, 1e2, 1e4, 1e6, 1e8])
+    )
     handles, labels = axes[0].get_legend_handles_labels()
     figure.legend(
         handles, labels, loc="upper center", bbox_to_anchor=(0.5, 0.975),

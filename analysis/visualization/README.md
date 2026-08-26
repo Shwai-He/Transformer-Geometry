@@ -1,5 +1,10 @@
 # Visualization Workspace
 
+Install the tested camera-ready plotting dependencies with
+`python -m pip install -r requirements-visualization.txt` from the repository
+root. The current reproduction status and known source gaps are tracked in
+`../../CAMERA_READY_FIGURE_AUDIT.md`.
+
 This directory is the single owner for editable plotting code and plot-specific
 notebooks used by the paper and supporting analyses.
 
@@ -44,8 +49,13 @@ directory. The older numbered copy is preserved only under
 The tracked Overleaf package is `_overleaf_/ARR_May_Revision_Overleaf`.
 Paper-facing plotting entry points and their lightweight inputs are:
 
-- geometry depth panels: `embedded_data/*.py`;
-- component-scaling panels: `para_ablation/`;
+- geometry depth panels: `para_dist/*.py` (the `embedded_data/*.py` scripts
+  retain the six-layer source bundles but are not the three-layer paper entry
+  points);
+- component-scaling panels: `plot_arr_matched_component_scaling.py`; use its
+  raw-result mode for source-level validation or `--source-manifest` with the
+  paper's `ppl_component_scaling_corrected_sources.csv` for an explicitly
+  replot-only reconstruction;
 - attention-diagonal panel: `recompute_arr_attention_diag_figure.py
   --replot-only` with `attn_matrix/source/effective_diagonal/`;
 - compression panels: `comp_analysis/plot_local_flip_compare_v2.py`;

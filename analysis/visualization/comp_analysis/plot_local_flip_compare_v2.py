@@ -229,7 +229,7 @@ def plot_total_error(df):
                     )
 
             layers = sorted(d["layer"].dropna().unique().tolist())
-            apply_layer_x_axis(ax, layers, min(10, len(layers)))
+            apply_layer_x_axis(ax, layers, min(6, len(layers)))
             ax.set_xlabel("Layer", fontsize=X_LABEL_FONTSIZE)
             ax.set_ylabel(ylabel, fontsize=Y_LABEL_FONTSIZE, labelpad=Y_LABEL_PAD)
             ax.grid(True, color="#d0d0d0", linewidth=0.9, alpha=0.50)
@@ -299,7 +299,7 @@ def plot_orthogonal_error(df):
                     )
 
             layers = sorted(d["layer"].dropna().unique().tolist())
-            apply_layer_x_axis(ax, layers, min(10, len(layers)))
+            apply_layer_x_axis(ax, layers, min(6, len(layers)))
             ax.set_xlabel("Layer", fontsize=X_LABEL_FONTSIZE)
             ax.set_ylabel(ylabel, fontsize=Y_LABEL_FONTSIZE, labelpad=Y_LABEL_PAD)
             ax.grid(True, color="#d0d0d0", linewidth=0.9, alpha=0.50)
@@ -369,7 +369,7 @@ def plot_parallel_error(df):
                     )
 
             layers = sorted(d["layer"].dropna().unique().tolist())
-            apply_layer_x_axis(ax, layers, min(10, len(layers)))
+            apply_layer_x_axis(ax, layers, min(6, len(layers)))
             ax.set_xlabel("Layer", fontsize=X_LABEL_FONTSIZE)
             ax.set_ylabel(ylabel, fontsize=Y_LABEL_FONTSIZE, labelpad=Y_LABEL_PAD)
             ax.grid(True, color="#d0d0d0", linewidth=0.9, alpha=0.50)

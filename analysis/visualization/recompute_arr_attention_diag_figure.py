@@ -21,8 +21,11 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 from matplotlib.patches import Rectangle
 import numpy as np
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+
+try:
+    import torch
+except ImportError:
+    torch = None
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -152,9 +155,9 @@ def plot_bundle(bundle: dict, output: Path) -> None:
         axes[2].imshow(value_matrix, cmap=cmap_delta, norm=norm_for_delta(value_delta)),
     ]
     titles = [
-        f"Raw attention\n(head {bundle['head']})",
-        r"Residual-space $\Delta A_{tt}$" + "\n(layer-level)",
-        r"Value-space $\Delta A_{tt}$" + f"\n(head {bundle['head']})",
+        "Raw attention",
+        r"Residual-space $\Delta A_{tt}$",
+        r"Value-space $\Delta A_{tt}$",
     ]
     arrays = [raw_masked.compressed(), residual_delta, value_delta]
     for ax, title, shown in zip(axes, titles, arrays):
@@ -190,7 +193,9 @@ def main() -> None:
     parser.add_argument("--head", type=int, default=6)
     parser.add_argument("--sample-idx", type=int, default=0)
     parser.add_argument("--max-length", type=int, default=96)
-    parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
+    parser.add_argument(
+        "--device", default="cuda" if torch is not None and torch.cuda.is_available() else "cpu"
+    )
     parser.add_argument("--dtype", default="bf16", choices=["auto", "bf16", "fp16", "fp32"])
     parser.add_argument("--result-dir", type=Path, default=DEFAULT_RESULT_DIR)
     parser.add_argument("--figure-output", type=Path)
@@ -203,6 +208,10 @@ def main() -> None:
         plot_bundle(json.loads(bundle_path.read_text(encoding="utf-8")), output)
         print(output)
         return
+
+    if torch is None:
+        raise RuntimeError("Full recomputation requires PyTorch; use --replot-only otherwise.")
+    from transformers import AutoModelForCausalLM, AutoTokenizer
 
     try:
         from qwen_attn_x_parallel_removal_viz import (
