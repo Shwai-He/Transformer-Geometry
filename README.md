@@ -34,6 +34,12 @@ Every hidden-state update $\Delta h$ (produced by multi-head self-attention or f
 
 We extend and evaluate this geometric framework across both **Residual-Space** and **Value-Space (XSA)**, uncovering key mechanisms behind inference-time editing, model compression (pruning & quantization), long-context processing, and pretraining optimization dynamics.
 
+<p align="center">
+  <img src="docs/research/assets/modellesion_biological_lesion_framework_web.jpg" alt="Biological Brain Lesion vs. Computational Model Lesion Atlas" width="100%" />
+</p>
+
+> 🧠 **Neurobiological Paradigm**: Just as clinical lesion studies map functional specialization in the human brain (e.g. Broca-Wernicke language aphasia vs. ventral stream visual object agnosia), targeted geometric lesions in Transformers disentangle linguistic control from visual lattice representation. See [Neurobiological Lesion Specification](docs/design/NEUROBIOLOGICAL_LESION_FRAMEWORK.md).
+
 ---
 
 ## 🧮 Mathematical Foundation
