@@ -1,20 +1,23 @@
 \begin{abstract}
-Transformer layers evolve representations through learned additive
-transformations that combine direction-preserving and direction-changing
-effects. We study this geometry by decomposing learned updates into parallel and
-perpendicular components. Across pretrained models, we find substantial learned
-parallel components, showing that direction-preserving behavior is not confined
-to the residual identity path. To test whether these components are redundant or
-behaviorally important, we apply the decomposition to residual-space updates and
-to value aggregation inside attention. Inference-time edits reveal a consistent
-asymmetry: perpendicular edits are disruptive, while parallel edits are
-comparatively more redundant, especially for the self-value-aligned component of
-attention aggregation in value space. As supporting applications, we use the
-same decomposition to diagnose compression error and construct matched
-component-weighted pruning variants that preserve downstream quality across five
-models. In from-scratch pretraining, suppressing value-space parallel attention
-components lowers fixed-validation loss in all 12 matched architecture--seed
-pairs; larger single-run studies also improve average downstream scores. Overall,
-editing provides the central causal evidence, while compression and training test
-how the same geometry can inform diagnosis and intervention.
+Transformer representations evolve through learned additive transformations
+that either preserve their current direction or redirect it. We study this
+evolution as a functional geometry, decomposing learned updates into parallel
+and perpendicular components. Across pretrained models, we find substantial
+parallel components beyond the residual identity path. We then apply the
+decomposition in two spaces: to attention and MLP updates relative to the
+hidden state, and to attention value aggregation relative to the current
+token's value. Targeted edits reveal a strongly space-dependent asymmetry:
+exclude-self value-space parallel manipulation is markedly more robust than
+residual-space and perpendicular counterparts, preserving the direct self
+message while scaling only the non-self aggregate. The same decomposition gives
+a component-resolved description of compression-induced update error:
+perpendicular error separates compression methods more clearly than parallel
+error.
+Extensive experiments further demonstrate that full-aggregate parallel suppression
+during from-scratch pretraining lowers validation-loss trajectories and
+improves downstream averages, with the value-space variant strongest. Together,
+these results connect
+representation geometry to editing robustness, compression diagnosis, and
+training-time intervention. Code is available in the
+\href{https://github.com/Shwai-He/Transformer-Geometry}{project repository}.
 \end{abstract}

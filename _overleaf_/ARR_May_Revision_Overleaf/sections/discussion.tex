@@ -1,24 +1,25 @@
 \section{Discussion}
 \label{sec:discussion}
 
-\paragraph{Compression diagnostics.}
-Perpendicular error is more fragile than direction-preserving error in our
-controlled edits. However, its ranking is nearly identical to total-error
-ranking and is matched by a norm-controlled isotropic null. We therefore use
-it as a component-resolved diagnostic, not as predictive information
-independent of total magnitude.
+\textit{This geometric decomposition suggests practical uses beyond the
+intervention analysis, especially for diagnosing compression error and
+interpreting training-time allocation.} An auxiliary control observes the same
+directional asymmetry at two internal MLP sites
+(Appendix~\ref{app:mlp-internal-carrier}).
 
-\paragraph{Practical screening workflow.}
-For an edit or compression rule: (1) specify its location and reference;
-(2) run matched directional ablations; (3) compare orientation with total
-error and a matched null; and (4) screen geometrically before downstream
-validation. Prevalence alone is insufficient because sensitivity varies with
-depth and joint head effects are non-additive.
+\paragraph{Compression diagnostics.}
+Approximation error should not be viewed only as an overall residual magnitude.
+Directional decomposition complements total error by showing whether
+compression changes the update direction. In our results, perpendicular error
+separates compression methods more clearly than parallel error. This suggests
+measuring total approximation error together with its perpendicular component.
 
 \paragraph{Training-time allocation.}
-The training runs test whether suppressing the comparatively robust
-value-parallel route reallocates optimization pressure. Full-scale single runs
-improve average downstream score, whereas an early matched three-seed study
-improves validation loss but not the six-task average. This supports changed
-optimization and operation-dependent co-adaptation, not a replicated
-downstream gain or convergence claim.
+Inference-time edits probe models after training. We therefore ask whether
+parallel suppression can instead be built into training from scratch. Keeping
+the modified forward computation active during both optimization and evaluation
+avoids a train--inference mismatch and lets the model adapt from initialization.
+In our evaluated settings, both variants improve the downstream average, with
+the largest gains from V-Para Rem. This shows that the role of a component
+depends on the intervention space, including when the intervention is part of
+training itself.

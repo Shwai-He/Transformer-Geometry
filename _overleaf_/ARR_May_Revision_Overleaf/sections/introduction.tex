@@ -4,69 +4,73 @@
 Transformer layers evolve representations through learned additive
 updates~\citep{vaswani2017attention,elhage2021mathematical} on top of residual
 paths~\citep{he2016deep}. Geometrically, each update has two roles relative to
-the current representation: a parallel component that preserves direction and a
-perpendicular component that redirects it. This view frames representation
-evolution as a functional geometry problem: decomposing learned updates into
-these roles and testing their behavioral sensitivity under targeted edits.
+the current representation: a parallel component that changes magnitude while
+preserving direction, and a perpendicular component that redirects it. This
+view frames representation evolution as a functional geometry problem:
+decompose learned updates by their directional role, then test their behavioral
+sensitivity through targeted interventions.
 
-Our measurements across pretrained models show that learned updates contain
-substantial components parallel to the current hidden state. Although a residual
-identity path can realize such direction preservation through a simple
-operation~\citep{he2016deep,elhage2021mathematical}, the same behavior also
-appears inside learned layer updates.
+Across pretrained models, we find substantial parallel components in the
+learned updates themselves. They are distinct from the exact carryover supplied
+by the residual identity path: attention and MLP branches also learn updates
+aligned with the representations they modify. Their presence alone, however,
+does not establish whether they are redundant, behaviorally important, or
+sensitive to the space in which alignment is defined.
 
-To test whether these components are functionally redundant or behaviorally
-important, we apply the decomposition in two settings. In \textit{residual
-space}, we edit the updates added back to the hidden state. Given the sequence
-modeling inside attention, we also use a \textit{value-space} view of value
-aggregation before the output projection, where the self-value contribution is separated from cross-token flow. We then use component-scaling experiments to
-modify parallel or perpendicular parts of the update and measure the resulting
-degradation.
+We study this question in two spaces. In \textit{residual space}, we decompose
+the attention or MLP update relative to the hidden state to which it is added.
+In \textit{value space}, we decompose the pre-output-projection attention
+aggregate relative to the current token's own value. Because the full aggregate
+combines the direct self message with values routed from other positions, we
+also introduce an exclude-self variant that preserves the direct self message
+and decomposes only the non-self aggregate. Component scaling in these spaces
+lets us distinguish the general geometry of an attention aggregate from the
+specific directional role of cross-token aggregation.
 
-These edits separate value-space parallel manipulation from its residual-space
-analogues. Scaling the part of attention aggregation aligned with the token's own
-projected value keeps behavior close to baseline over a broad range. In
-contrast, analogous residual-space attention scaling is less stable, residual
-MLP-side scaling is more fragile, and perpendicular scaling is much more
-disruptive. Together, these comparisons show that robustness is not a generic
-property of being parallel: it depends on which representation space defines the
-component and which parts of the update are preserved.
+The interventions reveal a pronounced directional and space-dependent
+asymmetry. Perpendicular scaling is consistently disruptive, whereas the effect
+of parallel scaling depends on where the component is defined and what the edit
+preserves. Residual-space parallel removal substantially changes model
+behavior, and full-aggregate value-space removal is also nontrivial. In
+contrast, preserving the direct self message makes value-space parallel scaling
+markedly more robust across perplexity, downstream tasks, and long-context
+evaluation. This robustness is not explained by a uniformly smaller
+perturbation: at a common post-projection site, the exclude-self value-space
+edit is larger than its more fragile residual-space counterpart. Robustness
+is therefore not a generic property of being parallel; it depends jointly on
+the representation space, reference direction, and preserved computation.
+Similar-looking parallel-removal operations therefore solve different
+geometric objectives, explaining why their behavioral effects diverge across
+representation spaces.
 
-We trace this asymmetry to value aggregation inside attention, where the
-self-value-aligned contribution can be targeted before projection.
-Residual-space analogues instead act after projection against a different
-reference, so similar-looking parallel-removal operations can solve different
-geometric objectives and produce very different benchmark behavior, including
-in settings related to self-directed value flow.
-
-Finally, we test whether this geometry extends beyond inference-time edits.
-For compression, we decompose the error between baseline and compressed-model
-updates, complementing prior work on post-training compression and
-layer-dropping analyses of transformer
+Finally, we ask whether the same geometry is informative beyond inference-time
+editing. For compression, we decompose the error between baseline and
+compressed-model updates, complementing prior work on post-training compression
+and layer-dropping analyses of transformer
 redundancy~\citep{Frantar2022GPTQAP,Lin2023AWQAW,Sun2023ASA,men2024shortgpt,He2026UncoveringTR}.
-Perpendicular error tracks total compression error closely, while parallel
-error is less discriminative; a norm-matched isotropic control shows that much
-of this alignment is expected from high-dimensional concentration. We therefore
-treat the decomposition as a component-resolved diagnostic rather than a
-universally superior compression score. For training, we run from-scratch
-pretraining with parallel attention suppression in residual and value spaces.
-Across four model sizes and three matched seeds, the value-space variant lowers
-fixed-validation loss in all 12 architecture--seed pairs at the final tested
-checkpoint. Larger 1.4B and 2.7B single runs also improve average downstream
-scores, with the value-space variant giving the largest gain. Together, these
-results make editing the central causal analysis and treat compression and
-training as supporting applications of the same geometry.
-
-In summary, the contributions of this work are as follows:
-\begin{enumerate}
-  \item This work reveals substantial direction-preserving components in
-        transformer updates and maps their robustness across spaces.
-  \item For attention updates, the value-space decomposition separates the
-        self-value-aligned direction from the remaining value aggregation,
-        explaining the stability gap between value-space and residual-space
-        edits.
-  \item In compression and training, we test two supporting consequences of
-        the editing result: component-resolved error diagnosis and targeted
-        self-value-parallel suppression, with claims scoped to the controls and
-        runs reported here.
-\end{enumerate}
+Across quantization and pruning, perpendicular-error profiles separate
+compression methods more clearly than parallel-error profiles.
+Motivated by the inference-time asymmetry, we separately test full-aggregate
+parallel suppression during from-scratch pretraining. Extensive experiments
+demonstrate that the value-space variant yields lower validation-loss
+trajectories across model scales. Both residual- and value-space variants
+improve average downstream scores, with the value-space variant producing the
+larger gains. \begingroup\setlength{\parskip}{0pt}The contributions are:
+\begin{itemize}
+  \setlength{\topsep}{0pt}
+  \setlength{\partopsep}{0pt}
+  \setlength{\itemsep}{2pt}
+  \setlength{\parsep}{0pt}
+  \setlength{\parskip}{0pt}
+  \item We identify substantial direction-preserving components in learned
+        transformer updates and formulate their analysis as a functional
+        geometry of representation evolution.
+  \item We map the distinct sensitivities of parallel and perpendicular
+        components across residual and value spaces; an exclude-self variant
+        shows markedly greater value-space robustness when the direct self
+        message is preserved.
+  \item We extend the geometry beyond inference-time editing, providing a
+        component-level diagnostic of compression error and training variants
+        that lower validation loss and improve downstream averages.
+\end{itemize}
+\endgroup

@@ -1,6 +1,29 @@
 \section{Related Work}
 \label{sec:related}
 
+\begin{figure*}[t]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/para_dist/paper_Qwen3-4B_hidden_both_block_para_perp_sampled_layers.pdf}
+    \caption{Qwen3-4B-Instruct-2507}
+  \end{subfigure}\hfill
+  \begin{subfigure}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figs/para_dist/paper_Qwen3-30B-A3B_hidden_both_block_para_perp_sampled_layers.pdf}
+    \caption{Qwen3-30B-A3B}
+  \end{subfigure}
+  \caption{\textbf{Parallel components persist across depth.}
+  For each accumulated attention-plus-MLP update, $\Dup{l}{t}$ is its
+  projection along the incoming hidden state, whereas $\Duperp{l}{t}$ is
+  orthogonal to that state. Curves show
+  $\|\Dup{l}{t}\|/\|\Duperp{l}{t}\|$ at three sampled layers per model
+  across generation steps; lines are means and bands span the observed range.
+  Ratios above one indicate parallel dominance.}
+  % \vspace{-10pt}
+  \label{fig:profiles}
+\end{figure*}
+
 \paragraph{Residual-stream geometry and residual scaling.}
 Residual connections preserve the input representation while allowing each
 block to add a learned transformation~\citep{he2016deep}. In transformers, this
@@ -10,7 +33,7 @@ updates~\citep{elhage2021mathematical}. This preservation path is also a practic
 target for architectural scaling mechanisms: ReZero~\citep{Bachlechner2020ReZeroIA},
 LayerScale~\citep{touvron2021going}, and deep-transformer initialization or
 normalization schemes~\citep{xiong2020on,Wang2022DeepNetST} adjust residual
-branch scale to improve optimization and stability. Residual paths can also
+branch scale to improve optimization and stability. Residual paths also
 mitigate degeneracy in deep self-attention, including rank
 collapse~\citep{dong2021attention}. These works establish the importance of
 residual pathways and residual magnitude. We study a complementary geometric
@@ -19,21 +42,16 @@ direction or rotates the representation into a perpendicular component.
 
 \paragraph{Context modeling and attention geometry.}
 Attention explicitly aggregates information across
-tokens~\citep{vaswani2017attention}, but attention mass can also concentrate
+tokens~\citep{vaswani2017attention}, but attention mass also concentrates
 on special or persistent positions, as shown by attention-sink behavior in
 long-context inference~\citep{xiao2023efficient}. Gated attention variants
 mitigate such sink behavior by modulating attention
-outputs~\citep{qiu2025gatedattention}. However, even when attention sinks are reduced,
-large diagonal attention weights can still route substantial mass back to the
-current token itself. Exclusive Self-Attention (\xsa{}) directly addresses this
-self-directed pathway by modifying value flow aligned with the current
-token~\citep{zhai2025xsa}. We revisit this issue from a
-parallel/perpendicular geometric perspective, focusing on when attention
+outputs~\citep{qiu2025gatedattention}. However, even when attention sinks are
+reduced, large diagonal attention weights still route substantial mass back
+to the current token itself. Exclusive Self-Attention
+(\xsa{}), introduced by \citet{zhai2025xsa}, directly addresses this
+self-directed pathway by modifying value flow aligned with the current token.
+We revisit this issue
+from a parallel/perpendicular geometric perspective, focusing on when attention
 updates preserve the current direction and when they introduce
 direction-changing information.
-
-Activation steering instead adds a task- or contrast-derived vector to a
-residual-stream activation to control model behavior~\citep{turner2023activation}.
-Our intervention is not defined by a target behavior or contrastive prompt: it
-uses the model's current hidden state or self-value as an endogenous reference
-and scales the analytically determined parallel and perpendicular components.

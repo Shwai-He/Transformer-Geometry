@@ -1,32 +1,36 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-We decompose transformer updates into parallel and perpendicular components.
-Across pretrained models, targeted edits show that robustness depends on both
-the representation space and reference direction: self-value-aligned attention
-components are comparatively stable, whereas residual-space and perpendicular
-edits are more fragile. Compression diagnosis and value-parallel pretraining
-demonstrate supporting uses of this geometry.
+We studied transformer layer evolution through a parallel/perpendicular
+decomposition of learned updates. The results show that parallel components are
+substantial beyond the residual identity path, but their role is
+space-dependent. Exclude-self value-space editing preserves the direct self
+message and remains comparatively stable around the no-op. This distinction
+also helps interpret compression and training behavior: perpendicular error is
+the more diagnostic component, while from-scratch parallel suppression lowers
+validation loss and improves downstream averages, most strongly in value
+space. Overall, this geometry offers a compact way to analyze update magnitude
+together with the direction of representation change.
 
 \section*{Limitations}
 \label{sec:limitations}
 
-Our evidence is limited to the evaluated decoder-only models, text tasks,
-intervention sites, and training budgets; the same sensitivities may not hold
-for other architectures, modalities, long-context distributions, or fully
-trained models. The decomposition is also reference- and site-dependent:
-attention supplies a natural current-token value reference, whereas an MLP has
-no canonical internal analogue, making the appendix study a scoped diagnostic.
-Finally, these edits are analysis tools rather than deployment-ready methods.
-The matched-seed training study improves early validation loss without a stable
-downstream gain, so we make no general efficiency or performance claim.
+Our experiments cover decoder-only language models across multiple scales,
+language tasks, inference-time interventions, compression settings, and
+from-scratch training configurations. Although the same geometric picture is
+consistent across the evaluated settings, its behavior under other
+architectures, modalities, and post-training regimes remains to be established.
+Future work should test whether these directional patterns persist across such
+settings and connect layer-level geometry more directly to downstream behavior.
+We use the proposed edits primarily as analysis tools; turning them into
+practical training or inference methods requires further validation.
 
 \section*{Ethical Considerations}
 
 Directional decomposition provides a concrete tool for auditing representation
 change and screening compression or interventions before downstream evaluation.
-This screening requires no retraining. Average stability does not imply safety:
-components can remain essential for particular prompts, tasks, or contexts, and
-small edits can silently alter behavior. Geometry cannot replace task-specific
-testing or human review. We do not evaluate bias, privacy, security, or
-high-stakes use, and these tools could also enable targeted manipulation.
+This screening requires no retraining and is designed to complement
+task-specific testing and human review. Responsible deployment should evaluate
+prompt- and context-specific behavior as well as bias, privacy, security, and
+high-stakes use. Access controls and downstream monitoring are appropriate when
+deploying editing capabilities.

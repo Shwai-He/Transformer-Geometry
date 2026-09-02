@@ -22,6 +22,15 @@
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{placeins}
+\usepackage{flushend}
+\usepackage{dblfloatfix}
+\usepackage{cuted}
+
+\captionsetup{labelfont=bf}
+\setcounter{dbltopnumber}{1}
+\makeatletter
+\apptocmd{\thebibliography}{\setlength{\itemsep}{-4.25pt plus 0.1pt minus 0.1pt}}{}{}
+\makeatother
 
 \setlength{\emergencystretch}{1.5em}
 \setlength{\titlebox}{6.2cm}
@@ -34,14 +43,15 @@
 Disentangling Representation Evolution in Transformers through Directional Decomposition}
 
 \author{
-  Shwai He$^{1}$\thanks{Work done while the first author was an intern at ByteDance.} \quad
+  Shwai He$^{1,*}$ \quad
   Haichao Zhang$^{2}$ \quad
   Shen Yan$^{3}$ \\[2pt]
   $^{1}$University of Maryland, College Park \quad
   $^{2}$Northeastern University \quad
   $^{3}$ByteDance \\[2pt]
   \texttt{\small shwaihe@umd.edu} \quad
-  \texttt{\small zhang.haich@northeastern.edu}
+  \texttt{\small zhang.haich@northeastern.edu} \quad
+  \texttt{\small sheny@bytedance.com}
 }
 
 \hypersetup{
@@ -49,19 +59,16 @@ Disentangling Representation Evolution in Transformers through Directional Decom
   pdfauthor={Shwai He, Haichao Zhang, and Shen Yan}
 }
 
-\definecolor{color1}{rgb}{0.1,0.7,0.8} % cyan
-\definecolor{color2}{rgb}{0.9,0.1,0.1} % red
-\definecolor{color3}{rgb}{0.7,0.3,0.7} % purple
-\definecolor{color4}{rgb}{0.3,0.3,0.7} % dark blue
-\definecolor{color5}{RGB}{8, 102, 3} % dark green
-\definecolor{color6}{rgb}{0.53, 0.66, 0.42} % light green
-
-\newcommand\sh[1]{\nbc{SH}{#1}{color3}}
-
-
 \begin{document}
 
 \maketitle
+
+\begingroup
+\renewcommand{\thefootnote}{*}
+\begin{NoHyper}
+\footnotetext{Work done while Shwai He was an intern at ByteDance.}
+\end{NoHyper}
+\endgroup
 
 \input{sections/abstract}
 
@@ -81,8 +88,6 @@ Disentangling Representation Evolution in Transformers through Directional Decom
 
 \bibliography{references}
 
-\clearpage
-\raggedbottom
 \input{sections/appendix}
 
 \end{document}
