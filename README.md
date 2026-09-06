@@ -35,10 +35,12 @@ Every hidden-state update $\Delta h$ (produced by multi-head self-attention or f
 We extend and evaluate this geometric framework across both **Residual-Space** and **Value-Space (XSA)**, uncovering key mechanisms behind inference-time editing, model compression (pruning & quantization), long-context processing, and pretraining optimization dynamics.
 
 <p align="center">
-  <img src="docs/research/assets/modellesion_biological_lesion_framework_web.jpg" alt="Biological Brain Lesion vs. Computational Model Lesion Atlas" width="100%" />
+  <img src="assets/transformer_geometry_overview.png" alt="Transformer Geometry: Geometric Decomposition and Component Scaling" width="100%" />
 </p>
 
-> 🧠 **Neurobiological Paradigm**: Just as clinical lesion studies map functional specialization in the human brain (e.g. Broca-Wernicke language aphasia vs. ventral stream visual object agnosia), targeted geometric lesions in Transformers disentangle linguistic control from visual lattice representation. See [Neurobiological Lesion Specification](docs/design/NEUROBIOLOGICAL_LESION_FRAMEWORK.md).
+<p align="center">
+  <em><b>Figure 1: Geometric Decomposition and Component Scaling.</b> Residual updates and attention value aggregates are decomposed into parallel ($\Delta_\parallel$) and perpendicular ($\Delta_\perp$) components and scaled independently; parallel-only scaling can be expressed as an attention-diagonal change. Changing $\Delta_\parallel$ has limited impact on performance, whereas modifying $\Delta_\perp$ sharply degrades perplexity.</em>
+</p>
 
 ---
 
@@ -46,35 +48,19 @@ We extend and evaluate this geometric framework across both **Residual-Space** a
 
 For a token representation $h_{l-1} \in \mathbb{R}^d$ entering layer $l$ and generating an update $\Delta h_l$:
 
-```mermaid
-flowchart LR
-    H_IN["📥 Input Representation\n h_{l-1}"] --> BLOCK["⚙️ Transformer Block\n(Self-Attention / FFN)"]
-    BLOCK --> DELTA["🔄 Layer Update\n Δh_l"]
-    
-    DELTA --> PARA["🔹 Parallel Component: Δh_{l, ∥}\n(Rescaling / Magnitude Maintenance)"]
-    DELTA --> PERP["🔸 Perpendicular Component: Δh_{l, ⊥}\n(Directional Rotation / Semantic Shift)"]
-    
-    H_IN --> COMBINE["➕ Update Combination\n h_l = h_{l-1} + α·Δh_{l, ∥} + β·Δh_{l, ⊥}"]
-    PARA --> COMBINE
-    PERP --> COMBINE
-    COMBINE --> H_OUT["📤 Output Representation\n h_l"]
-
-    style H_IN fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e40af
-    style H_OUT fill:#ecfdf5,stroke:#10b981,stroke-width:2px,color:#065f46
-    style BLOCK fill:#f8fafc,stroke:#64748b,stroke-width:1.5px,color:#334155
-    style DELTA fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#92400e
-    style PARA fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e40af
-    style PERP fill:#fae8ff,stroke:#a855f7,stroke-width:2px,color:#6b21a8
-    style COMBINE fill:#f1f5f9,stroke:#475569,stroke-width:2px,color:#0f172a
-```
-
 $$\Delta h_l = \Delta h_{l, \parallel} + \Delta h_{l, \perp}$$
+
+where the parallel component projects directly along the incoming representation:
 
 $$\Delta h_{l, \parallel} = \frac{\langle \Delta h_l, h_{l-1} \rangle}{\|h_{l-1}\|^2} h_{l-1}, \quad \Delta h_{l, \perp} = \Delta h_l - \Delta h_{l, \parallel}$$
 
+Component-scaling interventions systematically modulate the representation trajectory via scaling factors $\alpha$ and $\beta$:
+
+$$h_l = h_{l-1} + \alpha \cdot \Delta h_{l, \parallel} + \beta \cdot \Delta h_{l, \perp}$$
+
 > [!NOTE]
 > * **Residual-Space Decomposition**: Operates at the block-output residual stream level ($h_{l} = h_{l-1} + \Delta h_l$).
-> * **Value-Space Decomposition (XSA)**: Operates inside the attention mechanism, projecting weighted value vectors against self-value tokens.
+> * **Value-Space Decomposition (XSA)**: Operates inside the multi-head attention mechanism, projecting aggregated value representations against self-value tokens.
 
 ---
 
