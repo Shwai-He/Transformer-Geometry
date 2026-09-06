@@ -4,11 +4,9 @@
 \subsection{Parallel and Perpendicular Decomposition}
 \label{sec:decomp}
 
-Parallel and perpendicular decomposition separates a vector into components
-along and orthogonal to a reference direction in the same representation
-space. Let $\Delta \in \mathbb{R}^d$ denote the vector being analyzed and let
-$\mathbf{z} \in \mathbb{R}^d$ be the reference vector. The unique
-components are:
+Given a reference vector $\mathbf{z} \in \mathbb{R}^d$ and an update vector
+$\Delta \in \mathbb{R}^d$ within the same representation space, $\Delta$ admits
+a unique orthogonal decomposition into components parallel and perpendicular to $\mathbf{z}$:
 \begin{align}
   \Delta_\parallel
     &= \frac{\Delta \cdot \mathbf{z}}{\|\mathbf{z}\|^2}\,\mathbf{z}
@@ -22,12 +20,14 @@ components are:
   \label{eq:perp}
 \end{align}
 The parallel component $\Delta_\parallel$ lies along the reference direction
-$\mathbf{z}$, whereas $\Delta_\perp$ lies in its $(d-1)$-dimensional
-orthogonal subspace and carries the direction-changing degrees of freedom.
+$\mathbf{z}$, scaling its magnitude by $\alpha$, whereas $\Delta_\perp$ lies in
+the $(d-1)$-dimensional orthogonal subspace, carrying the direction-changing
+degrees of freedom.
 
-This is the basic decomposition used throughout the paper. In residual space,
-$\Delta$ is a contribution added to the hidden state; in value space, it
-is the value aggregate formed inside attention.
+We apply this decomposition across two primary sites: in
+\textit{residual space}, $\Delta$ is the sub-layer update added to the incoming
+state $\mathbf{z}$; in \textit{attention value space}, $\Delta$ is the
+pre-projection aggregate relative to the token's own value vector $\mathbf{z}$.
 
 \subsection{Transformer Residual Updates}
 \label{sec:transformer}
@@ -47,13 +47,13 @@ after both attention and MLP. We write $\hz{l}{t}$ for the reference state at
 token position $t \in \{1,\ldots,T\}$ and $\Du{l}{t}$ for the corresponding
 residual contribution.
 
-For a residual update:
+Decomposing $\Du{l}{t}$ relative to $\hz{l}{t}$ yields the parallel component:
 \begin{equation}
   \Dup{l}{t} = \alpha^l_t \hz{l}{t}, \qquad
   \alpha^l_t = \frac{\Du{l}{t}\cdot \hz{l}{t}}{\|\hz{l}{t}\|^2}.
 \end{equation}
-Adding the parallel component therefore rescales the existing hidden state by
-$1+\alpha^l_t$. The resulting representation is
+Adding the parallel component therefore rescales the existing representation by
+$1+\alpha^l_t$:
 \begin{equation}
   \hz{l+1}{t}
   = (1+\alpha^l_t)\hz{l}{t} + \Duperp{l}{t}, \qquad
@@ -64,12 +64,12 @@ To measure update geometry, we report the relative magnitude
 $\|\Dup{l}{t}\|/\|\Duperp{l}{t}\|$ across layers. This ratio quantifies how
 much update magnitude lies along the current representation versus orthogonal
 directions; the sign of $\alpha^l_t$ indicates whether the parallel component
-points with or against the current representation.
+reinforces or opposes the incoming representation.
 
 Figure~\ref{fig:profiles} reports this ratio across generation steps at three
 sampled layers for two Qwen3 models. The persistent parallel components
-motivate us to ask when they affect model behavior and in which representation
-spaces those effects are robust.
+motivate investigating when they affect model behavior and in which
+representation spaces those effects remain robust.
 
 \begin{figure*}[t]
   \centering

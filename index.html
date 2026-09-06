@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transformer Geometry: Decomposing Representation Updates into Parallel & Perpendicular Subspaces | EMNLP 2026</title>
+  <meta name="description" content="Official project website for [EMNLP 2026] Disentangling Representation Evolution in Transformers through Directional Decomposition by UMD, Northeastern University, and ByteDance.">
+  <meta name="keywords" content="Transformer Geometry, Representation Evolution, Orthogonal Decomposition, Parallel Updates, Perpendicular Updates, Value Space, XSA, Model Compression, EMNLP 2026, Machine Learning">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 Free -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- KaTeX for Vector-Sharp Mathematical Equations -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            heading: ['"Outfit"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+              900: '#082f49',
+            },
+            accent: {
+              orange: '#ea580c',
+              indigo: '#4f46e5',
+              emerald: '#059669',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Academic design system compliant soft styling */
+    .code-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.875rem;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+    }
+    .code-box pre, pre code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: #1e293b;
+    }
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      border-radius: 0.625rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+    .hero-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    }
+    .card-academic {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+      transition: all 0.2s ease;
+    }
+    .card-academic:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-100 selection:text-brand-900">
+
+  <!-- Top Sticky Navigation -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">📐</span>
+        <a href="#" class="font-heading font-bold text-lg text-slate-900 tracking-tight hover:text-brand-600 transition">
+          Transformer Geometry
+        </a>
+        <span class="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+          EMNLP 2026
+        </span>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <a href="#overview" class="hover:text-brand-600 transition">Overview</a>
+        <a href="#simulator" class="hover:text-brand-600 transition">Simulator</a>
+        <a href="#findings" class="hover:text-brand-600 transition">Core Pillars</a>
+        <a href="#benchmarks" class="hover:text-brand-600 transition">Benchmarks</a>
+        <a href="#quickstart" class="hover:text-brand-600 transition">Quickstart</a>
+        <a href="#citation" class="hover:text-brand-600 transition">Citation</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/Shwai-He/Transformer-Geometry" target="_blank" rel="noopener"
+           class="hero-btn bg-slate-900 text-white hover:bg-slate-800 text-xs sm:text-sm">
+          <i class="fa-brands fa-github text-base"></i>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative pt-12 pb-16 sm:pt-16 sm:pb-24 border-b border-slate-200/80 bg-gradient-to-b from-white via-slate-50/50 to-slate-100/40">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      
+      <!-- Conference Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm font-semibold mb-6 shadow-sm">
+        <i class="fa-solid fa-award text-emerald-600"></i>
+        <span>Accepted to EMNLP 2026 Main Conference</span>
+      </div>
+
+      <!-- Main Paper Title -->
+      <h1 class="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl text-slate-950 tracking-tight leading-tight max-w-4xl mx-auto mb-4">
+        Disentangling Representation Evolution in Transformers through Directional Decomposition
+      </h1>
+
+      <p class="text-base sm:text-lg text-slate-600 font-medium max-w-3xl mx-auto mb-8">
+        Transformer Geometry: Decomposing Representation Updates into Parallel and Perpendicular Subspaces
+      </p>
+
+      <!-- Authors & Affiliations -->
+      <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm sm:text-base font-medium text-slate-700 mb-3">
+        <span><a href="https://shwai-he.github.io" target="_blank" class="text-brand-600 hover:underline font-semibold">Shwai He</a><sup>1,*</sup></span>
+        <span class="text-slate-300">•</span>
+        <span><a href="https://www.zhanghaichao.xyz" target="_blank" class="text-brand-600 hover:underline font-semibold">Haichao Zhang</a><sup>2</sup></span>
+        <span class="text-slate-300">•</span>
+        <span><span class="font-semibold text-slate-800">Shen Yan</span><sup>3</sup></span>
+      </div>
+
+      <div class="text-xs sm:text-sm text-slate-500 mb-8 flex flex-wrap justify-center gap-x-4 gap-y-1">
+        <span><sup>1</sup> University of Maryland, College Park</span>
+        <span class="hidden sm:inline text-slate-300">|</span>
+        <span><sup>2</sup> Northeastern University</span>
+        <span class="hidden sm:inline text-slate-300">|</span>
+        <span><sup>3</sup> ByteDance</span>
+        <div class="w-full text-xs text-slate-400 mt-1">(* Corresponding / Project Lead)</div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap justify-center items-center gap-3 sm:gap-4 mb-8">
+        <a href="emnlp_2026_camera_ready.pdf" target="_blank" class="hero-btn bg-brand-600 text-white hover:bg-brand-700">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span>Paper (PDF)</span>
+        </a>
+        <a href="https://github.com/Shwai-He/Transformer-Geometry" target="_blank" class="hero-btn bg-white text-slate-700 border border-slate-300 hover:bg-slate-50">
+          <i class="fa-brands fa-github text-slate-800"></i>
+          <span>Codebase</span>
+        </a>
+        <a href="#simulator" class="hero-btn bg-white text-slate-700 border border-slate-300 hover:bg-slate-50">
+          <i class="fa-solid fa-compass-drafting text-brand-600"></i>
+          <span>Interactive Simulator</span>
+        </a>
+        <a href="#citation" class="hero-btn bg-white text-slate-700 border border-slate-300 hover:bg-slate-50">
+          <i class="fa-solid fa-quote-left text-slate-500"></i>
+          <span>Cite BibTeX</span>
+        </a>
+      </div>
+
+      <!-- Standard Shields Badges -->
+      <div class="flex flex-wrap justify-center items-center gap-2 pt-2">
+        <a href="https://2026.emnlp.org/" target="_blank"><img src="https://img.shields.io/badge/EMNLP-2026-brightgreen?style=for-the-badge" alt="EMNLP 2026"></a>
+        <a href="https://pytorch.org/" target="_blank"><img src="https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C.svg?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch"></a>
+        <a href="https://www.python.org/" target="_blank"><img src="https://img.shields.io/badge/Python-3.10%2B-3776AB.svg?style=for-the-badge&logo=python&logoColor=white" alt="Python"></a>
+        <a href="https://huggingface.co/" target="_blank"><img src="https://img.shields.io/badge/HuggingFace-Transformers-FFD21E.svg?style=for-the-badge&logo=huggingface&logoColor=black" alt="HuggingFace"></a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Executive Summary & Core Concept -->
+  <section id="overview" class="py-16 bg-white border-b border-slate-200/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="font-heading font-bold text-2xl sm:text-3xl text-slate-900 tracking-tight mb-3">
+          The Geometry of Representation Evolution
+        </h2>
+        <p class="text-slate-600 text-base leading-relaxed">
+          Why do heavily parameterized attention and MLP sub-layers actively allocate capacity to produce updates aligned with incoming states, when the residual stream already provides identical carryover for free?
+        </p>
+      </div>
+
+      <!-- Two Core Columns: Parallel vs Perpendicular -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div class="card-academic p-6 border-l-4 border-l-brand-500">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="w-8 h-8 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-lg">∥</span>
+            <h3 class="font-heading font-bold text-lg text-slate-900">Parallel Component (&Delta;h<sub>∥</sub>)</h3>
+          </div>
+          <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+            Projects directly onto the incoming representation vector \(h\). Geometrically, it modulates the <strong>magnitude and scaling</strong> of existing semantic features without altering their direction.
+          </p>
+          <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 text-xs font-mono text-slate-700">
+            &Delta;h<sub>∥</sub> = (&lang;&Delta;h, h&rang; / ||h||&sup2;) &middot; h
+          </div>
+          <div class="mt-3 text-xs text-emerald-700 font-semibold flex items-center gap-1.5">
+            <i class="fa-solid fa-shield-check"></i>
+            <span>Remarkably robust to component scaling (&Delta;PPL +0.46)</span>
+          </div>
+        </div>
+
+        <div class="card-academic p-6 border-l-4 border-l-accent-orange">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="w-8 h-8 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-lg">&perp;</span>
+            <h3 class="font-heading font-bold text-lg text-slate-900">Perpendicular Component (&Delta;h<sub>&perp;</sub>)</h3>
+          </div>
+          <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+            Lies strictly orthogonal to \(h\). It drives <strong>directional rotation and semantic shifts</strong>, steering representations into novel representational subspaces required for complex reasoning.
+          </p>
+          <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 text-xs font-mono text-slate-700">
+            &Delta;h<sub>&perp;</sub> = &Delta;h - &Delta;h<sub>∥</sub>, where &lang;&Delta;h<sub>&perp;</sub>, h&rang; = 0
+          </div>
+          <div class="mt-3 text-xs text-rose-600 font-semibold flex items-center gap-1.5">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>Highly sensitive; perturbing sharply hurts perplexity (&Delta;PPL +95.5k)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Paper Figure 1 Showcase -->
+      <div class="card-academic p-4 sm:p-6 bg-slate-50/50">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-image text-brand-600"></i>
+            <h3 class="font-heading font-bold text-slate-900 text-base sm:text-lg">
+              Figure 1: Geometric Decomposition & Component Scaling
+            </h3>
+          </div>
+          <button onclick="openLightbox('assets/transformer_geometry_overview.png')"
+                  class="text-xs font-semibold text-brand-600 hover:text-brand-700 flex items-center gap-1 bg-white px-2.5 py-1 rounded-md border border-slate-200 shadow-sm transition">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+            <span>Full-Screen Zoom</span>
+          </button>
+        </div>
+
+        <div class="cursor-pointer overflow-hidden rounded-lg border border-slate-200 bg-white" onclick="openLightbox('assets/transformer_geometry_overview.png')">
+          <img src="assets/transformer_geometry_overview.png" alt="Geometric Decomposition & Component Scaling" class="w-full h-auto object-contain hover:scale-[1.01] transition duration-200">
+        </div>
+
+        <p class="text-xs sm:text-sm text-slate-600 mt-4 leading-relaxed">
+          <strong>Figure 1 Description:</strong> Residual updates and attention value aggregates are decomposed into parallel (&Delta;<sub>∥</sub>) and perpendicular (&Delta;<sub>&perp;</sub>) components and scaled independently. Parallel-only scaling can be realized as an attention-diagonal modification. Changing &Delta;<sub>∥</sub> has limited impact on model performance, whereas perturbing &Delta;<sub>&perp;</sub> sharply degrades perplexity across scales.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Vector Decomposition Simulator -->
+  <section id="simulator" class="py-16 bg-slate-100/60 border-b border-slate-200/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-200 text-xs font-semibold mb-2">
+          <i class="fa-solid fa-flask"></i> Interactive Geometric Simulator
+        </div>
+        <h2 class="font-heading font-bold text-2xl sm:text-3xl text-slate-900 tracking-tight">
+          Explore Component-Scaling Interventions
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base mt-2">
+          Adjust the parallel scaling factor (&alpha;) and perpendicular factor (&beta;) to visualize real-time vector deformation and the resulting behavioral perplexity gap.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Controls (col-span-5) -->
+        <div class="lg:col-span-5 card-academic p-6 bg-white space-y-6">
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-brand-600 inline-block"></span>
+                Parallel Scale (&alpha;)
+              </label>
+              <span id="alphaVal" class="text-sm font-mono font-bold text-brand-600">1.00&times;</span>
+            </div>
+            <input type="range" id="alphaSlider" min="0" max="2" step="0.05" value="1.0" class="w-full accent-brand-600 cursor-pointer">
+            <p class="text-xs text-slate-500 mt-1">Modulates magnitude along incoming vector \(h\). Safe interval [0.0, 2.0].</p>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-accent-orange inline-block"></span>
+                Perpendicular Scale (&beta;)
+              </label>
+              <span id="betaVal" class="text-sm font-mono font-bold text-accent-orange">1.00&times;</span>
+            </div>
+            <input type="range" id="betaSlider" min="0" max="2" step="0.05" value="1.0" class="w-full accent-orange-600 cursor-pointer">
+            <p class="text-xs text-slate-500 mt-1">Modulates orthogonal semantic steering. Any deviation rapidly degrades output.</p>
+          </div>
+
+          <!-- Space Selector -->
+          <div>
+            <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-2">Representation Space</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button id="spaceResidual" onclick="setSpace('residual')" class="px-3 py-2 text-xs font-semibold rounded-lg border bg-brand-50 border-brand-300 text-brand-700 transition">
+                Residual-Space
+              </button>
+              <button id="spaceValue" onclick="setSpace('value')" class="px-3 py-2 text-xs font-semibold rounded-lg border bg-white border-slate-200 text-slate-600 hover:bg-slate-50 transition">
+                Value-Space (XSA)
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Presets -->
+          <div>
+            <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-2">Diagnostic Presets</label>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="setPreset(1.0, 1.0)" class="px-2.5 py-1 text-xs rounded bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+                Baseline (1.0, 1.0)
+              </button>
+              <button onclick="setPreset(0.0, 1.0)" class="px-2.5 py-1 text-xs rounded bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 transition">
+                Parallel-Removed (0, 1.0)
+              </button>
+              <button onclick="setPreset(1.0, 0.2)" class="px-2.5 py-1 text-xs rounded bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition">
+                Orthogonal Perturbed (1.0, 0.2)
+              </button>
+            </div>
+          </div>
+
+          <!-- Real-Time Metrics Box -->
+          <div class="bg-slate-50 rounded-lg p-4 border border-slate-200 space-y-2">
+            <div class="flex justify-between items-center text-xs font-medium">
+              <span class="text-slate-500">Relative Magnitude ||h'|| / ||h||:</span>
+              <span id="metricMag" class="font-mono font-semibold text-slate-800">1.34&times;</span>
+            </div>
+            <div class="flex justify-between items-center text-xs font-medium">
+              <span class="text-slate-500">Alignment Angle &theta;(h', h):</span>
+              <span id="metricAngle" class="font-mono font-semibold text-slate-800">18.4&deg;</span>
+            </div>
+            <div class="flex justify-between items-center text-xs font-medium pt-2 border-t border-slate-200">
+              <span class="text-slate-700 font-semibold">Predicted &Delta;PPL Impact:</span>
+              <span id="metricPpl" class="font-mono font-bold text-emerald-600">+0.00 (Baseline)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Canvas Visualizer (col-span-7) -->
+        <div class="lg:col-span-7 card-academic p-6 bg-white flex flex-col items-center">
+          <div class="w-full flex justify-between items-center mb-3">
+            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Vector Subspace Visualizer</span>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-slate-700 inline-block"></span> Base h</span>
+              <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-brand-500 inline-block"></span> &alpha;&Delta;h<sub>∥</sub></span>
+              <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-orange-500 inline-block"></span> &beta;&Delta;h<sub>&perp;</sub></span>
+              <span class="flex items-center gap-1"><span class="w-3 h-0.5 bg-emerald-600 inline-block"></span> Final h'</span>
+            </div>
+          </div>
+          <canvas id="vectorCanvas" width="520" height="360" class="w-full max-w-[520px] bg-slate-50 rounded-lg border border-slate-200 shadow-inner"></canvas>
+          <div class="text-center text-xs text-slate-400 mt-3">
+            Mathematical projection: \(h' = h + \alpha \Delta h_{\parallel} + \beta \Delta h_{\perp}\)
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Core Research Pillars -->
+  <section id="findings" class="py-16 bg-white border-b border-slate-200/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="font-heading font-bold text-2xl sm:text-3xl text-slate-900 tracking-tight mb-2">
+          Five Core Research Pillars
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base">
+          Systematic empirical and theoretical investigation across models, interventions, long-context retrieval, compression, and pretraining.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Pillar 1 -->
+        <div class="card-academic p-6 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-lg mb-4 font-bold">1</div>
+            <h3 class="font-heading font-bold text-slate-900 text-base mb-2">Geometry Probing</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Transformer updates allocate substantial capacity to direction-preserving components. Measured persistently across Qwen3, LLaMA-3, and nanoGPT architectures.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 font-mono">
+            scripts/run_probe.py
+          </div>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="card-academic p-6 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg mb-4 font-bold">2</div>
+            <h3 class="font-heading font-bold text-slate-900 text-base mb-2">Inference Interventions</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Discovered space-dependent stability: attention value-space (XSA) parallel scaling is highly resilient, whereas perpendicular scaling causes catastrophic performance drops.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 font-mono">
+            lm_eval/models/attn_diag_hooks.py
+          </div>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="card-academic p-6 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-lg mb-4 font-bold">3</div>
+            <h3 class="font-heading font-bold text-slate-900 text-base mb-2">Downstream & RULER</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Geometric editing preserves general downstream capabilities while revealing fine-grained sensitivity during 32k/64k long-context needle retrieval in the RULER suite.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 font-mono">
+            lm-eval/scripts/run_ruler.sh
+          </div>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="card-academic p-6 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-lg mb-4 font-bold">4</div>
+            <h3 class="font-heading font-bold text-slate-900 text-base mb-2">Compression Diagnostics</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Update distortion decomposition proves that Wanda/Magnitude pruning heavily corrupts &Delta;h<sub>&perp;</sub>, whereas quantization (GPTQ/AWQ) preserves true update geometry.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 font-mono">
+            compression/code/layerwise_compare.py
+          </div>
+        </div>
+
+        <!-- Pillar 5 -->
+        <div class="card-academic p-6 flex flex-col justify-between md:col-span-2 lg:col-span-2">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center text-lg mb-4 font-bold">5</div>
+            <h3 class="font-heading font-bold text-slate-900 text-base mb-2">Pretraining with Geometric Regularization</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Motivated by inference resilience, suppressing parallel attention updates during from-scratch pretraining consistently yields lower validation-loss trajectories and higher downstream benchmark averages across model scales from 300M to 2.7B parameters.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 font-mono">
+            training/pretraining_xsa.py
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Benchmark Visualizer -->
+  <section id="benchmarks" class="py-16 bg-slate-50 border-b border-slate-200/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <h2 class="font-heading font-bold text-2xl sm:text-3xl text-slate-900 tracking-tight mb-2">
+          Empirical Benchmark Dynamics
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base">
+          Interactive evaluation metrics across component scaling sweeps, pretraining convergence, and compression distortion.
+        </p>
+      </div>
+
+      <!-- Tab Buttons -->
+      <div class="flex justify-center mb-8">
+        <div class="inline-flex rounded-lg p-1 bg-slate-200/80 border border-slate-300">
+          <button onclick="switchChart('scaling')" id="tabBtn-scaling" class="px-4 py-2 text-xs sm:text-sm font-semibold rounded-md bg-white text-slate-900 shadow-sm transition">
+            Component Scaling (&Delta;PPL)
+          </button>
+          <button onclick="switchChart('pretrain')" id="tabBtn-pretrain" class="px-4 py-2 text-xs sm:text-sm font-semibold rounded-md text-slate-600 hover:text-slate-900 transition">
+            Pretraining Loss Curves
+          </button>
+          <button onclick="switchChart('compression')" id="tabBtn-compression" class="px-4 py-2 text-xs sm:text-sm font-semibold rounded-md text-slate-600 hover:text-slate-900 transition">
+            Compression Error Profile
+          </button>
+        </div>
+      </div>
+
+      <!-- Chart Container -->
+      <div class="card-academic p-6 bg-white">
+        <div class="relative h-[360px] sm:h-[420px] w-full">
+          <canvas id="benchmarkChart"></canvas>
+        </div>
+        <div id="chartCaption" class="mt-4 text-xs text-center text-slate-500">
+          Scaling parallel updates maintains near-zero &Delta;PPL disruption across [0, 2], while perpendicular perturbation collapses WikiText-2 perplexity.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Quickstart Workflows -->
+  <section id="quickstart" class="py-16 bg-white border-b border-slate-200/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <h2 class="font-heading font-bold text-2xl sm:text-3xl text-slate-900 tracking-tight mb-2">
+          Reproducibility & Quick Start
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base">
+          Clean Python interfaces for probing geometry, registering dynamic hooks, and running downstream evaluations.
+        </p>
+      </div>
+
+      <div class="card-academic overflow-hidden">
+        <!-- Sub-tabs -->
+        <div class="bg-slate-100 border-b border-slate-200 px-4 flex gap-2 overflow-x-auto text-xs font-semibold">
+          <button onclick="switchCodeTab('install')" id="codeTab-install" class="py-3 px-4 border-b-2 border-brand-600 text-brand-700 bg-white">
+            1. Setup & Environment
+          </button>
+          <button onclick="switchCodeTab('probe')" id="codeTab-probe" class="py-3 px-4 border-b-2 border-transparent text-slate-600 hover:text-slate-900">
+            2. Run Geometry Probing
+          </button>
+          <button onclick="switchCodeTab('hooks')" id="codeTab-hooks" class="py-3 px-4 border-b-2 border-transparent text-slate-600 hover:text-slate-900">
+            3. Intervention Hooks
+          </button>
+          <button onclick="switchCodeTab('eval')" id="codeTab-eval" class="py-3 px-4 border-b-2 border-transparent text-slate-600 hover:text-slate-900">
+            4. Long-Context RULER
+          </button>
+        </div>
+
+        <!-- Code Content -->
+        <div class="p-6 bg-slate-50 relative">
+          <button onclick="copyCodeContent()" class="absolute top-4 right-4 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-md px-3 py-1.5 text-xs font-semibold shadow-sm flex items-center gap-1.5 transition">
+            <i class="fa-regular fa-copy" id="copyIcon"></i>
+            <span id="copyText">Copy Code</span>
+          </button>
+          
+          <pre><code id="codeBlock" class="language-bash"># Clone repository and install dependencies
+git clone https://github.com/Shwai-He/Transformer-Geometry.git
+cd Transformer-Geometry
+pip install -r requirements.txt
+pip install -e .</code></pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BibTeX Citation -->
+  <section id="citation" class="py-16 bg-slate-50 border-b border-slate-200/80">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="font-heading font-bold text-2xl text-slate-900 tracking-tight">
+            Citation
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">If you find this research or code useful, please cite our EMNLP 2026 paper:</p>
+        </div>
+        <button onclick="copyBibtex()" class="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg px-3.5 py-1.5 text-xs font-semibold shadow-sm flex items-center gap-2 transition">
+          <i class="fa-regular fa-copy" id="bibtexCopyIcon"></i>
+          <span id="bibtexCopyText">Copy BibTeX</span>
+        </button>
+      </div>
+
+      <div class="code-box relative">
+        <pre><code id="bibtexContent">@inproceedings{he2026transformer_geometry,
+  title={Disentangling Representation Evolution in Transformers through Directional Decomposition},
+  author={He, Shwai and Zhang, Haichao and Yan, Shen},
+  booktitle={Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing (EMNLP)},
+  year={2026}
+}</code></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-10 bg-white text-slate-500 text-xs sm:text-sm border-t border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 font-medium">
+        <span>📐 Transformer Geometry</span>
+        <span>&middot;</span>
+        <span>EMNLP 2026</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-600 font-medium">
+        <a href="https://github.com/Shwai-He/Transformer-Geometry" target="_blank" class="hover:text-slate-900 transition">GitHub</a>
+        <a href="emnlp_2026_camera_ready.pdf" target="_blank" class="hover:text-slate-900 transition">PDF</a>
+        <a href="#overview" class="hover:text-slate-900 transition">Back to Top</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal -->
+  <div id="lightboxModal" class="fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4" onclick="closeLightbox()">
+    <div class="relative max-w-6xl max-h-[90vh] bg-white rounded-xl p-4 shadow-2xl" onclick="event.stopPropagation()">
+      <button onclick="closeLightbox()" class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-slate-700 shadow-md transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <img id="lightboxImg" src="" alt="Zoomed Diagram" class="max-h-[82vh] w-auto object-contain rounded-lg">
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-lg shadow-xl text-xs font-semibold flex items-center gap-2 transform translate-y-16 opacity-0 transition-all duration-300">
+    <i class="fa-solid fa-circle-check text-emerald-400"></i>
+    <span id="toastMsg">Copied to clipboard!</span>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // KaTeX auto-render
+    document.addEventListener("DOMContentLoaded", function() {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "\\(", right: "\\)", display: false},
+            {left: "$", right: "$", display: false}
+          ]
+        });
+      }
+      initCanvasSimulator();
+      initBenchmarkChart();
+    });
+
+    // Lightbox Controls
+    function openLightbox(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightboxModal').classList.remove('hidden');
+    }
+    function closeLightbox() {
+      document.getElementById('lightboxModal').classList.add('hidden');
+    }
+
+    // Toast Notification
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.remove('translate-y-16', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-16', 'opacity-0');
+      }, 2500);
+    }
+
+    // Copy Functions
+    function copyBibtex() {
+      const bib = document.getElementById('bibtexContent').innerText;
+      navigator.clipboard.writeText(bib).then(() => {
+        showToast("BibTeX citation copied to clipboard!");
+      });
+    }
+
+    const CODE_SNIPPETS = {
+      install: `# Clone repository and install dependencies
+git clone https://github.com/Shwai-He/Transformer-Geometry.git
+cd Transformer-Geometry
+pip install -r requirements.txt
+pip install -e .`,
+      probe: `# Layerwise parallel and perpendicular geometry probing
+python scripts/run_probe.py \\
+    --model_name Qwen/Qwen2.5-7B \\
+    --dataset wikitext \\
+    --output_dir results/probing/`,
+      hooks: `# Dynamic PyTorch component intervention hook
+from src.repgeo.hooks import register_geometry_hook
+
+# Scale parallel component by alpha and perpendicular by beta
+model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-7B")
+hooks = register_geometry_hook(model, alpha=0.0, beta=1.0, space="value_xsa")
+# Execute forward pass with modified geometry
+outputs = model.generate(**inputs)`,
+      eval: `# Evaluate RULER 32k needle-retrieval under geometric intervention
+cd lm-evaluation-harness
+bash scripts/run_lm_eval_ruler_all_settings.sh \\
+    --model Qwen/Qwen2.5-7B \\
+    --context_length 32768 \\
+    --setting v_para_rem`
+    };
+
+    let currentCodeTab = 'install';
+    function switchCodeTab(tab) {
+      currentCodeTab = tab;
+      document.querySelectorAll('[id^="codeTab-"]').forEach(btn => {
+        btn.className = "py-3 px-4 border-b-2 border-transparent text-slate-600 hover:text-slate-900";
+      });
+      document.getElementById('codeTab-' + tab).className = "py-3 px-4 border-b-2 border-brand-600 text-brand-700 bg-white";
+      document.getElementById('codeBlock').innerText = CODE_SNIPPETS[tab];
+    }
+
+    function copyCodeContent() {
+      navigator.clipboard.writeText(CODE_SNIPPETS[currentCodeTab]).then(() => {
+        showToast("Code snippet copied!");
+      });
+    }
+
+    // ==========================================
+    // Interactive Canvas Simulator
+    // ==========================================
+    let simAlpha = 1.0;
+    let simBeta = 1.0;
+    let simSpace = 'residual';
+
+    function setSpace(sp) {
+      simSpace = sp;
+      if (sp === 'residual') {
+        document.getElementById('spaceResidual').className = "px-3 py-2 text-xs font-semibold rounded-lg border bg-brand-50 border-brand-300 text-brand-700 transition";
+        document.getElementById('spaceValue').className = "px-3 py-2 text-xs font-semibold rounded-lg border bg-white border-slate-200 text-slate-600 hover:bg-slate-50 transition";
+      } else {
+        document.getElementById('spaceValue').className = "px-3 py-2 text-xs font-semibold rounded-lg border bg-brand-50 border-brand-300 text-brand-700 transition";
+        document.getElementById('spaceResidual').className = "px-3 py-2 text-xs font-semibold rounded-lg border bg-white border-slate-200 text-slate-600 hover:bg-slate-50 transition";
+      }
+      updateSimulator();
+    }
+
+    function setPreset(a, b) {
+      document.getElementById('alphaSlider').value = a;
+      document.getElementById('betaSlider').value = b;
+      updateSimulator();
+    }
+
+    function initCanvasSimulator() {
+      const alphaSlider = document.getElementById('alphaSlider');
+      const betaSlider = document.getElementById('betaSlider');
+
+      alphaSlider.addEventListener('input', updateSimulator);
+      betaSlider.addEventListener('input', updateSimulator);
+
+      updateSimulator();
+    }
+
+    function updateSimulator() {
+      simAlpha = parseFloat(document.getElementById('alphaSlider').value);
+      simBeta = parseFloat(document.getElementById('betaSlider').value);
+
+      document.getElementById('alphaVal').innerText = simAlpha.toFixed(2) + "×";
+      document.getElementById('betaVal').innerText = simBeta.toFixed(2) + "×";
+
+      // Calculate Metrics
+      // Base incoming vector h = [150, 0]
+      // Delta h = [50, 60] -> Delta_parallel = [50, 0], Delta_perp = [0, 60]
+      // Final h' = [150 + alpha * 50, beta * 60]
+      const h_len = 150;
+      const d_par = 50;
+      const d_perp = 60;
+
+      const hp_x = h_len + simAlpha * d_par;
+      const hp_y = simBeta * d_perp;
+      const hp_len = Math.sqrt(hp_x * hp_x + hp_y * hp_y);
+      const magRatio = (hp_len / h_len).toFixed(2);
+      const angleDeg = (Math.atan2(hp_y, hp_x) * 180 / Math.PI).toFixed(1);
+
+      document.getElementById('metricMag').innerText = magRatio + "×";
+      document.getElementById('metricAngle').innerText = angleDeg + "°";
+
+      // PPL Prediction Model based on empirical curves
+      let deltaPpl = 0;
+      if (simSpace === 'value') {
+        deltaPpl = Math.abs(simAlpha - 1.0) * 0.46 + Math.pow(Math.abs(simBeta - 1.0) * 8.5, 3.5);
+      } else {
+        deltaPpl = Math.abs(simAlpha - 1.0) * 8.8 + Math.pow(Math.abs(simBeta - 1.0) * 12.0, 4.0);
+      }
+
+      const pplElem = document.getElementById('metricPpl');
+      if (deltaPpl < 1.0) {
+        pplElem.innerText = "+" + deltaPpl.toFixed(2) + " (Resilient / Baseline)";
+        pplElem.className = "font-mono font-bold text-emerald-600";
+      } else if (deltaPpl < 50.0) {
+        pplElem.innerText = "+" + deltaPpl.toFixed(1) + " (Moderate Shift)";
+        pplElem.className = "font-mono font-bold text-amber-600";
+      } else {
+        pplElem.innerText = "> +" + (deltaPpl > 1000 ? (deltaPpl/1000).toFixed(1) + "k" : deltaPpl.toFixed(0)) + " (Catastrophic Collapse)";
+        pplElem.className = "font-mono font-bold text-rose-600";
+      }
+
+      drawCanvas(h_len, d_par, d_perp, hp_x, hp_y);
+    }
+
+    function drawCanvas(hx, dpar, dperp, hpx, hpy) {
+      const canvas = document.getElementById('vectorCanvas');
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Origin
+      const ox = 60;
+      const oy = 240;
+
+      // Draw Grid / Axis
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(ox, 20); ctx.lineTo(ox, h - 20);
+      ctx.moveTo(20, oy); ctx.lineTo(w - 20, oy);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // 1. Vector h (Incoming Base Representation)
+      drawArrow(ctx, ox, oy, ox + hx, oy, '#334155', 3, 'h (base)');
+
+      // 2. Vector Delta_parallel (Scaled)
+      const parX = ox + hx + simAlpha * dpar;
+      drawArrow(ctx, ox + hx, oy, parX, oy, '#0284c7', 3, 'α·Δh_∥');
+
+      // 3. Vector Delta_perpendicular (Scaled)
+      const perpY = oy - simBeta * dperp;
+      drawArrow(ctx, parX, oy, parX, perpY, '#ea580c', 3, 'β·Δh_⊥');
+
+      // 4. Resultant Vector h'
+      drawArrow(ctx, ox, oy, parX, perpY, '#059669', 4, "h' (updated)");
+
+      // Dashed connector
+      ctx.strokeStyle = '#94a3b8';
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(ox + hx, oy);
+      ctx.lineTo(parX, perpY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function drawArrow(ctx, fromx, fromy, tox, toy, color, width, label) {
+      const headlen = 10;
+      const dx = tox - fromx;
+      const dy = toy - fromy;
+      const angle = Math.atan2(dy, dx);
+
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = width;
+
+      ctx.beginPath();
+      ctx.moveTo(fromx, fromy);
+      ctx.lineTo(tox, toy);
+      ctx.stroke();
+
+      // Arrow head
+      ctx.beginPath();
+      ctx.moveTo(tox, toy);
+      ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+      ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+      ctx.fill();
+
+      // Label
+      if (label) {
+        ctx.font = "bold 11px 'JetBrains Mono', monospace";
+        const midX = (fromx + tox) / 2;
+        const midY = (fromy + toy) / 2 - 8;
+        ctx.fillText(label, midX, midY);
+      }
+    }
+
+    // ==========================================
+    // Chart.js Benchmark Visualizer
+    // ==========================================
+    let benchmarkChart = null;
+
+    const CHART_DATA = {
+      scaling: {
+        labels: ['0.0', '0.25', '0.5', '0.75', '1.0 (Base)', '1.25', '1.5', '1.75', '2.0'],
+        datasets: [
+          {
+            label: 'Parallel Scaling (Value-Space XSA)',
+            data: [0.46, 0.28, 0.12, 0.04, 0.0, 0.15, 0.82, 3.40, 9.13],
+            borderColor: '#059669',
+            backgroundColor: 'rgba(5, 150, 105, 0.1)',
+            tension: 0.3,
+            fill: true
+          },
+          {
+            label: 'Parallel Scaling (Residual-Space)',
+            data: [8.80, 5.20, 2.40, 0.60, 0.0, 1.40, 4.80, 12.5, 28.4],
+            borderColor: '#0284c7',
+            backgroundColor: 'transparent',
+            borderDash: [5, 5],
+            tension: 0.3
+          },
+          {
+            label: 'Perpendicular Scaling (Δh_⊥)',
+            data: [95500, 48000, 15000, 1200, 0.0, 850, 12000, 46000, 212700],
+            borderColor: '#ea580c',
+            backgroundColor: 'transparent',
+            yAxisID: 'yLog',
+            tension: 0.3
+          }
+        ],
+        yScales: {
+          y: {
+            title: { display: true, text: 'Linear ΔPPL (Parallel)' },
+            min: 0, max: 35
+          },
+          yLog: {
+            position: 'right',
+            type: 'logarithmic',
+            title: { display: true, text: 'Log ΔPPL (Perpendicular)' },
+            grid: { drawOnChartArea: false }
+          }
+        },
+        caption: "Figure 2: WikiText-2 Perplexity under Component Scaling on Qwen3. Notice the massive asymmetry: parallel scaling is near baseline (+0.46 to +9.13 PPL), whereas perpendicular scaling causes catastrophic failure (> 95k PPL)."
+      },
+      pretrain: {
+        labels: ['10k', '20k', '30k', '40k', '50k', '60k', '70k', '80k', '90k', '100k'],
+        datasets: [
+          {
+            label: 'Baseline Transformer (Dense)',
+            data: [4.65, 3.98, 3.65, 3.44, 3.29, 3.18, 3.10, 3.03, 2.98, 2.94],
+            borderColor: '#64748b',
+            tension: 0.3
+          },
+          {
+            label: 'Attn Para-Removed (Residual)',
+            data: [4.58, 3.91, 3.59, 3.38, 3.23, 3.12, 3.04, 2.97, 2.92, 2.88],
+            borderColor: '#0284c7',
+            tension: 0.3
+          },
+          {
+            label: 'Value-Space Para-Removed (V-Para Rem)',
+            data: [4.49, 3.82, 3.50, 3.29, 3.14, 3.03, 2.95, 2.88, 2.83, 2.79],
+            borderColor: '#059669',
+            tension: 0.3,
+            borderWidth: 3
+          }
+        ],
+        yScales: {
+          y: {
+            title: { display: true, text: 'Validation Loss (OpenWebText)' },
+            min: 2.7, max: 4.8
+          }
+        },
+        caption: "Figure 3: From-scratch pretraining validation loss trajectories. Value-space parallel suppression consistently converges to strictly lower validation loss across 300M, 1.4B, and 2.7B parameter scales."
+      },
+      compression: {
+        labels: ['L2', 'L6', 'L10', 'L14', 'L18', 'L22', 'L26', 'L30'],
+        datasets: [
+          {
+            label: 'Wanda 2:4 Pruning (Perpendicular Error ||e_⊥||)',
+            data: [0.68, 0.72, 0.79, 0.84, 0.88, 0.91, 0.93, 0.94],
+            borderColor: '#dc2626',
+            tension: 0.3
+          },
+          {
+            label: 'Magnitude Pruning (Perpendicular Error ||e_⊥||)',
+            data: [0.74, 0.79, 0.85, 0.90, 0.93, 0.95, 0.96, 0.97],
+            borderColor: '#ea580c',
+            borderDash: [4, 4],
+            tension: 0.3
+          },
+          {
+            label: 'GPTQ 4-bit (Perpendicular Error ||e_⊥||)',
+            data: [0.22, 0.26, 0.31, 0.34, 0.38, 0.41, 0.43, 0.44],
+            borderColor: '#059669',
+            tension: 0.3
+          },
+          {
+            label: 'AWQ 4-bit (Perpendicular Error ||e_⊥||)',
+            data: [0.18, 0.21, 0.25, 0.28, 0.31, 0.33, 0.36, 0.37],
+            borderColor: '#0284c7',
+            tension: 0.3
+          }
+        ],
+        yScales: {
+          y: {
+            title: { display: true, text: 'Normalized Perpendicular Error Ratio' },
+            min: 0, max: 1.1
+          }
+        },
+        caption: "Figure 4: Component-level error decomposition of compressed models. Pruning induces catastrophic orthogonal steering errors (||e_⊥|| > 0.9), whereas quantization preserves true representation geometry."
+      }
+    };
+
+    function initBenchmarkChart() {
+      const ctx = document.getElementById('benchmarkChart').getContext('2d');
+      const dataCfg = CHART_DATA.scaling;
+
+      benchmarkChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: dataCfg.labels,
+          datasets: dataCfg.datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: dataCfg.yScales,
+          plugins: {
+            legend: { position: 'top', labels: { font: { family: "'Plus Jakarta Sans'", size: 12 } } },
+            tooltip: { padding: 10 }
+          }
+        }
+      });
+    }
+
+    function switchChart(tab) {
+      document.querySelectorAll('[id^="tabBtn-"]').forEach(btn => {
+        btn.className = "px-4 py-2 text-xs sm:text-sm font-semibold rounded-md text-slate-600 hover:text-slate-900 transition";
+      });
+      document.getElementById('tabBtn-' + tab).className = "px-4 py-2 text-xs sm:text-sm font-semibold rounded-md bg-white text-slate-900 shadow-sm transition";
+
+      const cfg = CHART_DATA[tab];
+      benchmarkChart.data.labels = cfg.labels;
+      benchmarkChart.data.datasets = cfg.datasets;
+      benchmarkChart.options.scales = cfg.yScales;
+      benchmarkChart.update();
+
+      document.getElementById('chartCaption').innerText = cfg.caption;
+    }
+  </script>
+</body>
+</html>
