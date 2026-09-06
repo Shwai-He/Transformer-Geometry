@@ -1,123 +1,192 @@
-\begin{thebibliography}{36}
+\begin{thebibliography}{35}
 \providecommand{\natexlab}[1]{#1}
 
-\bibitem[{Bachlechner et~al.(2021)Bachlechner, Majumder, Mao, Cottrell, and McAuley}]{Bachlechner2020ReZeroIA}
-Thomas~C. Bachlechner, Bodhisattwa~Prasad Majumder, Huanru~Henry Mao, G.~Cottrell, and Julian McAuley. 2021.
-\newblock \href {https://proceedings.mlr.press/v161/bachlechner21a.html} {{ReZero} is all you need: Fast convergence at large depth}.
+\bibitem[{Bachlechner et~al.(2021)Bachlechner, Majumder, Mao, Cottrell, and
+  McAuley}]{Bachlechner2020ReZeroIA}
+Thomas~C. Bachlechner, Bodhisattwa~Prasad Majumder, Huanru~Henry Mao,
+  G.~Cottrell, and Julian McAuley. 2021.
+\newblock \href {https://proceedings.mlr.press/v161/bachlechner21a.html}
+  {{ReZero} is all you need: Fast convergence at large depth}.
 \newblock In \emph{Conference on Uncertainty in Artificial Intelligence}.
 
 \bibitem[{Bisk et~al.(2020)Bisk, Zellers, Bras, Gao, and Choi}]{Bisk2019PIQARA}
 Yonatan Bisk, Rowan Zellers, Ronan~Le Bras, Jianfeng Gao, and Yejin Choi. 2020.
-\newblock \href {https://ojs.aaai.org/index.php/AAAI/article/view/6239} {{PIQA}: Reasoning about physical commonsense in natural language}.
+\newblock \href {https://ojs.aaai.org/index.php/AAAI/article/view/6239}
+  {{PIQA}: Reasoning about physical commonsense in natural language}.
 \newblock In \emph{AAAI Conference on Artificial Intelligence}.
 
-\bibitem[{Clark et~al.(2019)Clark, Lee, Chang, Kwiatkowski, Collins, and Toutanova}]{Clark2019BoolQET}
-Christopher Clark, Kenton Lee, Ming-Wei Chang, Tom Kwiatkowski, Michael Collins, and Kristina Toutanova. 2019.
-\newblock \href {https://arxiv.org/abs/1905.10044} {{BoolQ}: Exploring the surprising difficulty of natural yes/no questions}.
+\bibitem[{Clark et~al.(2019)Clark, Lee, Chang, Kwiatkowski, Collins, and
+  Toutanova}]{Clark2019BoolQET}
+Christopher Clark, Kenton Lee, Ming-Wei Chang, Tom Kwiatkowski, Michael
+  Collins, and Kristina Toutanova. 2019.
+\newblock \href {https://arxiv.org/abs/1905.10044} {{BoolQ}: Exploring the
+  surprising difficulty of natural yes/no questions}.
 \newblock \emph{ArXiv}, abs/1905.10044.
 
-\bibitem[{Clark et~al.(2018)Clark, Cowhey, Etzioni, Khot, Sabharwal, Schoenick, and Tafjord}]{Clark2018ThinkYH}
-Peter Clark, Isaac Cowhey, Oren Etzioni, Tushar Khot, Ashish Sabharwal, Carissa Schoenick, and Oyvind Tafjord. 2018.
-\newblock \href {https://arxiv.org/abs/1803.05457} {Think you have solved question answering? try arc, the ai2 reasoning challenge}.
+\bibitem[{Clark et~al.(2018)Clark, Cowhey, Etzioni, Khot, Sabharwal, Schoenick,
+  and Tafjord}]{Clark2018ThinkYH}
+Peter Clark, Isaac Cowhey, Oren Etzioni, Tushar Khot, Ashish Sabharwal, Carissa
+  Schoenick, and Oyvind Tafjord. 2018.
+\newblock \href {https://arxiv.org/abs/1803.05457} {Think you have solved
+  question answering? try arc, the ai2 reasoning challenge}.
 \newblock \emph{ArXiv}, abs/1803.05457.
 
-\bibitem[{Cobbe et~al.(2021)Cobbe, Kosaraju, Bavarian, Chen, Jun, Kaiser, Plappert, Tworek, Hilton, Nakano, Hesse, and Schulman}]{Cobbe2021TrainingVT}
-Karl Cobbe, Vineet Kosaraju, Mo~Bavarian, Mark Chen, Heewoo Jun, Lukasz Kaiser, Matthias Plappert, Jerry Tworek, Jacob Hilton, Reiichiro Nakano, Christopher Hesse, and John Schulman. 2021.
-\newblock \href {https://arxiv.org/abs/2110.14168} {Training verifiers to solve math word problems}.
+\bibitem[{Cobbe et~al.(2021)Cobbe, Kosaraju, Bavarian, Chen, Jun, Kaiser,
+  Plappert, Tworek, Hilton, Nakano, Hesse, and Schulman}]{Cobbe2021TrainingVT}
+Karl Cobbe, Vineet Kosaraju, Mo~Bavarian, Mark Chen, Heewoo Jun, Lukasz Kaiser,
+  Matthias Plappert, Jerry Tworek, Jacob Hilton, Reiichiro Nakano, Christopher
+  Hesse, and John Schulman. 2021.
+\newblock \href {https://arxiv.org/abs/2110.14168} {Training verifiers to solve
+  math word problems}.
 \newblock \emph{ArXiv}, abs/2110.14168.
 
 \bibitem[{Dao(2024)}]{dao2024flashattention2}
 Tri Dao. 2024.
-\newblock \href {https://proceedings.iclr.cc/paper_files/paper/2024/hash/98ed250b203d1ac6b24bbcf263e3d4a7-Abstract-Conference.html} {{FlashAttention}-2: Faster attention with better parallelism and work partitioning}.
+\newblock \href
+  {https://proceedings.iclr.cc/paper_files/paper/2024/hash/98ed250b203d1ac6b24bbcf263e3d4a7-Abstract-Conference.html}
+  {{FlashAttention}-2: Faster attention with better parallelism and work
+  partitioning}.
 \newblock In \emph{ICLR}.
 
 \bibitem[{Dong et~al.(2021)Dong, Cordonnier, and Loukas}]{dong2021attention}
 Yihe Dong, Jean-Baptiste Cordonnier, and Andreas Loukas. 2021.
-\newblock \href {https://proceedings.mlr.press/v139/dong21a.html} {Attention is not all you need: Pure attention loses rank doubly exponentially with depth}.
+\newblock \href {https://proceedings.mlr.press/v139/dong21a.html} {Attention is
+  not all you need: Pure attention loses rank doubly exponentially with depth}.
 \newblock In \emph{ICML}.
 
-\bibitem[{Dua et~al.(2019)Dua, Wang, Dasigi, Stanovsky, Singh, and Gardner}]{dua-etal-2019-drop}
-Dheeru Dua, Yizhong Wang, Pradeep Dasigi, Gabriel Stanovsky, Sameer Singh, and Matt Gardner. 2019.
-\newblock \href {https://doi.org/10.18653/v1/N19-1246} {{DROP}: A reading comprehension benchmark requiring discrete reasoning over paragraphs}.
-\newblock In \emph{Proceedings of the 2019 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)}, pages 2368--2378, Minneapolis, Minnesota. Association for Computational Linguistics.
+\bibitem[{Dua et~al.(2019)Dua, Wang, Dasigi, Stanovsky, Singh, and
+  Gardner}]{dua-etal-2019-drop}
+Dheeru Dua, Yizhong Wang, Pradeep Dasigi, Gabriel Stanovsky, Sameer Singh, and
+  Matt Gardner. 2019.
+\newblock \href {https://doi.org/10.18653/v1/N19-1246} {{DROP}: A reading
+  comprehension benchmark requiring discrete reasoning over paragraphs}.
+\newblock In \emph{Proceedings of the 2019 Conference of the North {A}merican
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies, Volume 1 (Long and Short Papers)}, pages 2368--2378,
+  Minneapolis, Minnesota. Association for Computational Linguistics.
 
-\bibitem[{Elhage et~al.(2021)Elhage, Nanda, Olsson, Henighan, Joseph, Mann, Askell, Bai, Chen, Conerly, DasSarma, Drain, Ganguli, Hatfield-Dodds, Hernandez, Jones, Kernion, Lovitt, Ndousse, Amodei, Brown, Clark, Kaplan, McCandlish, and Olah}]{elhage2021mathematical}
-Nelson Elhage, Neel Nanda, Catherine Olsson, Tom Henighan, Nicholas Joseph, Ben Mann, Amanda Askell, Yuntao Bai, Anna Chen, Tom Conerly, Nova DasSarma, Dawn Drain, Deep Ganguli, Zac Hatfield-Dodds, Danny Hernandez, Andy Jones, Jackson Kernion, Liane Lovitt, Kamal Ndousse, and 6 others. 2021.
-\newblock \href {https://transformer-circuits.pub/2021/framework/index.html} {A mathematical framework for transformer circuits}.
+\bibitem[{Elhage et~al.(2021)Elhage, Nanda, Olsson, Henighan, Joseph, Mann,
+  Askell, Bai, Chen, Conerly, DasSarma, Drain, Ganguli, Hatfield-Dodds,
+  Hernandez, Jones, Kernion, Lovitt, Ndousse, Amodei, Brown, Clark, Kaplan,
+  McCandlish, and Olah}]{elhage2021mathematical}
+Nelson Elhage, Neel Nanda, Catherine Olsson, Tom Henighan, Nicholas Joseph, Ben
+  Mann, Amanda Askell, Yuntao Bai, Anna Chen, Tom Conerly, Nova DasSarma, Dawn
+  Drain, Deep Ganguli, Zac Hatfield-Dodds, Danny Hernandez, Andy Jones, Jackson
+  Kernion, Liane Lovitt, Kamal Ndousse, and 6 others. 2021.
+\newblock \href {https://transformer-circuits.pub/2021/framework/index.html} {A
+  mathematical framework for transformer circuits}.
 \newblock \emph{Transformer Circuits Thread}.
 
-\bibitem[{Frantar et~al.(2023)Frantar, Ashkboos, Hoefler, and Alistarh}]{Frantar2022GPTQAP}
+\bibitem[{Frantar et~al.(2023)Frantar, Ashkboos, Hoefler, and
+  Alistarh}]{Frantar2022GPTQAP}
 Elias Frantar, Saleh Ashkboos, Torsten Hoefler, and Dan Alistarh. 2023.
-\newblock \href {https://arxiv.org/abs/2210.17323} {{GPTQ}: Accurate post-training quantization for generative pre-trained transformers}.
+\newblock \href {https://arxiv.org/abs/2210.17323} {{GPTQ}: Accurate
+  post-training quantization for generative pre-trained transformers}.
 \newblock In \emph{International Conference on Learning Representations}.
 
-\bibitem[{Gao et~al.(2024)Gao, Tow, Abbasi, Biderman, Black, DiPofi, Foster, Golding, Hsu, Le~Noac'h, Li, McDonell, Muennighoff, Ociepa, Phang, Reynolds, Schoelkopf, Skowron, Sutawika, Tang, Thite, Wang, Wang, and Zou}]{eval-harness}
-Leo Gao, Jonathan Tow, Baber Abbasi, Stella Biderman, Sid Black, Anthony DiPofi, Charles Foster, Laurence Golding, Jeffrey Hsu, Alain Le~Noac'h, Haonan Li, Kyle McDonell, Niklas Muennighoff, Chris Ociepa, Jason Phang, Laria Reynolds, Hailey Schoelkopf, Aviya Skowron, Lintang Sutawika, and 5 others. 2024.
-\newblock \href {https://doi.org/10.5281/zenodo.12608602} {The language model evaluation harness}.
+\bibitem[{Gao et~al.(2024)Gao, Tow, Abbasi, Biderman, Black, DiPofi, Foster,
+  Golding, Hsu, Le~Noac'h, Li, McDonell, Muennighoff, Ociepa, Phang, Reynolds,
+  Schoelkopf, Skowron, Sutawika, Tang, Thite, Wang, Wang, and
+  Zou}]{eval-harness}
+Leo Gao, Jonathan Tow, Baber Abbasi, Stella Biderman, Sid Black, Anthony
+  DiPofi, Charles Foster, Laurence Golding, Jeffrey Hsu, Alain Le~Noac'h,
+  Haonan Li, Kyle McDonell, Niklas Muennighoff, Chris Ociepa, Jason Phang,
+  Laria Reynolds, Hailey Schoelkopf, Aviya Skowron, Lintang Sutawika, and 5
+  others. 2024.
+\newblock \href {https://doi.org/10.5281/zenodo.12608602} {The language model
+  evaluation harness}.
 
-\bibitem[{{Gemma Team}(2025)}]{GemmaTeam2025Gemma3}
-{Gemma Team}. 2025.
-\newblock \href {https://arxiv.org/abs/2503.19786} {{Gemma 3} technical report}.
-\newblock \emph{Preprint}, arXiv:2503.19786.
-
-\bibitem[{Gokaslan et~al.(2019)Gokaslan, Cohen, Pavlick, and Tellex}]{Gokaslan2019OpenWeb}
+\bibitem[{Gokaslan et~al.(2019)Gokaslan, Cohen, Pavlick, and
+  Tellex}]{Gokaslan2019OpenWeb}
 Aaron Gokaslan, Vanya Cohen, Ellie Pavlick, and Stefanie Tellex. 2019.
 \newblock Openwebtext corpus.
 \newblock \url{http://Skylion007.github.io/OpenWebTextCorpus}.
 
 \bibitem[{He et~al.(2016)He, Zhang, Ren, and Sun}]{he2016deep}
 Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. 2016.
-\newblock \href {https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html} {Deep residual learning for image recognition}.
+\newblock \href
+  {https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html}
+  {Deep residual learning for image recognition}.
 \newblock In \emph{CVPR}.
 
 \bibitem[{He et~al.(2026)He, Sun, Shen, and Li}]{He2026UncoveringTR}
 Shwai He, Guoheng Sun, Zheyu Shen, and Ang Li. 2026.
-\newblock \href {https://openreview.net/forum?id=1I7PCbOPfe} {Uncovering the redundancy in transformers via a unified study of layer dropping}.
+\newblock \href {https://openreview.net/forum?id=1I7PCbOPfe} {Uncovering the
+  redundancy in transformers via a unified study of layer dropping}.
 \newblock \emph{Transactions on Machine Learning Research}.
 
-\bibitem[{Hendrycks et~al.(2021)Hendrycks, Burns, Basart, Zou, Mazeika, Song, and Steinhardt}]{Hendrycks2020MeasuringMM}
-Dan Hendrycks, Collin Burns, Steven Basart, Andy Zou, Mantas Mazeika, Dawn~Xiaodong Song, and Jacob Steinhardt. 2021.
-\newblock \href {https://openreview.net/forum?id=d7KBjmI3GmQ} {Measuring massive multitask language understanding}.
+\bibitem[{Hendrycks et~al.(2021)Hendrycks, Burns, Basart, Zou, Mazeika, Song,
+  and Steinhardt}]{Hendrycks2020MeasuringMM}
+Dan Hendrycks, Collin Burns, Steven Basart, Andy Zou, Mantas Mazeika,
+  Dawn~Xiaodong Song, and Jacob Steinhardt. 2021.
+\newblock \href {https://openreview.net/forum?id=d7KBjmI3GmQ} {Measuring
+  massive multitask language understanding}.
 \newblock In \emph{International Conference on Learning Representations}.
 
-\bibitem[{Hsieh et~al.(2024)Hsieh, Sun, Kriman, Acharya, Rekesh, Jia, and Ginsburg}]{Hsieh2024RULERWT}
-Cheng-Ping Hsieh, Simeng Sun, Samuel Kriman, Shantanu Acharya, Dima Rekesh, Fei Jia, and Boris Ginsburg. 2024.
-\newblock \href {https://arxiv.org/abs/2404.06654} {{RULER}: What's the real context size of your long-context language models?}
+\bibitem[{Hsieh et~al.(2024)Hsieh, Sun, Kriman, Acharya, Rekesh, Jia, and
+  Ginsburg}]{Hsieh2024RULERWT}
+Cheng-Ping Hsieh, Simeng Sun, Samuel Kriman, Shantanu Acharya, Dima Rekesh, Fei
+  Jia, and Boris Ginsburg. 2024.
+\newblock \href {https://arxiv.org/abs/2404.06654} {{RULER}: What's the real
+  context size of your long-context language models?}
 \newblock \emph{ArXiv}, abs/2404.06654.
 
-\bibitem[{Lin et~al.(2024)Lin, Tang, Tang, Yang, Chen, Wang, Xiao, Dang, Gan, and Han}]{Lin2023AWQAW}
-Ji~Lin, Jiaming Tang, Haotian Tang, Shang Yang, Wei-Ming Chen, Wei-Chen Wang, Guangxuan Xiao, Xingyu Dang, Chuang Gan, and Song Han. 2024.
-\newblock \href {https://proceedings.mlsys.org/paper_files/paper/2024/hash/42a452cbafa9dd64e9ba4aa95cc1ef21-Abstract-Conference.html} {{AWQ}: Activation-aware weight quantization for on-device {LLM} compression and acceleration}.
+\bibitem[{Lin et~al.(2024)Lin, Tang, Tang, Yang, Chen, Wang, Xiao, Dang, Gan,
+  and Han}]{Lin2023AWQAW}
+Ji~Lin, Jiaming Tang, Haotian Tang, Shang Yang, Wei-Ming Chen, Wei-Chen Wang,
+  Guangxuan Xiao, Xingyu Dang, Chuang Gan, and Song Han. 2024.
+\newblock \href
+  {https://proceedings.mlsys.org/paper_files/paper/2024/hash/42a452cbafa9dd64e9ba4aa95cc1ef21-Abstract-Conference.html}
+  {{AWQ}: Activation-aware weight quantization for on-device {LLM} compression
+  and acceleration}.
 \newblock In \emph{Proceedings of Machine Learning and Systems}.
 
 \bibitem[{Lin et~al.(2022)Lin, Hilton, and Evans}]{lin-etal-2022-truthfulqa}
 Stephanie Lin, Jacob Hilton, and Owain Evans. 2022.
-\newblock \href {https://doi.org/10.18653/v1/2022.acl-long.229} {{T}ruthful{QA}: Measuring how models mimic human falsehoods}.
-\newblock In \emph{Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 3214--3252, Dublin, Ireland. Association for Computational Linguistics.
+\newblock \href {https://doi.org/10.18653/v1/2022.acl-long.229}
+  {{T}ruthful{QA}: Measuring how models mimic human falsehoods}.
+\newblock In \emph{Proceedings of the 60th Annual Meeting of the Association
+  for Computational Linguistics (Volume 1: Long Papers)}, pages 3214--3252,
+  Dublin, Ireland. Association for Computational Linguistics.
 
 \bibitem[{{Llama Team}(2024)}]{Dubey2024TheL3}
 {Llama Team}. 2024.
-\newblock \href {https://arxiv.org/abs/2407.21783} {The llama 3 herd of models}.
+\newblock \href {https://arxiv.org/abs/2407.21783} {The llama 3 herd of
+  models}.
 \newblock \emph{arXiv preprint arXiv:2407.21783}.
 
-\bibitem[{Men et~al.(2024)Men, Xu, Zhang, Wang, Lin, Lu, Han, and Chen}]{men2024shortgpt}
-Xin Men, Mingyu Xu, Qingyu Zhang, Bingning Wang, Hongyu Lin, Yaojie Lu, Xianpei Han, and Weipeng Chen. 2024.
-\newblock \href {https://arxiv.org/abs/2403.03853} {{ShortGPT}: Layers in large language models are more redundant than you expect}.
+\bibitem[{Men et~al.(2024)Men, Xu, Zhang, Wang, Lin, Lu, Han, and
+  Chen}]{men2024shortgpt}
+Xin Men, Mingyu Xu, Qingyu Zhang, Bingning Wang, Hongyu Lin, Yaojie Lu, Xianpei
+  Han, and Weipeng Chen. 2024.
+\newblock \href {https://arxiv.org/abs/2403.03853} {{ShortGPT}: Layers in large
+  language models are more redundant than you expect}.
 \newblock \emph{arXiv:2403.03853}.
 
-\bibitem[{Mihaylov et~al.(2018)Mihaylov, Clark, Khot, and Sabharwal}]{Mihaylov2018CanAS}
+\bibitem[{Mihaylov et~al.(2018)Mihaylov, Clark, Khot, and
+  Sabharwal}]{Mihaylov2018CanAS}
 Todor Mihaylov, Peter Clark, Tushar Khot, and Ashish Sabharwal. 2018.
-\newblock \href {https://aclanthology.org/D18-1260/} {Can a suit of armor conduct electricity? a new dataset for open book question answering}.
-\newblock In \emph{Conference on Empirical Methods in Natural Language Processing}.
+\newblock \href {https://aclanthology.org/D18-1260/} {Can a suit of armor
+  conduct electricity? a new dataset for open book question answering}.
+\newblock In \emph{Conference on Empirical Methods in Natural Language
+  Processing}.
 
-\bibitem[{Penedo et~al.(2024)Penedo, Kydl{\'\i}{\v{c}}ek, allal, Lozhkov, Mitchell, Raffel, Werra, and Wolf}]{penedo2024the}
-Guilherme Penedo, Hynek Kydl{\'\i}{\v{c}}ek, Loubna~Ben allal, Anton Lozhkov, Margaret Mitchell, Colin Raffel, Leandro~Von Werra, and Thomas Wolf. 2024.
-\newblock \href {https://openreview.net/forum?id=n6SCkn2QaG} {The fineweb datasets: Decanting the web for the finest text data at scale}.
-\newblock In \emph{The Thirty-eight Conference on Neural Information Processing Systems Datasets and Benchmarks Track}.
+\bibitem[{Penedo et~al.(2024)Penedo, Kydl{\'\i}{\v{c}}ek, allal, Lozhkov,
+  Mitchell, Raffel, Werra, and Wolf}]{penedo2024the}
+Guilherme Penedo, Hynek Kydl{\'\i}{\v{c}}ek, Loubna~Ben allal, Anton Lozhkov,
+  Margaret Mitchell, Colin Raffel, Leandro~Von Werra, and Thomas Wolf. 2024.
+\newblock \href {https://openreview.net/forum?id=n6SCkn2QaG} {The fineweb
+  datasets: Decanting the web for the finest text data at scale}.
+\newblock In \emph{The Thirty-eight Conference on Neural Information Processing
+  Systems Datasets and Benchmarks Track}.
 
-\bibitem[{Qiu et~al.(2025)Qiu, Wang, Zheng, Huang, Wen, Yang, Men, Yu, Huang, Huang, Liu, Zhou, and Lin}]{qiu2025gatedattention}
-Zihan Qiu, Zekun Wang, Bo~Zheng, Zeyu Huang, Kaiyue Wen, Songlin Yang, Rui Men, Le~Yu, Fei Huang, Suozhi Huang, Dayiheng Liu, Jingren Zhou, and Junyang Lin. 2025.
-\newblock \href {https://arxiv.org/abs/2505.06708} {Gated attention for large language models: Non-linearity, sparsity, and attention-sink-free}.
+\bibitem[{Qiu et~al.(2025)Qiu, Wang, Zheng, Huang, Wen, Yang, Men, Yu, Huang,
+  Huang, Liu, Zhou, and Lin}]{qiu2025gatedattention}
+Zihan Qiu, Zekun Wang, Bo~Zheng, Zeyu Huang, Kaiyue Wen, Songlin Yang, Rui Men,
+  Le~Yu, Fei Huang, Suozhi Huang, Dayiheng Liu, Jingren Zhou, and Junyang Lin.
+  2025.
+\newblock \href {https://arxiv.org/abs/2505.06708} {Gated attention for large
+  language models: Non-linearity, sparsity, and attention-sink-free}.
 \newblock \emph{Preprint}, arXiv:2505.06708.
 
 \bibitem[{{Qwen Team}(2025)}]{Yang2025Qwen3TR}
@@ -127,53 +196,82 @@ Zihan Qiu, Zekun Wang, Bo~Zheng, Zeyu Huang, Kaiyue Wen, Songlin Yang, Rui Men, 
 
 \bibitem[{Reddy et~al.(2019)Reddy, Chen, and Manning}]{reddy-etal-2019-coqa}
 Siva Reddy, Danqi Chen, and Christopher~D. Manning. 2019.
-\newblock \href {https://doi.org/10.1162/tacl_a_00266} {{C}o{QA}: A conversational question answering challenge}.
-\newblock \emph{Transactions of the Association for Computational Linguistics}, 7:249--266.
+\newblock \href {https://doi.org/10.1162/tacl_a_00266} {{C}o{QA}: A
+  conversational question answering challenge}.
+\newblock \emph{Transactions of the Association for Computational Linguistics},
+  7:249--266.
 
-\bibitem[{Sakaguchi et~al.(2020)Sakaguchi, Bras, Bhagavatula, and Choi}]{Sakaguchi2019AnAW}
+\bibitem[{Sakaguchi et~al.(2020)Sakaguchi, Bras, Bhagavatula, and
+  Choi}]{Sakaguchi2019AnAW}
 Keisuke Sakaguchi, Ronan~Le Bras, Chandra Bhagavatula, and Yejin Choi. 2020.
-\newblock \href {https://aaai.org/papers/08732-winogrande-an-adversarial-winograd-schema-challenge-at-scale/} {An adversarial winograd schema challenge at scale}.
+\newblock \href
+  {https://aaai.org/papers/08732-winogrande-an-adversarial-winograd-schema-challenge-at-scale/}
+  {An adversarial winograd schema challenge at scale}.
 \newblock In \emph{AAAI Conference on Artificial Intelligence}.
 
 \bibitem[{Sun et~al.(2024)Sun, Liu, Bair, and Kolter}]{Sun2023ASA}
 Mingjie Sun, Zhuang Liu, Anna Bair, and J.~Zico Kolter. 2024.
-\newblock \href {https://arxiv.org/abs/2306.11695} {A simple and effective pruning approach for large language models}.
+\newblock \href {https://arxiv.org/abs/2306.11695} {A simple and effective
+  pruning approach for large language models}.
 \newblock In \emph{International Conference on Learning Representations}.
 
-\bibitem[{Touvron et~al.(2021)Touvron, Cord, Sablayrolles, Synnaeve, and J{\'e}gou}]{touvron2021going}
-Hugo Touvron, Matthieu Cord, Alexandre Sablayrolles, Gabriel Synnaeve, and Herv{\'e} J{\'e}gou. 2021.
-\newblock \href {https://openaccess.thecvf.com/content/ICCV2021/html/Touvron_Going_Deeper_With_Image_Transformers_ICCV_2021_paper.html} {Going deeper with image transformers}.
+\bibitem[{Touvron et~al.(2021)Touvron, Cord, Sablayrolles, Synnaeve, and
+  J{\'e}gou}]{touvron2021going}
+Hugo Touvron, Matthieu Cord, Alexandre Sablayrolles, Gabriel Synnaeve, and
+  Herv{\'e} J{\'e}gou. 2021.
+\newblock \href
+  {https://openaccess.thecvf.com/content/ICCV2021/html/Touvron_Going_Deeper_With_Image_Transformers_ICCV_2021_paper.html}
+  {Going deeper with image transformers}.
 \newblock In \emph{ICCV}.
 
-\bibitem[{Vaswani et~al.(2017)Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez, Kaiser, and Polosukhin}]{vaswani2017attention}
-Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan~N. Gomez, {\L}ukasz Kaiser, and Illia Polosukhin. 2017.
-\newblock \href {https://papers.nips.cc/paper/7181-attention-is-all-you-need} {Attention is all you need}.
+\bibitem[{Vaswani et~al.(2017)Vaswani, Shazeer, Parmar, Uszkoreit, Jones,
+  Gomez, Kaiser, and Polosukhin}]{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N. Gomez, {\L}ukasz Kaiser, and Illia Polosukhin. 2017.
+\newblock \href {https://papers.nips.cc/paper/7181-attention-is-all-you-need}
+  {Attention is all you need}.
 \newblock In \emph{NeurIPS}.
 
-\bibitem[{Wang et~al.(2018)Wang, Singh, Michael, Hill, Levy, and Bowman}]{Wang2018GLUEAM}
-Alex Wang, Amanpreet Singh, Julian Michael, Felix Hill, Omer Levy, and Samuel~R. Bowman. 2018.
-\newblock \href {https://openreview.net/forum?id=rJ4km2R5t7} {{GLUE}: A multi-task benchmark and analysis platform for natural language understanding}.
+\bibitem[{Wang et~al.(2018)Wang, Singh, Michael, Hill, Levy, and
+  Bowman}]{Wang2018GLUEAM}
+Alex Wang, Amanpreet Singh, Julian Michael, Felix Hill, Omer Levy, and
+  Samuel~R. Bowman. 2018.
+\newblock \href {https://openreview.net/forum?id=rJ4km2R5t7} {{GLUE}: A
+  multi-task benchmark and analysis platform for natural language
+  understanding}.
 \newblock In \emph{BlackboxNLP@EMNLP}.
 
-\bibitem[{Wang et~al.(2024)Wang, Ma, Dong, Huang, Zhang, and Wei}]{Wang2022DeepNetST}
-Hongyu Wang, Shuming Ma, Li~Dong, Shaohan Huang, Dongdong Zhang, and Furu Wei. 2024.
-\newblock \href {https://doi.org/10.1109/TPAMI.2024.3386927} {{DeepNet}: Scaling transformers to 1,000 layers}.
-\newblock \emph{IEEE Transactions on Pattern Analysis and Machine Intelligence}, 46(10):6761--6774.
+\bibitem[{Wang et~al.(2024)Wang, Ma, Dong, Huang, Zhang, and
+  Wei}]{Wang2022DeepNetST}
+Hongyu Wang, Shuming Ma, Li~Dong, Shaohan Huang, Dongdong Zhang, and Furu Wei.
+  2024.
+\newblock \href {https://doi.org/10.1109/TPAMI.2024.3386927} {{DeepNet}:
+  Scaling transformers to 1,000 layers}.
+\newblock \emph{IEEE Transactions on Pattern Analysis and Machine
+  Intelligence}, 46(10):6761--6774.
 
-\bibitem[{Xiao et~al.(2024)Xiao, Tian, Chen, Han, and Lewis}]{xiao2023efficient}
+\bibitem[{Xiao et~al.(2024)Xiao, Tian, Chen, Han, and
+  Lewis}]{xiao2023efficient}
 Guangxuan Xiao, Yuandong Tian, Beidi Chen, Song Han, and Mike Lewis. 2024.
-\newblock \href {https://openreview.net/forum?id=NG7sS51zVF} {Efficient streaming language models with attention sinks}.
+\newblock \href {https://openreview.net/forum?id=NG7sS51zVF} {Efficient
+  streaming language models with attention sinks}.
 \newblock In \emph{ICLR}.
 
-\bibitem[{Xiong et~al.(2020)Xiong, Yang, He, Zheng, Zheng, Zhang, Lan, Wang, and Liu}]{xiong2020on}
-Ruibin Xiong, Yunchang Yang, Di~He, Kai Zheng, Shuxin Zheng, Huishuai Zhang, Yanyan Lan, Liwei Wang, and Tie-Yan Liu. 2020.
-\newblock \href {https://openreview.net/forum?id=B1x8anVFPr} {On layer normalization in the transformer architecture}.
+\bibitem[{Xiong et~al.(2020)Xiong, Yang, He, Zheng, Zheng, Zhang, Lan, Wang,
+  and Liu}]{xiong2020on}
+Ruibin Xiong, Yunchang Yang, Di~He, Kai Zheng, Shuxin Zheng, Huishuai Zhang,
+  Yanyan Lan, Liwei Wang, and Tie-Yan Liu. 2020.
+\newblock \href {https://openreview.net/forum?id=B1x8anVFPr} {On layer
+  normalization in the transformer architecture}.
 \newblock In \emph{International Conference on Machine Learning}.
 
-\bibitem[{Zellers et~al.(2019)Zellers, Holtzman, Bisk, Farhadi, and Choi}]{Zellers2019HellaSwagCA}
+\bibitem[{Zellers et~al.(2019)Zellers, Holtzman, Bisk, Farhadi, and
+  Choi}]{Zellers2019HellaSwagCA}
 Rowan Zellers, Ari Holtzman, Yonatan Bisk, Ali Farhadi, and Yejin Choi. 2019.
-\newblock \href {https://aclanthology.org/P19-1472/} {{HellaSwag}: Can a machine really finish your sentence?}
-\newblock In \emph{Annual Meeting of the Association for Computational Linguistics}.
+\newblock \href {https://aclanthology.org/P19-1472/} {{HellaSwag}: Can a
+  machine really finish your sentence?}
+\newblock In \emph{Annual Meeting of the Association for Computational
+  Linguistics}.
 
 \bibitem[{Zhai(2026)}]{zhai2025xsa}
 Shuangfei Zhai. 2026.

@@ -1,16 +1,7 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-We studied transformer layer evolution through a parallel/perpendicular
-decomposition of learned updates. The results show that parallel components are
-substantial beyond the residual identity path, but their role is
-space-dependent. Exclude-self value-space editing preserves the direct self
-message and remains comparatively stable around the no-op. This distinction
-also helps interpret compression and training behavior: perpendicular error is
-the more diagnostic component, while from-scratch parallel suppression lowers
-validation loss and improves downstream averages, most strongly in value
-space. Overall, this geometry offers a compact way to analyze update magnitude
-together with the direction of representation change.
+In this work, we formalized representation evolution in Transformers through directional orthogonal decomposition, separating learned updates into parallel magnitude modulation ($\Delta_\parallel$) and perpendicular semantic steering ($\Delta_\perp$). Across pretrained language models, our interventions uncovered a universal directional asymmetry: representations exhibit an expansive, resilient tolerance basin for parallel scaling, but acute, fragile sensitivity to perpendicular perturbations. We demonstrated that this geometric framework provides practical utility across the model lifecycle: resolving discrepancies in post-training compression by identifying perpendicular error as the true causal driver of degradation, and guiding from-scratch pretraining to lower validation-loss trajectories and improve downstream generalization. These results establish directional geometry as a principled foundation for deciphering internal representations, diagnosing model compression, and guiding future architecture design.
 
 \section*{Limitations}
 \label{sec:limitations}

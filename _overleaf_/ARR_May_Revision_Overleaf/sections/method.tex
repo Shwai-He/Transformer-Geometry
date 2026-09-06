@@ -72,10 +72,8 @@ nothing from other positions.
 Residual-space geometry does not isolate this self-value-aligned structure
 because the output projection mixes the aggregate into the residual stream.
 
-\paragraph{Direct Self-Message Preservation.}
-The aggregate mixes two roles: the token's own value passed straight through,
-and context routed from other positions. Editing both at once confounds them,
-so we split the aggregate and edit only the second:
+\paragraph{Direct Self-Message Control.}
+Attention value aggregation inherently combines two distinct computational pathways: identity preservation via the token's own value ($\mathcal{A}_{tt}\mathbf{v}_t$) and contextual routing from prior positions ($\sum_{s<t}\mathcal{A}_{ts}\mathbf{v}_s$). Perturbing both simultaneously conflates cross-token aggregation with the trivial erasure of the query token's identity. As a rigorous measurement control, we decouple these pathways and apply directional decomposition exclusively to the non-self aggregate:
 \begin{equation}
   \begin{aligned}
   \mathbf{o}_t
@@ -88,8 +86,7 @@ so we split the aggregate and edit only the second:
   \end{aligned}
   \label{eq:exclude-self-decomp}
 \end{equation}
-We scale only the parallel and perpendicular components of the non-self
-aggregate and then restore the unchanged self message:
+We scale the directional components of the non-self aggregate while preserving the untouched self message:
 \begin{equation}
   \widetilde{\mathbf{o}}^{\mathrm{excl}}_t
     = \mathbf{d}_t
@@ -97,8 +94,7 @@ aggregate and then restore the unchanged self message:
       +s^{(\perp)}\mathbf{c}_{t,\perp}.
   \label{eq:exclude-self-scaling}
 \end{equation}
-We refer to this operation as \emph{exclude-self} scaling: it neither masks the
-self-attention edge nor renormalizes the attention row.
+We designate this control \emph{exclude-self} scaling: it isolates the directional effects of cross-token aggregation while keeping the identity carrier and attention row normalization intact.
 
 Value-space decomposition applies only to attention aggregates. For MLPs, the
 main analysis decomposes the sub-layer output in residual space; Appendix

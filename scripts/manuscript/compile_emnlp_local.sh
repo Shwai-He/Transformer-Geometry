@@ -45,6 +45,7 @@ mkdir -p "$(dirname "$OUTPUT_PDF")"
 )
 
 cp "$PAPER_DIR/emnlp_2026.pdf" "$OUTPUT_PDF"
+cp "$PAPER_DIR/emnlp_2026.pdf" "$REPO_ROOT/emnlp_2026_camera_ready.pdf"
 
 if command -v pdftoppm >/dev/null 2>&1; then
   pdftoppm -png -r 144 "$OUTPUT_PDF" "$RENDER_DIR/page"
