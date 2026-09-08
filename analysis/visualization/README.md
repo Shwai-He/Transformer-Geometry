@@ -60,7 +60,7 @@ Paper-facing plotting entry points and their lightweight inputs are:
   --replot-only` with `attn_matrix/source/effective_diagonal/`;
 - compression panels: `comp_analysis/plot_local_flip_compare_v2.py`;
 - 1.4B loss panel: `loss_curves/plot_loss_1p4_gate_vs_xsa.py`;
-- pretraining trajectories: `train/scripts/plot_arr_figure6_retained_curves.py`;
+- pretraining trajectories: `training/scripts/plot_arr_figure6_retained_curves.py`;
 - per-head causal sensitivity:
   `analysis/forward_geometry/analyze_per_head_causal_sensitivity.py`.
 

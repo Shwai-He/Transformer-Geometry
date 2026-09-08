@@ -59,9 +59,17 @@ lm-evaluation-harness/scripts/unused_for_compression_20260523/cache/
 *.pdf
 *.docx
 
+# LaTeX build intermediate artifacts
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+
 # Legacy/private local workspaces
-representation-analysis/
-_imports/
 archive/
 
 # Optional local checklists
@@ -72,9 +80,9 @@ notebooks/
 compression/notebooks/
 scripts/probe_steps_viz/
 scripts/plot_*.py
-analysis/visualization/
 analysis/utils/plot_wandb_history.py
 analysis/forward_geometry/*viz.py
 analysis/forward_geometry/visualize_*.py
 compression/code/visualize_*.py
 compression/scripts/run_visualize_*.sh
+

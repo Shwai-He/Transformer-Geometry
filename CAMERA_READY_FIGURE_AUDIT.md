@@ -14,7 +14,7 @@ The plotting environment used Python 3.10 with the exact packages in
 | Attention diagonal | `analysis/visualization/recompute_arr_attention_diag_figure.py --replot-only` | Pass | Replot from the checked-in effective-diagonal bundle has identical dimensions; 150-DPI raster RMSE is 0.000261 (rendering-level only). |
 | Compression panels | `analysis/visualization/comp_analysis/plot_local_flip_compare_v2.py` | Pass | All six paper-facing parallel/perpendicular panels and the baseline-update panel reproduce pixel-for-pixel at 150 DPI (RMSE 0). |
 | 1.4B training loss | `analysis/visualization/loss_curves/plot_loss_1p4_gate_vs_xsa.py` | Pass | Paper-facing absolute-loss panel reproduces pixel-for-pixel at 150 DPI (RMSE 0). |
-| Pretraining trajectories | `train/scripts/plot_arr_figure6_retained_curves.py` | Pass | Paper-facing restored curve panel reproduces pixel-for-pixel at 150 DPI (RMSE 0). |
+| Pretraining trajectories | `training/scripts/plot_arr_figure6_retained_curves.py` | Pass | Paper-facing restored curve panel reproduces pixel-for-pixel at 150 DPI (RMSE 0). |
 | Per-head causal sensitivity | `analysis/forward_geometry/analyze_per_head_causal_sensitivity.py` | Gap | Script executes, but produces early/middle/late head-index panels, while the paper uses four all-layer model panels with a single-head min--max envelope. The committed CSVs contain only three layers per model, so they cannot reconstruct the all-layer paper asset. Their manifests point to `/beacon-projects/traumallm`; read-only recovery attempts from ECEC to both `ihccs050v.ihc.umd.edu` and `10.7.103.35` timed out on port 22 on 2026-08-24. Do not infer missing values from the rendered figure. |
 | Method overview | composed asset under `analysis/visualization/overview/` | Gap | The checked-in arrow SVG/PNG assets are only component inputs. PDF metadata identifies the paper-facing figure as created by Microsoft PowerPoint 2021 (author metadata `Lenovo`, creation time `2026-05-25T14:33:54-07:00`), but no `.pptx`, `.ppt`, `.key`, `.ai`, `.drawio`, or `.fig` source exists in the repository. Recover the original PowerPoint deck/source slide; do not approximate the final composition from the rendered PDF. |
 
@@ -28,7 +28,7 @@ python analysis/visualization/plot_arr_matched_component_scaling.py \
   --output results/figures/camera_ready_audit/component_scaling/ppl_component_scaling_corrected.pdf
 python analysis/visualization/comp_analysis/plot_local_flip_compare_v2.py
 python analysis/visualization/loss_curves/plot_loss_1p4_gate_vs_xsa.py
-python train/scripts/plot_arr_figure6_retained_curves.py --output-dir results/figures/camera_ready_audit/pretraining
+python training/scripts/plot_arr_figure6_retained_curves.py --output-dir results/figures/camera_ready_audit/pretraining
 python analysis/forward_geometry/analyze_per_head_causal_sensitivity.py \
   --bootstrap 5000 --sign-flips 10000 --seed 2026 \
   --figure-dir results/figures/camera_ready_audit/per_head
