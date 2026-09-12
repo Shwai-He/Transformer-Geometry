@@ -73,11 +73,11 @@ $$
 ### 1. Geometry Probing (Depth & Subspace Dynamics)
 > **Key Finding**: Transformer updates maintain a persistent, non-zero parallel projection across deep layers, counteracting the isotropic dispersion predicted by high-dimensional random geometry.
 
-<p align="center">
-  <img src="assets/probing_layer_distribution_qwen3_4b.png" alt="Probing Layer Distribution Across Depths" width="92%" />
-</p>
+| (a) Dense Model: Qwen3-4B (Sampled Layers L7, L20, L34) | (b) MoE Model: Qwen3-30B-A3B (Sampled Layers L10, L28, L46) |
+| :---: | :---: |
+| <img src="assets/probing_layer_distribution_qwen3_4b.png" alt="Dense Model Probing (Qwen3-4B)" width="100%" /> | <img src="assets/probing_layer_distribution_qwen3_30b_a3b.png" alt="MoE Model Probing (Qwen3-30B-A3B)" width="100%" /> |
 
-* **Insight**: The projection ratio $r = \|\Delta h_{\parallel}\| / \|\Delta h_{\perp}\|$ remains stably bounded across early (L7), middle (L20), and late (L34) layers, confirming that deep representations continually modulate feature magnitudes rather than exclusively steering directions.
+* **Insight**: The projection ratio $r = \|\Delta h_{\parallel}\| / \|\Delta h_{\perp}\|$ remains stably bounded and persistent across both Dense (`Qwen3-4B`) and Mixture-of-Experts (`Qwen3-30B-A3B`) architectures throughout early, intermediate, and deep layers, proving that non-zero parallel projection is a universal property across diverse Transformer families.
 * **Theory**: Layer updates decompose into parallel and orthogonal components:
   $$
   \Delta h_l = \Delta h_{l, \parallel} + \Delta h_{l, \perp} \quad \text{where} \quad \Delta h_{l, \parallel} = \frac{\Delta h_l \cdot h_{l-1}}{\|h_{l-1}\|^2} h_{l-1}
