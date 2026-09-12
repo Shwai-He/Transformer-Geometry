@@ -1,28 +1,6 @@
 \section{Related Work}
 \label{sec:related}
 
-\begin{figure*}[t]
-  \centering
-  \begin{subfigure}{0.49\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{figs/para_dist/paper_Qwen3-4B_hidden_both_block_para_perp_sampled_layers.pdf}
-    \caption{Qwen3-4B-Instruct-2507}
-  \end{subfigure}\hfill
-  \begin{subfigure}{0.49\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{figs/para_dist/paper_Qwen3-30B-A3B_hidden_both_block_para_perp_sampled_layers.pdf}
-    \caption{Qwen3-30B-A3B}
-  \end{subfigure}
-  \caption{\textbf{Parallel components persist across depth.}
-  For each accumulated attention-plus-MLP update, $\Dup{l}{t}$ is its
-  projection along the incoming hidden state, whereas $\Duperp{l}{t}$ is
-  orthogonal to that state. Curves show
-  $\|\Dup{l}{t}\|/\|\Duperp{l}{t}\|$ at three sampled layers per model
-  across generation steps; lines are means and bands span the observed range.
-  Ratios above one indicate parallel dominance.}
-  % \vspace{-10pt}
-  \label{fig:profiles}
-\end{figure*}
 
 \paragraph{Residual Stream Magnitude Scaling.}
 Residual connections preserve input representations while allowing each block

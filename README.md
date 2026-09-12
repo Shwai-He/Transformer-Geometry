@@ -29,8 +29,8 @@
 **Transformer Geometry** investigates internal representation dynamics across deep Transformer language models through an orthogonal geometric lens. 
 
 Every hidden-state update $\Delta h$ (produced by multi-head self-attention or feed-forward networks) is decomposed into two complementary geometric components:
-1. **Parallel Component ($\Delta h_{\parallel}$)**: Projects directly onto the incoming representation vector $h$. It primarily modulates the **magnitude and scaling** of existing semantic features without altering their direction.
-2. **Perpendicular Component ($\Delta h_{\perp}$)**: Lies strictly orthogonal to $h$. It drives **directional rotation and semantic shifts**, steering the representation into new subspaces.
+1. **Parallel Component** ($\Delta h_{\parallel}$): Projects directly onto the incoming representation vector $h$. It primarily modulates the **magnitude and scaling** of existing semantic features without altering their direction.
+2. **Perpendicular Component** ($\Delta h_{\perp}$): Lies strictly orthogonal to $h$. It drives **directional rotation and semantic shifts**, steering the representation into new subspaces.
 
 We extend and evaluate this geometric framework across both **Residual-Space** and **Value-Space (XSA)**, uncovering key mechanisms behind inference-time editing, model compression (pruning & quantization), long-context processing, and pretraining optimization dynamics.
 
@@ -38,9 +38,7 @@ We extend and evaluate this geometric framework across both **Residual-Space** a
   <img src="assets/transformer_geometry_overview.png" alt="Transformer Geometry: Geometric Decomposition and Component Scaling" width="100%" />
 </p>
 
-<p align="center">
-  <em><b>Figure 1: Geometric Decomposition and Component Scaling.</b> Residual updates and attention value aggregates are decomposed into parallel ($\Delta_\parallel$) and perpendicular ($\Delta_\perp$) components and scaled independently; parallel-only scaling can be expressed as an attention-diagonal change. Changing $\Delta_\parallel$ has limited impact on performance, whereas modifying $\Delta_\perp$ sharply degrades perplexity.</em>
-</p>
+**Figure 1: Geometric Decomposition and Component Scaling.** Residual updates and attention value aggregates are decomposed into parallel ($\Delta_\parallel$) and perpendicular ($\Delta_\perp$) components and scaled independently; parallel-only scaling can be expressed as an attention-diagonal change. Changing $\Delta_\parallel$ has limited impact on performance, whereas modifying $\Delta_\perp$ sharply degrades perplexity.
 
 ---
 
@@ -48,18 +46,24 @@ We extend and evaluate this geometric framework across both **Residual-Space** a
 
 For a token representation $h_{l-1} \in \mathbb{R}^d$ entering layer $l$ and generating an update $\Delta h_l$:
 
-$$\Delta h_l = \Delta h_{l, \parallel} + \Delta h_{l, \perp}$$
+$$
+\Delta h_l = \Delta h_{l, \parallel} + \Delta h_{l, \perp}
+$$
 
 where the parallel component projects directly along the incoming representation:
 
-$$\Delta h_{l, \parallel} = \frac{\langle \Delta h_l, h_{l-1} \rangle}{\|h_{l-1}\|^2} h_{l-1}, \quad \Delta h_{l, \perp} = \Delta h_l - \Delta h_{l, \parallel}$$
+$$
+\Delta h_{l, \parallel} = \frac{\Delta h_l \cdot h_{l-1}}{\|h_{l-1}\|^2} h_{l-1}, \quad \Delta h_{l, \perp} = \Delta h_l - \Delta h_{l, \parallel}
+$$
 
 Component-scaling interventions systematically modulate the representation trajectory via scaling factors $\alpha$ and $\beta$:
 
-$$h_l = h_{l-1} + \alpha \cdot \Delta h_{l, \parallel} + \beta \cdot \Delta h_{l, \perp}$$
+$$
+h_l = h_{l-1} + \alpha \cdot \Delta h_{l, \parallel} + \beta \cdot \Delta h_{l, \perp}
+$$
 
 > [!NOTE]
-> * **Residual-Space Decomposition**: Operates at the block-output residual stream level ($h_{l} = h_{l-1} + \Delta h_l$).
+> * **Residual-Space Decomposition**: Operates at the block-output residual stream level: $h_{l} = h_{l-1} + \Delta h_l$.
 > * **Value-Space Decomposition (XSA)**: Operates inside the multi-head attention mechanism, projecting aggregated value representations against self-value tokens.
 
 ---
@@ -69,7 +73,10 @@ $$h_l = h_{l-1} + \alpha \cdot \Delta h_{l, \parallel} + \beta \cdot \Delta h_{l
 ### 1. Geometry Probing (Depth & Subspace Dynamics)
 > **Key Finding**: Transformer updates maintain a distinct, persistent balance between rescaling-aligned and direction-changing vectors across model families (Qwen, LLaMA, nanoGPT).
 
-* **Theory**: Layer updates $\Delta h = \Delta h_{\parallel} + \Delta h_{\perp}$ persist parallel components throughout depth ($r = \|\Delta h_{\parallel}\| / \|\Delta h_{\perp}\| > 1$).
+* **Theory**: Layer updates decompose into parallel and orthogonal components, maintaining $r = \|\Delta h_{\parallel}\| / \|\Delta h_{\perp}\| > 1$ across layers:
+  $$
+  \Delta h = \Delta h_{\parallel} + \Delta h_{\perp}
+  $$
 * **Reproduce**:
   ```bash
   python scripts/run_probe.py --model_path Qwen/Qwen2.5-7B
@@ -79,9 +86,12 @@ $$h_l = h_{l-1} + \alpha \cdot \Delta h_{l, \parallel} + \beta \cdot \Delta h_{l
 ---
 
 ### 2. Inference Interventions (Component & Diagonal Editing)
-> **Key Finding**: Value-parallel scaling ($\Delta h_{\parallel}$) exhibits remarkable resilience ($\Delta\mathrm{PPL} \le +0.46$), whereas modifying perpendicular steering ($\Delta h_{\perp}$) catastrophically degrades perplexity.
+> **Key Finding**: Scaling the parallel component $\Delta h_{\parallel}$ exhibits remarkable resilience ($\Delta\mathrm{PPL} \le +0.46$), whereas modifying perpendicular steering $\Delta h_{\perp}$ catastrophically degrades perplexity.
 
-* **Theory**: Direct self-message preservation ($\widetilde{\mathbf{o}}^{\mathrm{excl}}_t = \mathbf{d}_t + s^{(\parallel)}\mathbf{c}_{t,\parallel} + s^{(\perp)}\mathbf{c}_{t,\perp}$) isolates cross-token magnitude modulation.
+* **Theory**: Direct self-message preservation isolates cross-token magnitude modulation:
+  $$
+  \widetilde{\mathbf{o}}^{\mathrm{excl}}_t = \mathbf{d}_t + s^{(\parallel)}\mathbf{c}_{t,\parallel} + s^{(\perp)}\mathbf{c}_{t,\perp}
+  $$
 * **Reproduce**:
   ```bash
   bash lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh
@@ -102,7 +112,7 @@ $$h_l = h_{l-1} + \alpha \cdot \Delta h_{l, \parallel} + \beta \cdot \Delta h_{l
 ---
 
 ### 4. Compression Geometry (Pruning vs. Quantization Distortion)
-> **Key Finding**: Pruning methods (Wanda, SparseGPT) heavily distort the perpendicular subspace ($\Delta h_{\perp}$), while quantization preserves update geometry substantially closer to dense baselines.
+> **Key Finding**: Pruning methods (Wanda, SparseGPT) heavily distort the perpendicular subspace $\Delta h_{\perp}$, while quantization preserves update geometry substantially closer to dense baselines.
 
 * **Theory**: Perpendicular error strictly separates compression quality regimes, explaining why isotropic $L_2$ error fails to rank degradations.
 * **Reproduce**:
@@ -121,8 +131,6 @@ $$h_l = h_{l-1} + \alpha \cdot \Delta h_{l, \parallel} + \beta \cdot \Delta h_{l
   python training/scripts/plot_arr_figure6_retained_curves.py
   bash lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh
   ```
-
----
 
 ---
 

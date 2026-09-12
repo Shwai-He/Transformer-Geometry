@@ -44,15 +44,14 @@ post-training compression and from-scratch pretraining. For model
 compression~\citep{Frantar2022GPTQAP,Lin2023AWQAW,Sun2023ASA,men2024shortgpt,He2026UncoveringTR},
 decomposing update distortion reveals that better-performing quantized and
 pruned models consistently exhibit lower perpendicular error, whereas parallel
-error is far less discriminative. Motivated by the inference-time asymmetry, we
-separately evaluate parallel attention suppression during pretraining. Across
-model scales from 300M to 2.7B parameters, the value-space variant consistently
-yields lower validation-loss trajectories, and both variants improve average
-downstream benchmark scores, with the value-space variant producing the largest
-gains.
+error is far less discriminative. Motivated by this directional geometry, we
+evaluate parallel attention suppression during pretraining. Across model
+scales from 296M to 2.7B parameters, the value-space variant consistently
+yields lower validation-loss trajectories, and both variants improve downstream
+performance, with the value-space variant producing the largest gains.
 
 \begingroup\setlength{\parskip}{0pt}In summary, the contributions of this work are as follows:
-\begin{enumerate}
+\begin{itemize}
   \setlength{\topsep}{0pt}
   \setlength{\partopsep}{0pt}
   \setlength{\itemsep}{2pt}
@@ -68,5 +67,5 @@ gains.
         editing: perpendicular error tracks compressed-model quality, while
         parallel suppression consistently improves validation loss and
         downstream performance across model scales.
-\end{enumerate}
+\end{itemize}
 \endgroup

@@ -1,4 +1,4 @@
-\begin{thebibliography}{35}
+\begin{thebibliography}{32}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Bachlechner et~al.(2021)Bachlechner, Majumder, Mao, Cottrell, and
@@ -8,20 +8,6 @@ Thomas~C. Bachlechner, Bodhisattwa~Prasad Majumder, Huanru~Henry Mao,
 \newblock \href {https://proceedings.mlr.press/v161/bachlechner21a.html}
   {{ReZero} is all you need: Fast convergence at large depth}.
 \newblock In \emph{Conference on Uncertainty in Artificial Intelligence}.
-
-\bibitem[{Bisk et~al.(2020)Bisk, Zellers, Bras, Gao, and Choi}]{Bisk2019PIQARA}
-Yonatan Bisk, Rowan Zellers, Ronan~Le Bras, Jianfeng Gao, and Yejin Choi. 2020.
-\newblock \href {https://ojs.aaai.org/index.php/AAAI/article/view/6239}
-  {{PIQA}: Reasoning about physical commonsense in natural language}.
-\newblock In \emph{AAAI Conference on Artificial Intelligence}.
-
-\bibitem[{Clark et~al.(2019)Clark, Lee, Chang, Kwiatkowski, Collins, and
-  Toutanova}]{Clark2019BoolQET}
-Christopher Clark, Kenton Lee, Ming-Wei Chang, Tom Kwiatkowski, Michael
-  Collins, and Kristina Toutanova. 2019.
-\newblock \href {https://arxiv.org/abs/1905.10044} {{BoolQ}: Exploring the
-  surprising difficulty of natural yes/no questions}.
-\newblock \emph{ArXiv}, abs/1905.10044.
 
 \bibitem[{Clark et~al.(2018)Clark, Cowhey, Etzioni, Khot, Sabharwal, Schoenick,
   and Tafjord}]{Clark2018ThinkYH}
@@ -96,6 +82,12 @@ Leo Gao, Jonathan Tow, Baber Abbasi, Stella Biderman, Sid Black, Anthony
 \newblock \href {https://doi.org/10.5281/zenodo.12608602} {The language model
   evaluation harness}.
 
+\bibitem[{{Gemma Team}(2025)}]{GemmaTeam2025Gemma3}
+{Gemma Team}. 2025.
+\newblock \href {https://arxiv.org/abs/2503.19786} {{Gemma 3} technical
+  report}.
+\newblock \emph{Preprint}, arXiv:2503.19786.
+
 \bibitem[{Gokaslan et~al.(2019)Gokaslan, Cohen, Pavlick, and
   Tellex}]{Gokaslan2019OpenWeb}
 Aaron Gokaslan, Vanya Cohen, Ellie Pavlick, and Stefanie Tellex. 2019.
@@ -163,14 +155,6 @@ Xin Men, Mingyu Xu, Qingyu Zhang, Bingning Wang, Hongyu Lin, Yaojie Lu, Xianpei
   language models are more redundant than you expect}.
 \newblock \emph{arXiv:2403.03853}.
 
-\bibitem[{Mihaylov et~al.(2018)Mihaylov, Clark, Khot, and
-  Sabharwal}]{Mihaylov2018CanAS}
-Todor Mihaylov, Peter Clark, Tushar Khot, and Ashish Sabharwal. 2018.
-\newblock \href {https://aclanthology.org/D18-1260/} {Can a suit of armor
-  conduct electricity? a new dataset for open book question answering}.
-\newblock In \emph{Conference on Empirical Methods in Natural Language
-  Processing}.
-
 \bibitem[{Penedo et~al.(2024)Penedo, Kydl{\'\i}{\v{c}}ek, allal, Lozhkov,
   Mitchell, Raffel, Werra, and Wolf}]{penedo2024the}
 Guilherme Penedo, Hynek Kydl{\'\i}{\v{c}}ek, Loubna~Ben allal, Anton Lozhkov,
@@ -200,14 +184,6 @@ Siva Reddy, Danqi Chen, and Christopher~D. Manning. 2019.
   conversational question answering challenge}.
 \newblock \emph{Transactions of the Association for Computational Linguistics},
   7:249--266.
-
-\bibitem[{Sakaguchi et~al.(2020)Sakaguchi, Bras, Bhagavatula, and
-  Choi}]{Sakaguchi2019AnAW}
-Keisuke Sakaguchi, Ronan~Le Bras, Chandra Bhagavatula, and Yejin Choi. 2020.
-\newblock \href
-  {https://aaai.org/papers/08732-winogrande-an-adversarial-winograd-schema-challenge-at-scale/}
-  {An adversarial winograd schema challenge at scale}.
-\newblock In \emph{AAAI Conference on Artificial Intelligence}.
 
 \bibitem[{Sun et~al.(2024)Sun, Liu, Bair, and Kolter}]{Sun2023ASA}
 Mingjie Sun, Zhuang Liu, Anna Bair, and J.~Zico Kolter. 2024.

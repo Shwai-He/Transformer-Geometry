@@ -1,20 +1,18 @@
-\section{Method}
+\section{Directional Interventions}
 \label{sec:method}
 
-We instantiate the decomposition from \S\ref{sec:decomp} in two complementary
-spaces: the residual stream, where it characterizes learned updates relative to
-the evolving hidden state, and attention value space, where it characterizes
-token aggregation before output projection. These views yield the
-component-scaling interventions and compression diagnostics used throughout the
-paper. Figure~\ref{fig:overview} summarizes the intervention sites and their
-associated diagonal view.
+We instantiate directional decomposition across two complementary spaces: the
+residual stream (Section~\ref{sec:residual-level}) and the attention value space
+(Section~\ref{sec:value-level}). We then unify these sites into a shared
+component-scaling framework (Section~\ref{sec:closed-form-control}) to systematically
+manipulate parallel and perpendicular updates. Figure~\ref{fig:overview}
+summarizes both intervention sites and their diagonal view.
 
 % ------------------------------------------------------------------
 \subsection{Residual-Level Decomposition}
 \label{sec:residual-level}
 
-\paragraph{Instantiation.}
-Set $\Delta = \Du{l}{t}$ (the residual update of block $f^l$ at token $t$)
+Set $\Delta = \Du{l}{t}$ (the residual update at layer $l$, token position $t$)
 and $\mathbf{z} = \hz{l}{t}$ (the pre-update hidden state).
 For layer and module profiles, we report calibration-corpus averages of the
 per-token residual parallel ratio:
@@ -31,14 +29,13 @@ per-token residual parallel ratio:
 This residual-level view serves as the shared observable for the rest of the
 paper. The resulting diagnostic is block-agnostic. We apply it to
 (i)~the $\Attn$ sub-layer output,
-(ii)~the $\FFN$ sub-layer output, and
-(iii)~their joint effect at the transformer-block level.
+(ii)~the $\mathrm{MLP}$ sub-layer output, and
+(iii)~their accumulated effect at the transformer-block level.
 
 % ------------------------------------------------------------------
 \subsection{Value-Space Decomposition}
 \label{sec:value-level}
 
-\begin{samepage}
 Inside attention, let $\mathbf{x}^{\mathrm{attn}}_s$ denote the input to the
 value projection, including the model's pre-attention normalization. Each
 source token $s$ is mapped to a value vector
@@ -52,41 +49,40 @@ The pre-output-projection aggregate is
   \mathbf{o}_t=\sum_{s\le t} \mathcal{A}_{ts}\mathbf{v}_s .
   \label{eq:value-aggregation}
 \end{equation}
-\end{samepage}%
 Within this space the natural reference is the current token's own value
 $\mathbf{v}_t$: the direction $\mathbf{o}_t$ would take if attention routed
 nothing from other positions.
-\begingroup
-\setlength{\abovedisplayskip}{5pt}
-\setlength{\belowdisplayskip}{5pt}
-\setlength{\abovedisplayshortskip}{4pt}
-\setlength{\belowdisplayshortskip}{4pt}
 \begin{equation}
   \mathbf{o}_{t,\parallel}
-    = \frac{\mathbf{o}_t^\top\mathbf{v}_t}{\|\mathbf{v}_t\|^2}\mathbf{v}_t,
+    = \frac{\mathbf{o}_t \cdot \mathbf{v}_t}{\|\mathbf{v}_t\|^2}\mathbf{v}_t,
   \qquad
   \mathbf{o}_{t,\perp}=\mathbf{o}_t-\mathbf{o}_{t,\parallel}.
   \label{eq:value-space-decomp}
 \end{equation}
-\endgroup
 Residual-space geometry does not isolate this self-value-aligned structure
 because the output projection mixes the aggregate into the residual stream.
 
-\paragraph{Direct Self-Message Control.}
-Attention value aggregation inherently combines two distinct computational pathways: identity preservation via the token's own value ($\mathcal{A}_{tt}\mathbf{v}_t$) and contextual routing from prior positions ($\sum_{s<t}\mathcal{A}_{ts}\mathbf{v}_s$). Perturbing both simultaneously conflates cross-token aggregation with the trivial erasure of the query token's identity. As a rigorous measurement control, we decouple these pathways and apply directional decomposition exclusively to the non-self aggregate:
+\paragraph{Direct Self-Message Preservation.}
+In naive value-space decomposition (Equation~\ref{eq:value-space-decomp}), the
+query token's self message $\mathbf{d}_t = \mathcal{A}_{tt}\mathbf{v}_t$ is
+colinear with $\mathbf{v}_t$ and absorbed into $\mathbf{o}_{t,\parallel}$.
+Naive parallel removal ($s^{(\parallel)}=0$) thus extinguishes the token's
+identity carrier alongside cross-token features. To isolate \textit{contextual}
+magnitude modulation while preserving self-representation, we decouple the aggregate:
 \begin{equation}
   \begin{aligned}
   \mathbf{o}_t
     &= \underbrace{\mathcal{A}_{tt}\mathbf{v}_t}_{\mathbf{d}_t\;\text{(self)}}
      + \underbrace{\sum_{s<t}\mathcal{A}_{ts}\mathbf{v}_s}_{\mathbf{c}_t\;\text{(non-self)}},\\
   \mathbf{c}_{t,\parallel}
-    &= \frac{\mathbf{c}_t^\top\mathbf{v}_t}{\|\mathbf{v}_t\|^2}\mathbf{v}_t,
+    &= \frac{\mathbf{c}_t \cdot \mathbf{v}_t}{\|\mathbf{v}_t\|^2}\mathbf{v}_t,
   \qquad
   \mathbf{c}_{t,\perp}=\mathbf{c}_t-\mathbf{c}_{t,\parallel}.
   \end{aligned}
   \label{eq:exclude-self-decomp}
 \end{equation}
-We scale the directional components of the non-self aggregate while preserving the untouched self message:
+We scale only the parallel and perpendicular components of the non-self
+aggregate and then restore the unchanged self message:
 \begin{equation}
   \widetilde{\mathbf{o}}^{\mathrm{excl}}_t
     = \mathbf{d}_t
@@ -94,12 +90,13 @@ We scale the directional components of the non-self aggregate while preserving t
       +s^{(\perp)}\mathbf{c}_{t,\perp}.
   \label{eq:exclude-self-scaling}
 \end{equation}
-We designate this control \emph{exclude-self} scaling: it isolates the directional effects of cross-token aggregation while keeping the identity carrier and attention row normalization intact.
+We refer to this operation as \emph{exclude-self} scaling: it neither masks the
+self-attention edge nor renormalizes the attention row.
 
 Value-space decomposition applies only to attention aggregates. For MLPs, the
-main analysis decomposes the sub-layer output in residual space; Appendix
-\ref{app:mlp-internal-carrier} separately applies the same projection geometry
-to the post-gating carrier and grouped down-projected contributions.
+main analysis decomposes the sub-layer output in residual space; Appendix~\ref{app:mlp-internal-carrier}
+separately applies the same projection geometry to the post-gating carrier and
+grouped down-projected contributions.
 
 % ------------------------------------------------------------------
 \subsection{Component Scaling and Diagonal Form}
@@ -112,7 +109,7 @@ uses $(\mathcal M_{ts},\mathbf m_s,\mathbf r_t)
 =(\mathcal A_{ts},\mathbf v_s,\mathbf v_t)$. Residual-space attention editing
 uses $\mathcal B_{ts}=W_O\mathcal A_{ts}$ and
 $(\mathcal M_{ts},\mathbf m_s,\mathbf r_t)
-=(\mathcal B_{ts},\mathbf v_s,\hz{}{t})$, keeping head-dependent mixing
+=(\mathcal B_{ts},\mathbf v_s,\hz{l}{t})$, keeping head-dependent mixing
 explicit. Component scaling then uses the shared intervention
 \begin{equation}
   \widetilde{\mathbf{y}}_t
@@ -123,26 +120,25 @@ explicit. Component scaling then uses the shared intervention
 The no-op is $s^{(\parallel)}=s^{(\perp)}=1$, and parallel removal sets
 $s^{(\parallel)}=0,s^{(\perp)}=1$. Exclude-self scaling applies the same form
 to $\mathbf{c}_t$ and restores $\mathbf{d}_t$ as in
-Eq.~\ref{eq:exclude-self-scaling}.
+Equation~\ref{eq:exclude-self-scaling}.
 
 The same edit can also be read on the attention map itself, connecting it to
-self-directed attention mass (\S\ref{sec:related}). Holding all off-diagonal
+self-directed attention mass (Section~\ref{sec:related}). Holding all off-diagonal
 messages fixed, a diagonal update realizes parallel-only scaling when
 \begin{equation}
   \Delta\mathbf y_{tt}
     =\bigl(s^{(\parallel)}-1\bigr)\mathbf y_{t,\parallel}.
   \label{eq:general-diagonal-constraint}
 \end{equation}
-Appendix~\ref{app:method} gives an operator realization, the scalar
-attention-diagonal forms used in our visual comparison, their removed cases,
-and the applied-output audit.
+Appendix~\ref{app:method} gives an operator realization, scalar
+attention-diagonal forms, removed cases, and the applied-output audit.
 
 \begin{figure*}[t]
   \centering
   \includegraphics[width=0.96\linewidth]{figs/para_ablation_corrected/ppl_component_scaling_corrected.pdf}
-  \caption{\textbf{Perplexity under component scaling on Qwen3-1.7B.}
+  \caption{\textbf{Perplexity under component scaling.}
   The left panel varies $s_{\parallel}$ with $s_{\perp}=1$; the right varies
-  $s_{\perp}$ with $s_{\parallel}=1$. On WikiText-2,
+  $s_{\perp}$ with $s_{\parallel}=1$. Evaluated on Qwen3-1.7B (WikiText-2),
   $\Delta\mathrm{PPL}$ is edited minus the matched scale-one no-op, so lower is
   better. All decoder layers are edited; value-space curves use exclude-self
   scaling.}
