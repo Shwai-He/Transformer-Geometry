@@ -176,6 +176,43 @@ $$
 
 ## 📂 Repository Architecture
 
+```mermaid
+graph TD
+    classDef core fill:#eff6ff,stroke:#3b82f6,stroke-width:1.5px,color:#1e3a8a
+    classDef ana fill:#f0fdf4,stroke:#22c55e,stroke-width:1.5px,color:#14532d
+    classDef eval fill:#faf5ff,stroke:#a855f7,stroke-width:1.5px,color:#581c87
+    classDef comp fill:#fffbeb,stroke:#f59e0b,stroke-width:1.5px,color:#78350f
+    classDef train fill:#fff1f2,stroke:#f43f5e,stroke-width:1.5px,color:#881337
+
+    subgraph CoreEngine["🧩 Foundational Core"]
+        repgeo["<b>src/repgeo/</b><br/>Projection Math & PyTorch Hooks"]:::core
+    end
+
+    subgraph Workspaces["🔬 Empirical Research Workspaces"]
+        ana["<b>analysis/</b><br/>Depth Probing & VLM Sweeps"]:::ana
+        eval["<b>lm-evaluation-harness/</b><br/>Attention Hooks & RULER Suite"]:::eval
+        comp["<b>compression/</b><br/>Wanda/Quant Distortion Diagnostics"]:::comp
+        train["<b>training/</b><br/>Pretraining with Parallel Suppression"]:::train
+    end
+
+    repgeo -->|Dynamic hook injection| eval
+    repgeo -->|Subspace metrics & ratios| ana
+    repgeo -->|Orthogonal distortion ranking| comp
+    repgeo -->|Geometric regularizer loss| train
+```
+
+| Module | Primary Directory | Core Responsibilities | Key Entrypoints |
+| :--- | :--- | :--- | :--- |
+| 🧩 **Core Geometric Engine** | [`src/repgeo/`](src/repgeo/) | Mathematical formulations for projection decomposition ($\Delta h_\parallel, \Delta h_\perp$) and PyTorch forward hook mechanisms | [`geometry_utils.py`](src/repgeo/geometry_utils.py)<br/>[`hooks.py`](src/repgeo/hooks.py) |
+| 🔍 **Probing & Diagnostic Labs** | [`analysis/`](analysis/) | Depth-wise geometric probing, angular drift tracking, GSM8K reasoning validation, and VLM cross-modality interventions | [`analysis/forward_geometry/`](analysis/forward_geometry/)<br/>[`analysis/vlm_geometry/`](analysis/vlm_geometry/) |
+| 🧪 **Benchmarking & RULER** | [`lm-evaluation-harness/`](lm-evaluation-harness/) | Extended evaluation suite supporting attention diagonal modifications, downstream benchmarks, and long-context needle tests | [`lm_eval/models/`](lm-evaluation-harness/lm_eval/models/)<br/>[`scripts/run_lm_eval_ruler_all_settings.sh`](lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh) |
+| 🗜️ **Compression & Pruning** | [`compression/`](compression/) | Subspace distortion decomposition, Wanda / 2:4 / 4:8 structured pruning analysis, and geometry-guided pruning algorithms | [`compression/code/`](compression/code/)<br/>[`compression/scripts/`](compression/scripts/) |
+| ⚡ **Pretraining Dynamics** | [`training/`](training/) | From-scratch pretraining workflows with parallel-suppressed inductive bias and validation loss tracking | [`training/pretraining_xsa.py`](training/)<br/>[`training/scripts/`](training/scripts/) |
+| 🚀 **Execution Drivers** | [`scripts/`](scripts/) | Root-level CLI probing launchers and batch reproducibility entrypoints | [`scripts/run_probe.py`](scripts/run_probe.py)<br/>[`scripts/run_batch_probe.py`](scripts/run_batch_probe.py) |
+
+<details>
+<summary><b>📁 Click to expand full directory tree</b></summary>
+
 ```text
 Transformer-Geometry/
 ├── src/repgeo/                 # Reusable core geometry, projection, and intervention utilities
@@ -203,6 +240,7 @@ Transformer-Geometry/
 ├── scripts/                    # Root-level probing runners and reproducibility utilities
 └── requirements.txt            # Base Python dependencies
 ```
+</details>
 
 ---
 
@@ -237,51 +275,91 @@ pip install transformers accelerate datasets evaluate
 ## 🚀 Experiment Execution Guide
 
 > [!TIP]
-> **File-First Configuration Convention**: Most experiment launchers are configured directly near the top of the shell/Python script. Open the target script to adjust `MODEL_PATH`, `GPU_DEVICES`, and `OUTPUT_DIR` before running.
+> **File-First Configuration Convention**: Most experiment launchers are parameterized at the top of their respective script files. Adjust `MODEL_PATH`, `GPU_DEVICES`, and `OUTPUT_DIR` in the designated header variables before launching.
 
-### 1. Geometry Probing Across Depths
-Extract parallel/perpendicular ratios, angular velocities, and magnitude projections:
+---
+
+### 1. 🔍 Geometry Probing Across Depths
+> Extract and track parallel/perpendicular ratios $r = \|\Delta h_\parallel\| / \|\Delta h_\perp\|$, magnitude growth, and angular drift across Transformer layers and generation steps.
+
+| Target Models | Evaluated Corpora | Measured Subspace Quantities | Primary Output Artifact |
+| :--- | :--- | :--- | :--- |
+| Qwen3 (0.6B–30B), LLaMA-3 (8B), nanoGPT | WikiText-2, C4 | Ratio $r = \|\Delta h_\parallel\| / \|\Delta h_\perp\|$, Cosine angle $\theta$, Absolute scale | `results/probe_metrics.json` |
+
 ```bash
-# Single model probe
-python scripts/run_probe.py --model_path Qwen/Qwen2.5-7B --dataset wikitext
+# 🔹 Single-model probing run (e.g. Qwen2.5-7B on WikiText)
+python scripts/run_probe.py \
+  --model_path Qwen/Qwen2.5-7B \
+  --dataset wikitext \
+  --output_dir results/probing/qwen_7b
 
-# Batch probing across model families
-python scripts/run_batch_probe.py --config configs/probe_models.yaml
+# 🔹 Multi-architecture batch probing across Dense and MoE model families
+python scripts/run_batch_probe.py \
+  --config configs/probe_models.yaml
 ```
 
-### 2. Inference-Time Component & Diagonal Interventions
-Evaluate the effect of scaling $\Delta h_{\parallel}$ vs $\Delta h_{\perp}$ on language modeling:
+---
+
+### 2. 🎛️ Inference-Time Component & Diagonal Interventions
+> Apply forward hooks to scale parallel ($\alpha$) vs. perpendicular ($\beta$) update components during auto-regressive generation, measuring language modeling resilience and effective attention diagonal equivalents.
+
+| Intervention Site | Parameter Sweeps | Target Metric | Presets Tested |
+| :--- | :--- | :--- | :--- |
+| **Residual-Space** ($\Delta h_l$) & **Value-Space** (XSA $\mathbf{v}_t$) | $\alpha \in [-1, 3]$, $\beta \in [0, 2]$ | WikiText-2 $\Delta\text{PPL}$ | Baseline ($1, 1$), Para-Off ($0, 1$), Perp-Off ($1, 0$) |
+
 ```bash
-# Run XSA (cross-subspace attention) intervention sweep
+# 🔹 Launch Cross-Subspace Attention (XSA) value-space intervention grid
 bash lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh
 
-# Run attention diagonal scaling ablation
+# 🔹 Run closed-form attention diagonal modification ablation
 bash lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh
 ```
 
-### 3. Long-Context RULER Evaluation Suite
-Benchmark context-window integrity under geometric modifications:
+---
+
+### 3. 📏 Long-Context RULER Evaluation Suite
+> Stress-test retrieval accuracy and context-window fidelity under geometric interventions across extended token horizons (4,096 to 12,288 tokens).
+
+| Benchmark Suite | Evaluated Context Depths | Tasks Covered | Target Metric |
+| :--- | :--- | :--- | :--- |
+| **RULER Benchmark** | 4k, 8k, 12k tokens | Single-Key NIAH, Multi-Key NIAH, CWE, FWE | Needle Retrieval Accuracy (%) |
+
 ```bash
+# 🔹 Execute full RULER benchmark across all geometric intervention settings
 bash lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh
 ```
 
-### 4. Compression Error & Geometry-Aware Pruning
-Analyze distortion caused by pruning (Wanda, SparseGPT) and quantization:
+---
+
+### 4. 🗜️ Compression Error & Geometry-Aware Pruning
+> Decompose compression error vectors into parallel and perpendicular subspaces ($\|e_\perp\| / \|\Delta_{\text{base}}\|$), validating why isotropic $L_2$ error misranks pruning techniques and executing geometry-guided pruning.
+
+| Compression Regimes | Evaluated Sub-layers | Baseline Comparison | Key Finding |
+| :--- | :--- | :--- | :--- |
+| Wanda, SparseGPT, 2:4 / 4:8 N:M Sparsity | **Attn**, **MLP**, **Block Output** | AWQ / GPTQ 4-bit Quantization | Pruning corrupts $\Delta h_\perp$; Quant preserves geometry |
+
 ```bash
-# Layerwise parallel/perpendicular distortion comparison
+# 🔹 Layerwise parallel vs. perpendicular error decomposition across sub-layers
 bash compression/scripts/run_layerwise_para_perp_compare.sh
 
-# Run geometry-guided pruning
+# 🔹 Run geometry-guided sparse pruning with directional preservation
 bash compression/scripts/run_geometry_aware_pruning.sh
 ```
 
-### 5. Training-Time Interventions (nanoGPT & Scratch Sweeps)
-Train small-to-medium models with suppressed parallel components and evaluate checkpoints:
+---
+
+### 5. ⚡ Training-Time Interventions (nanoGPT & Scratch Sweeps)
+> Train models from scratch with parallel-suppression geometric regularization, demonstrating accelerated convergence and superior downstream generalization.
+
+| Architecture Scales | Training Corpora | Regularization Strategy | Evaluated Outcomes |
+| :--- | :--- | :--- | :--- |
+| 296M, 436M, 528M, 1.4B, 2.7B | OpenWebText, SlimPajama | Direct Value-Space Parallel Suppression | Validation Loss Trajectory, 6-Task Benchmark Avg |
+
 ```bash
-# Pretraining experiments
+# 🔹 Launch pretraining with geometric regularization
 cd training && bash scripts/run_nanogpt_geom_train.sh && cd ..
 
-# Evaluate trained checkpoints on standard tasks
+# 🔹 Evaluate trained checkpoints on downstream task suites
 bash lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh
 python lm-evaluation-harness/scripts/collect_nanogpt_lm_eval_results.py
 ```
