@@ -204,8 +204,8 @@ For detailed workspace-specific guidance, refer to sub-package documentation:
 
 ```bibtex
 @inproceedings{he2026transformer_geometry,
-  title={Transformer Geometry: Decomposing Representation Updates into Parallel and Perpendicular Subspaces},
-  author={He, Shwai and collaborators},
+  title={Disentangling Representation Evolution in Transformers through Directional Decomposition},
+  author={He, Shwai and Zhang, Haichao and Yan, Shen},
   booktitle={Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing (EMNLP)},
   year={2026}
 }
