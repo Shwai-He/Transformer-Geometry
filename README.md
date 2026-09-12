@@ -4,7 +4,7 @@
 ### Decomposing Transformer Updates into Parallel & Perpendicular Subspaces
 
 <p align="center">
-  <a href="https://2026.emnlp.org/"><img alt="EMNLP 2026" src="https://img.shields.io/badge/EMNLP-2026-brightgreen?style=for-the-badge"></a>
+  <a href="https://2026.emnlp.org/"><img alt="EMNLP 2026 Findings" src="https://img.shields.io/badge/EMNLP_2026-Findings-blue?style=for-the-badge"></a>
   <a href="https://shwai-he.github.io/Transformer-Geometry/"><img alt="Project Website" src="https://img.shields.io/badge/🌐_Project-Website-0f5f56?style=for-the-badge"></a>
   <a href="https://pytorch.org/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C.svg?style=for-the-badge&logo=pytorch&logoColor=white"></a>
   <a href="https://www.python.org/downloads/"><img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-3776AB.svg?style=for-the-badge&logo=python&logoColor=white"></a>
@@ -382,7 +382,7 @@ For detailed workspace-specific guidance, refer to sub-package documentation:
 @inproceedings{he2026transformer_geometry,
   title={Disentangling Representation Evolution in Transformers through Directional Decomposition},
   author={He, Shwai and Zhang, Haichao and Yan, Shen},
-  booktitle={Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing (EMNLP)},
+  booktitle={Findings of the Association for Computational Linguistics: EMNLP 2026},
   year={2026}
 }
 ```
