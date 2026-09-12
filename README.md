@@ -185,7 +185,7 @@ graph TD
     classDef train fill:#fff1f2,stroke:#f43f5e,stroke-width:1.5px,color:#881337
 
     subgraph CoreEngine["🧩 Foundational Core"]
-        repgeo["<b>src/repgeo/</b><br/>Projection Math & PyTorch Hooks"]:::core
+        repgeo["<b>repgeo/</b><br/>Projection Math & PyTorch Hooks"]:::core
     end
 
     subgraph Workspaces["🔬 Empirical Research Workspaces"]
@@ -206,7 +206,7 @@ graph TD
 
 ```text
 Transformer-Geometry/
-├── src/repgeo/                 # Reusable core geometry, projection, and intervention utilities
+├── repgeo/                     # Reusable core geometry, projection, and intervention utilities
 │   ├── geometry_utils.py       # Parallel / perpendicular projection math & metrics
 │   └── hooks.py                # PyTorch forward hook mechanisms for dynamic interventions
 │

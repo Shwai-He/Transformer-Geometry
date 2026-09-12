@@ -18,7 +18,7 @@ for the index and package marker only.
 - `nanogpt/`: nanoGPT checkpoint diagnostics and wrappers.
 - `utils/`: shared helpers and data-prep utilities.
 
-Prefer keeping reusable logic small here, or promoting it into `src/repgeo/`
+Prefer keeping reusable logic small here, or promoting it into `repgeo/`
 when it becomes shared infrastructure.
 
 ## Boundaries with other directories
@@ -27,7 +27,7 @@ when it becomes shared infrastructure.
 - If a script is specifically for pretraining or optimization runs, it should usually live under `training/`.
 - If a script is specifically for compression geometry, it should usually live under `compression/`.
 - Keep private plotting workspaces outside git; this tree should stay focused on reusable analysis helpers and experiment runners.
-- If logic becomes reusable across multiple scripts, move it into `src/repgeo/`
+- If logic becomes reusable across multiple scripts, move it into `repgeo/`
   or `analysis/utils/` depending on whether it is project infrastructure or a
   local analysis helper.
 

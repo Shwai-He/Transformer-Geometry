@@ -13,6 +13,7 @@ from .residual_scale_fx_patch import (
     log_scale_on_fx_stats_to_wandb,
 )
 from .trainer_integration import ResidualScaleWandbCallback
+from .technical_reproduction import TechnicalReproducer
 
 __all__ = [
     "GeometryAnalyzer",
@@ -27,4 +28,5 @@ __all__ = [
     "collect_scale_on_fx_stats",
     "log_scale_on_fx_stats_to_wandb",
     "ResidualScaleWandbCallback",
+    "TechnicalReproducer",
 ]

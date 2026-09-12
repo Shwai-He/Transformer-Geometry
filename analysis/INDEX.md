@@ -99,7 +99,7 @@ Utilities and launchers for nanoGPT checkpoints.
 ## 7. Shared Utilities And Data Prep
 
 Keep reusable code small here.  If a helper becomes shared infrastructure,
-promote it into `src/repgeo/` and leave a thin compatibility wrapper.
+promote it into `repgeo/` and leave a thin compatibility wrapper.
 
 | Script | Role |
 |---|---|

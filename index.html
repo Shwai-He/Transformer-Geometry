@@ -737,7 +737,7 @@ python scripts/run_probe.py \\
     --dataset wikitext \\
     --output_dir results/probing/`,
       hooks: `# Dynamic PyTorch component intervention hook
-from src.repgeo.hooks import register_geometry_hook
+from repgeo.hooks import register_geometry_hook
 
 # Scale parallel component by alpha and perpendicular by beta
 model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen2.5-7B")
