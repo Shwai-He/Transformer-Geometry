@@ -135,13 +135,13 @@ $$
 ---
 
 ### 4. Compression Geometry (Pruning vs. Quantization Distortion)
-> **Key Finding**: Pruning methods (Wanda, SparseGPT) heavily distort the perpendicular subspace $\Delta h_{\perp}$, while quantization preserves update geometry substantially closer to dense baselines.
+> **Key Finding**: Pruning methods (Wanda, SparseGPT) heavily distort the perpendicular subspace $\Delta h_{\perp}$, while quantization preserves update geometry substantially closer to dense baselines across Attention, MLP, and combined Block updates.
 
-<p align="center">
-  <img src="assets/compression_perp_distortion.png" alt="Compression Perpendicular Subspace Distortion" width="90%" />
-</p>
+| Attention Output ($\Delta h_\perp^{\text{attn}}$) | MLP Output ($\Delta h_\perp^{\text{mlp}}$) | Full Block Output ($\Delta h_\perp^{\text{block}} = \text{Attn} + \text{MLP}$) |
+| :---: | :---: | :---: |
+| <img src="assets/compression_perp_distortion_attn.png" alt="Attention Output Perpendicular Distortion" width="100%" /> | <img src="assets/compression_perp_distortion_mlp.png" alt="MLP Output Perpendicular Distortion" width="100%" /> | <img src="assets/compression_perp_distortion_block.png" alt="Block Output Perpendicular Distortion" width="100%" /> |
 
-* **Insight**: Relative perpendicular error $\|\Delta_{\perp}\Delta_{\text{base}}\| / \|\Delta_{\text{base}}\|$ strictly separates structured pruning (2:4, 4:8) and unstructured pruning from quantization, explaining why traditional isotropic $L_2$ error fails to rank post-compression degradation.
+* **Insight**: Relative perpendicular error $\|e_\perp\| / \|\Delta_{\text{base}}\|$ strictly separates structured pruning (2:4, 4:8) and unstructured pruning from quantization. Attention sub-layers suffer the highest orthogonal steering distortion (peaking above 1.2 in upper layers), followed by MLP layers, explaining why isotropic $L_2$ error fails to predict compression degradation.
 * **Reproduce**:
   ```bash
   bash scripts/compression_analysis/run_layerwise_para_perp_compare.sh
