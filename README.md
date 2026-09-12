@@ -71,11 +71,16 @@ $$
 ## 🔬 Core Research Pillars & Findings
 
 ### 1. Geometry Probing (Depth & Subspace Dynamics)
-> **Key Finding**: Transformer updates maintain a distinct, persistent balance between rescaling-aligned and direction-changing vectors across model families (Qwen, LLaMA, nanoGPT).
+> **Key Finding**: Transformer updates maintain a persistent, non-zero parallel projection across deep layers, counteracting the isotropic dispersion predicted by high-dimensional random geometry.
 
-* **Theory**: Layer updates decompose into parallel and orthogonal components, maintaining $r = \|\Delta h_{\parallel}\| / \|\Delta h_{\perp}\| > 1$ across layers:
+<p align="center">
+  <img src="assets/probing_layer_distribution_qwen3_4b.png" alt="Probing Layer Distribution Across Depths" width="92%" />
+</p>
+
+* **Insight**: The projection ratio $r = \|\Delta h_{\parallel}\| / \|\Delta h_{\perp}\|$ remains stably bounded across early (L7), middle (L20), and late (L34) layers, confirming that deep representations continually modulate feature magnitudes rather than exclusively steering directions.
+* **Theory**: Layer updates decompose into parallel and orthogonal components:
   $$
-  \Delta h = \Delta h_{\parallel} + \Delta h_{\perp}
+  \Delta h_l = \Delta h_{l, \parallel} + \Delta h_{l, \perp} \quad \text{where} \quad \Delta h_{l, \parallel} = \frac{\Delta h_l \cdot h_{l-1}}{\|h_{l-1}\|^2} h_{l-1}
   $$
 * **Reproduce**:
   ```bash
@@ -87,6 +92,16 @@ $$
 
 ### 2. Inference Interventions (Component & Diagonal Editing)
 > **Key Finding**: Scaling the parallel component $\Delta h_{\parallel}$ exhibits remarkable resilience ($\Delta\mathrm{PPL} \le +0.46$), whereas modifying perpendicular steering $\Delta h_{\perp}$ catastrophically degrades perplexity.
+
+<p align="center">
+  <img src="assets/ppl_component_scaling.png" alt="PPL Component Scaling Ablation" width="92%" />
+</p>
+
+* **Insight**: Modulating the parallel retained scale $s_{\parallel} \in [-1, 3]$ leaves language modeling ability largely intact (especially under Value-space with self-message preserved), whereas deviating from $s_{\perp} = 1.0$ causes catastrophic error spikes ($10^4$–$10^8$).
+* **Attention Diagonal View**: Parallel interventions in attention correspond to closed-form effective diagonal adjustments:
+<p align="center">
+  <img src="assets/attn_diagonal_matrix_edit.png" alt="Attention-Side Diagonal Matrix Equivalent" width="85%" />
+</p>
 
 * **Theory**: Direct self-message preservation isolates cross-token magnitude modulation:
   $$
@@ -101,9 +116,17 @@ $$
 ---
 
 ### 3. Downstream & Long-Context (RULER Benchmark)
-> **Key Finding**: Suppressing cross-token parallel updates preserves core reasoning on 7 standard benchmarks while exposing critical needle-retrieval sensitivities in long-context regimes (4k–12k tokens).
+> **Key Finding**: Suppressing cross-token parallel updates preserves core reasoning on standard benchmarks while exposing critical needle-retrieval sensitivities in long-context regimes (4k–12k tokens).
 
-* **Theory**: Full-aggregate removal collapses long-context retrieval, whereas exclude-self preserves high retrieval accuracy.
+| Intervention Method | Retained Scale $s_\parallel$ | RULER 4k Acc (%) | RULER 8k Acc (%) | RULER 12k Acc (%) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Dense Baseline** | 1.0 | 86.91 | 82.09 | 79.30 |
+| V-Full (All Value Tokens) | 0.5 | 84.81 | 78.80 | 74.76 |
+| **V-Excl.-self (Ours)** | 0.5 | **86.69** | **80.80** | **76.88** |
+| V-Full (All Value Tokens) | 0.0 | 60.99 | 48.61 | 39.17 |
+| **V-Excl.-self (Ours)** | 0.0 | **75.64** | **67.97** | **62.02** |
+
+* **Insight**: Full-aggregate value scaling collapses long-context retrieval (down to 39.17% at 12k), whereas preserving the direct self-message $\mathbf{d}_t$ retains over 75% accuracy at 4k and maintains robust needle recall out to 12k.
 * **Reproduce**:
   ```bash
   bash lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh
@@ -114,7 +137,11 @@ $$
 ### 4. Compression Geometry (Pruning vs. Quantization Distortion)
 > **Key Finding**: Pruning methods (Wanda, SparseGPT) heavily distort the perpendicular subspace $\Delta h_{\perp}$, while quantization preserves update geometry substantially closer to dense baselines.
 
-* **Theory**: Perpendicular error strictly separates compression quality regimes, explaining why isotropic $L_2$ error fails to rank degradations.
+<p align="center">
+  <img src="assets/compression_perp_distortion.png" alt="Compression Perpendicular Subspace Distortion" width="90%" />
+</p>
+
+* **Insight**: Relative perpendicular error $\|\Delta_{\perp}\Delta_{\text{base}}\| / \|\Delta_{\text{base}}\|$ strictly separates structured pruning (2:4, 4:8) and unstructured pruning from quantization, explaining why traditional isotropic $L_2$ error fails to rank post-compression degradation.
 * **Reproduce**:
   ```bash
   bash scripts/compression_analysis/run_layerwise_para_perp_compare.sh
@@ -125,7 +152,20 @@ $$
 ### 5. Training Optimization (Pretraining with Geometric Inductive Bias)
 > **Key Finding**: Suppressing parallel updates during from-scratch pretraining consistently lowers validation-loss trajectories across scales (300M–2.7B) and boosts downstream generalization.
 
-* **Theory**: Suppressing parallel updates relieves attention from redundant scalar scaling and directs representational capacity toward orthogonal contextual steering.
+<p align="center">
+  <img src="assets/pretraining_loss_curves_by_size.png" alt="Pretraining Loss Curves by Model Size" width="95%" />
+</p>
+
+| Model Scale | Training Configuration | 6-Benchmark Average | $\Delta\text{Avg}$ vs. Baseline |
+| :--- | :--- | :---: | :---: |
+| **1.4B** | Standard Baseline | 58.5% | — |
+| | Attn Para-Removal | 58.8% | +0.3% |
+| | **V-Para Removal (Ours)** | **59.2%** | **+0.7%** |
+| **2.7B** | Standard Baseline | 60.2% | — |
+| | Attn Para-Removal | 60.9% | +0.7% |
+| | **V-Para Removal (Ours)** | **61.7%** | **+1.5%** |
+
+* **Insight**: Suppressing parallel updates relieves attention from redundant scalar re-scaling, directing representational capacity toward orthogonal contextual steering and providing +1.5% gains on downstream benchmarks (ARC-Easy, BoolQ, HellaSwag, OpenBookQA, PIQA, WinoGrande).
 * **Reproduce**:
   ```bash
   python training/scripts/plot_arr_figure6_retained_curves.py
