@@ -66,13 +66,63 @@ $$h_l = h_{l-1} + \alpha \cdot \Delta h_{l, \parallel} + \beta \cdot \Delta h_{l
 
 ## 🔬 Core Research Pillars & Findings
 
-| Pillar | Focus Area | Core Insight / Key Result | Key Script Entrypoint |
-| :--- | :--- | :--- | :--- |
-| **1. Geometry Probing** | Depth & Subspace Dynamics | Transformer updates maintain a distinct, persistent balance between rescaling-aligned and direction-changing vectors across model families (Qwen, LLaMA, nanoGPT). | `scripts/run_probe.py`<br>`scripts/run_batch_probe.py` |
-| **2. Inference Interventions** | Component & Diagonal Editing | Value-parallel scaling ($\Delta h_{\parallel}$) exhibits remarkable resilience, while perturbing the perpendicular component ($\Delta h_{\perp}$) rapidly degrades model perplexity and coherence. | `lm_eval/models/attn_diag_hooks.py`<br>`analysis/forward_geometry/` |
-| **3. Downstream & RULER** | Broad Benchmarks & Long Context | Geometric interventions preserve core reasoning while exposing critical sensitivities in long-context needle-retrieval (RULER benchmark suite). | `lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh`<br>`.../run_lm_eval_ruler_all_settings.sh` |
-| **4. Compression Geometry** | Pruning & Quantization Analysis | Magnitude/Wanda pruning errors heavily distort the perpendicular ($\Delta h_{\perp}$) subspace, while quantization retains update geometry significantly closer to dense baselines. | `compression/code/layerwise_para_perp_compare.py`<br>`compression/code/geometry_aware_pruning.py` |
-| **5. Training Optimization** | Scratch Pretraining with Geometric Penalties | Suppressing parallel updates during pretraining alters loss trajectory convergence, demonstrating that geometry directly governs learning dynamics. | `training/`<br>`lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh` |
+### 1. Geometry Probing (Depth & Subspace Dynamics)
+> **Key Finding**: Transformer updates maintain a distinct, persistent balance between rescaling-aligned and direction-changing vectors across model families (Qwen, LLaMA, nanoGPT).
+
+* **Theory**: Layer updates $\Delta h = \Delta h_{\parallel} + \Delta h_{\perp}$ persist parallel components throughout depth ($r = \|\Delta h_{\parallel}\| / \|\Delta h_{\perp}\| > 1$).
+* **Reproduce**:
+  ```bash
+  python scripts/run_probe.py --model_path Qwen/Qwen2.5-7B
+  python scripts/run_batch_probe.py
+  ```
+
+---
+
+### 2. Inference Interventions (Component & Diagonal Editing)
+> **Key Finding**: Value-parallel scaling ($\Delta h_{\parallel}$) exhibits remarkable resilience ($\Delta\mathrm{PPL} \le +0.46$), whereas modifying perpendicular steering ($\Delta h_{\perp}$) catastrophically degrades perplexity.
+
+* **Theory**: Direct self-message preservation ($\widetilde{\mathbf{o}}^{\mathrm{excl}}_t = \mathbf{d}_t + s^{(\parallel)}\mathbf{c}_{t,\parallel} + s^{(\perp)}\mathbf{c}_{t,\perp}$) isolates cross-token magnitude modulation.
+* **Reproduce**:
+  ```bash
+  bash lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh
+  bash lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh
+  ```
+
+---
+
+### 3. Downstream & Long-Context (RULER Benchmark)
+> **Key Finding**: Suppressing cross-token parallel updates preserves core reasoning on 7 standard benchmarks while exposing critical needle-retrieval sensitivities in long-context regimes (4k–12k tokens).
+
+* **Theory**: Full-aggregate removal collapses long-context retrieval, whereas exclude-self preserves high retrieval accuracy.
+* **Reproduce**:
+  ```bash
+  bash lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh
+  ```
+
+---
+
+### 4. Compression Geometry (Pruning vs. Quantization Distortion)
+> **Key Finding**: Pruning methods (Wanda, SparseGPT) heavily distort the perpendicular subspace ($\Delta h_{\perp}$), while quantization preserves update geometry substantially closer to dense baselines.
+
+* **Theory**: Perpendicular error strictly separates compression quality regimes, explaining why isotropic $L_2$ error fails to rank degradations.
+* **Reproduce**:
+  ```bash
+  bash scripts/compression_analysis/run_layerwise_para_perp_compare.sh
+  ```
+
+---
+
+### 5. Training Optimization (Pretraining with Geometric Inductive Bias)
+> **Key Finding**: Suppressing parallel updates during from-scratch pretraining consistently lowers validation-loss trajectories across scales (300M–2.7B) and boosts downstream generalization.
+
+* **Theory**: Suppressing parallel updates relieves attention from redundant scalar scaling and directs representational capacity toward orthogonal contextual steering.
+* **Reproduce**:
+  ```bash
+  python training/scripts/plot_arr_figure6_retained_curves.py
+  bash lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh
+  ```
+
+---
 
 ---
 
