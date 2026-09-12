@@ -119,7 +119,7 @@ submit_eval() {
     --time="$TIME" \
     --output="$slurm_dir/%x-%j.out" \
     --error="$slurm_dir/%x-%j.err" \
-    --wrap="cd $REPO_ROOT && export HF_HOME=$HF_HOME HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_DATASETS_OFFLINE=1 TOKENIZERS_PARALLELISM=false HF_ALLOW_CODE_EVAL=1 && PYTHON_BIN=$PYTHON_BIN MODEL_NAME=$model_name TASKS=$task NUM_FEWSHOT=$fewshot OUTPUT_ROOT=$out_root BATCH_SIZE=auto DTYPE=$DTYPE APPLY_CHAT_TEMPLATE=$EVAL_APPLY_CHAT_TEMPLATE MAX_LENGTH=$EVAL_MAX_LENGTH LAUNCH_MODE=single TRUST_REMOTE_CODE=true$log_samples_flag bash lm-evaluation-harness/scripts/run_lm_eval_compression_setting.sh"
+    --wrap="cd $REPO_ROOT && export HF_HOME=$HF_HOME HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_DATASETS_OFFLINE=1 TOKENIZERS_PARALLELISM=false HF_ALLOW_CODE_EVAL=1 && PYTHON_BIN=$PYTHON_BIN MODEL_NAME=$model_name TASKS=$task NUM_FEWSHOT=$fewshot OUTPUT_ROOT=$out_root BATCH_SIZE=auto DTYPE=$DTYPE APPLY_CHAT_TEMPLATE=$EVAL_APPLY_CHAT_TEMPLATE MAX_LENGTH=$EVAL_MAX_LENGTH LAUNCH_MODE=single TRUST_REMOTE_CODE=true$log_samples_flag bash evaluation/scripts/run_lm_eval_compression_setting.sh"
 }
 
 submit_model_grid() {

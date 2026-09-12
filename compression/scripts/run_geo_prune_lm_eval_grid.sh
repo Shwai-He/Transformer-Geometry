@@ -6,7 +6,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd)"
-SINGLE_SETTING_SCRIPT="$REPO_ROOT/lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh"
+SINGLE_SETTING_SCRIPT="$REPO_ROOT/evaluation/scripts/run_lm_eval_xsa_setting.sh"
 
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 MODEL_TAG="${MODEL_TAG:-qwen3_0p6b_base}"

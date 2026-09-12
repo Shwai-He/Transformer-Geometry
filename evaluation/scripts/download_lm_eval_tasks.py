@@ -29,7 +29,7 @@ def _repo_root() -> Path:
 
 
 def _mmlu_subjects(repo_root: Path) -> list[str]:
-    task_dir = repo_root / "lm-evaluation-harness" / "lm_eval" / "tasks" / "mmlu" / "default"
+    task_dir = repo_root / "evaluation" / "lm_eval" / "tasks" / "mmlu" / "default"
     subjects: list[str] = []
     for path in sorted(task_dir.glob("mmlu_*.yaml")):
         text = path.read_text(encoding="utf-8")
@@ -40,7 +40,7 @@ def _mmlu_subjects(repo_root: Path) -> list[str]:
 
 
 def _bbh_subjects(repo_root: Path) -> list[str]:
-    task_dir = repo_root / "lm-evaluation-harness" / "lm_eval" / "tasks" / "bbh" / "cot_zeroshot"
+    task_dir = repo_root / "evaluation" / "lm_eval" / "tasks" / "bbh" / "cot_zeroshot"
     subjects: list[str] = []
     for path in sorted(task_dir.glob("*.yaml")):
         if path.name.startswith("_"):
@@ -84,7 +84,7 @@ def main() -> int:
     output_path = (
         Path(args.output).expanduser().resolve()
         if args.output
-        else repo_root / "lm-evaluation-harness" / "outputs" / "task_cache" / "lm_eval_task_download_manifest.json"
+        else repo_root / "evaluation" / "outputs" / "task_cache" / "lm_eval_task_download_manifest.json"
     )
 
     os.environ["HF_HOME"] = str(hf_home)
@@ -99,7 +99,7 @@ def main() -> int:
         subjects = _mmlu_subjects(repo_root)
         if not subjects:
             raise RuntimeError("No MMLU subject YAML files found.")
-        local_mmlu = repo_root / "lm-evaluation-harness" / "outputs" / "task_cache" / "cais_mmlu_git_tmp"
+        local_mmlu = repo_root / "evaluation" / "outputs" / "task_cache" / "cais_mmlu_git_tmp"
         mmlu_path = str(local_mmlu) if local_mmlu.exists() else "cais/mmlu"
         jobs.extend((mmlu_path, subject, ["dev", "test"]) for subject in subjects)
     if "gsm8k" in requested:

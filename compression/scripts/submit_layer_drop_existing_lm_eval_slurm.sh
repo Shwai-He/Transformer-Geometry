@@ -103,7 +103,7 @@ AUTO_COLLECT_RESULTS="$AUTO_COLLECT_RESULTS" \
 LAYER_DROP_CONFIG="$selection_json" \
 LAYER_DROP_COMPONENT="$component" \
 LAYER_DROP_COUNT="$drop_count" \
-bash "$REPO_ROOT/lm-evaluation-harness/scripts/run_lm_eval_layer_drop_setting.sh"
+bash "$REPO_ROOT/evaluation/scripts/run_lm_eval_layer_drop_setting.sh"
 EOF
 )"
   )"

@@ -4,7 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="${REPO_ROOT:-$(cd "$SCRIPT_DIR/../.." && pwd)}"
 SCRIPT_PATH="$SCRIPT_DIR/$(basename "${BASH_SOURCE[0]}")"
-SLURM_DIR="${SLURM_DIR:-$REPO_ROOT/lm-evaluation-harness/outputs/geo_prune_lm_eval_slurm}"
+SLURM_DIR="${SLURM_DIR:-$REPO_ROOT/evaluation/outputs/geo_prune_lm_eval_slurm}"
 mkdir -p "$SLURM_DIR"
 
 if [[ -z "${SLURM_JOB_ID:-}" && "${INSIDE_WANDA_LAYERWISE_SLURM:-0}" != "1" ]]; then

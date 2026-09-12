@@ -157,7 +157,7 @@ for task in "\${tasks[@]}"; do
     continue
   fi
   echo "[TASK_START] variant=$tag task=\$task fewshot=\$fewshot out_root=\$out_root"
-  if PYTHON_BIN="$PYTHON_BIN" MODEL_NAME="$model_path" TASKS="\$task" NUM_FEWSHOT="\$fewshot" OUTPUT_ROOT="\$out_root" BATCH_SIZE=auto DTYPE="$DTYPE" APPLY_CHAT_TEMPLATE=false MAX_LENGTH=4096 LAUNCH_MODE=single TRUST_REMOTE_CODE=true bash lm-evaluation-harness/scripts/run_lm_eval_compression_setting.sh; then
+  if PYTHON_BIN="$PYTHON_BIN" MODEL_NAME="$model_path" TASKS="\$task" NUM_FEWSHOT="\$fewshot" OUTPUT_ROOT="\$out_root" BATCH_SIZE=auto DTYPE="$DTYPE" APPLY_CHAT_TEMPLATE=false MAX_LENGTH=4096 LAUNCH_MODE=single TRUST_REMOTE_CODE=true bash evaluation/scripts/run_lm_eval_compression_setting.sh; then
     echo "[TASK_DONE] variant=$tag task=\$task"
     collect_results
   else

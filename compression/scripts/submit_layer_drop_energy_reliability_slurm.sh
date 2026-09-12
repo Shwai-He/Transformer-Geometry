@@ -243,7 +243,7 @@ if [[ "$RUN_EVAL" == "true" ]]; then
               LAYER_DROP_CONFIG="\$selection_json" \\
               LAYER_DROP_COMPONENT="\$component" \\
               LAYER_DROP_COUNT="\$drop_count" \\
-              bash "$REPO_ROOT/lm-evaluation-harness/scripts/run_lm_eval_layer_drop_setting.sh"; then
+              bash "$REPO_ROOT/evaluation/scripts/run_lm_eval_layer_drop_setting.sh"; then
               echo "[TASK_DONE] model=\$model_tag setting=\$setting task=\$task"
             else
               rc=\$?

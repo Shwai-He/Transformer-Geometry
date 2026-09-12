@@ -109,8 +109,8 @@ $$
   $$
 * **Reproduce**:
   ```bash
-  bash lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh
-  bash lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh
+  bash evaluation/scripts/run_lm_eval_xsa_setting.sh
+  bash evaluation/scripts/run_lm_eval_attn_diag_setting.sh
   ```
 
 ---
@@ -129,7 +129,7 @@ $$
 * **Insight**: Full-aggregate value scaling collapses long-context retrieval (down to 39.17% at 12k), whereas preserving the direct self-message $\mathbf{d}_t$ retains over 75% accuracy at 4k and maintains robust needle recall out to 12k.
 * **Reproduce**:
   ```bash
-  bash lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh
+  bash evaluation/scripts/run_lm_eval_ruler_all_settings.sh
   ```
 
 ---
@@ -169,7 +169,7 @@ $$
 * **Reproduce**:
   ```bash
   python training/scripts/plot_arr_figure6_retained_curves.py
-  bash lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh
+  bash evaluation/scripts/run_lm_eval_nanogpt_setting.sh
   ```
 
 ---
@@ -190,7 +190,7 @@ graph TD
 
     subgraph Workspaces["🔬 Empirical Research Workspaces"]
         ana["<b>analysis/</b><br/>Depth Probing & VLM Sweeps"]:::ana
-        eval["<b>lm-evaluation-harness/</b><br/>Attention Hooks & RULER Suite"]:::eval
+        eval["<b>evaluation/</b><br/>Attention Hooks & RULER Suite"]:::eval
         comp["<b>compression/</b><br/>Wanda/Quant Distortion Diagnostics"]:::comp
         train["<b>training/</b><br/>Pretraining with Parallel Suppression"]:::train
     end
@@ -210,7 +210,7 @@ Transformer-Geometry/
 │   ├── geometry_utils.py       # Parallel / perpendicular projection math & metrics
 │   └── hooks.py                # PyTorch forward hook mechanisms for dynamic interventions
 │
-├── lm-evaluation-harness/      # Forked evaluation harness supporting geometric hook configurations
+├── evaluation/                 # Benchmark evaluation suite supporting geometric hook configurations
 │   ├── lm_eval/models/         # Attention diagonal and residual modification hooks
 │   └── scripts/                # Launchers for downstream benchmarks & RULER long-context evals
 │
@@ -247,8 +247,8 @@ conda activate transformer-geometry
 # Install root dependencies
 pip install -r requirements.txt
 
-# Install the geometric-aware lm-evaluation-harness
-cd lm-evaluation-harness
+# Install the geometric-aware evaluation harness
+cd evaluation
 pip install -e .
 cd ..
 ```
@@ -300,10 +300,10 @@ python scripts/run_batch_probe.py \
 
 ```bash
 # 🔹 Launch Cross-Subspace Attention (XSA) value-space intervention grid
-bash lm-evaluation-harness/scripts/run_lm_eval_xsa_setting.sh
+bash evaluation/scripts/run_lm_eval_xsa_setting.sh
 
 # 🔹 Run closed-form attention diagonal modification ablation
-bash lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh
+bash evaluation/scripts/run_lm_eval_attn_diag_setting.sh
 ```
 
 ---
@@ -317,7 +317,7 @@ bash lm-evaluation-harness/scripts/run_lm_eval_attn_diag_setting.sh
 
 ```bash
 # 🔹 Execute full RULER benchmark across all geometric intervention settings
-bash lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh
+bash evaluation/scripts/run_lm_eval_ruler_all_settings.sh
 ```
 
 ---
@@ -351,8 +351,8 @@ bash compression/scripts/run_geometry_aware_pruning.sh
 cd training && bash scripts/run_nanogpt_geom_train.sh && cd ..
 
 # 🔹 Evaluate trained checkpoints on downstream task suites
-bash lm-evaluation-harness/scripts/run_lm_eval_nanogpt_setting.sh
-python lm-evaluation-harness/scripts/collect_nanogpt_lm_eval_results.py
+bash evaluation/scripts/run_lm_eval_nanogpt_setting.sh
+python evaluation/scripts/collect_nanogpt_lm_eval_results.py
 ```
 
 ---
@@ -360,7 +360,7 @@ python lm-evaluation-harness/scripts/collect_nanogpt_lm_eval_results.py
 ## 📖 Module Documentation Index
 
 For detailed workspace-specific guidance, refer to sub-package documentation:
-* [lm-evaluation-harness/scripts/README.md](lm-evaluation-harness/scripts/README.md) — Evaluation harness launcher parameters & task definitions.
+* [evaluation/scripts/README.md](evaluation/scripts/README.md) — Evaluation harness launcher parameters & task definitions.
 * [analysis/README.md](analysis/README.md) — Standalone analysis utilities, forward geometry, and visualization tools.
 * [compression/README.md](compression/README.md) — Pruning/quantization theory and geometry-aware pruning docs.
 * [training/README.md](training/README.md) — Scratch training setups, configs, and checkpoint logging.

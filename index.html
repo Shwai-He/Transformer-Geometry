@@ -745,7 +745,7 @@ hooks = register_geometry_hook(model, alpha=0.0, beta=1.0, space="value_xsa")
 # Execute forward pass with modified geometry
 outputs = model.generate(**inputs)`,
       eval: `# Evaluate RULER 32k needle-retrieval under geometric intervention
-cd lm-evaluation-harness
+cd evaluation
 bash scripts/run_lm_eval_ruler_all_settings.sh \\
     --model Qwen/Qwen2.5-7B \\
     --context_length 32768 \\

@@ -40,9 +40,9 @@ outputs/
 results/
 compression/outputs/
 training/outputs/
-lm-evaluation-harness/outputs/
-lm-evaluation-harness/lm-evaluation-harness/
-lm-evaluation-harness/scripts/unused_for_compression_20260523/cache/
+evaluation/outputs/
+evaluation/lm-evaluation-harness/
+evaluation/scripts/unused_for_compression_20260523/cache/
 
 # Local checkpoints, datasets, and binary exports
 /models/

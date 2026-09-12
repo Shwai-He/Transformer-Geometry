@@ -7,7 +7,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd)"
-HARNESS_DIR="$REPO_ROOT/lm-evaluation-harness"
+HARNESS_DIR="$REPO_ROOT/evaluation"
 
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 BASE_MODEL="${BASE_MODEL:-/mnt/bn/seed-aws-va/shwai.he/models/Qwen/Qwen3-4B}"

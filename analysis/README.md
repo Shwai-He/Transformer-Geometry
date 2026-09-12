@@ -23,7 +23,7 @@ when it becomes shared infrastructure.
 
 ## Boundaries with other directories
 
-- If a script is a benchmark launcher, it should usually live under `lm-evaluation-harness/scripts/`.
+- If a script is a benchmark launcher, it should usually live under `evaluation/scripts/`.
 - If a script is specifically for pretraining or optimization runs, it should usually live under `training/`.
 - If a script is specifically for compression geometry, it should usually live under `compression/`.
 - Keep private plotting workspaces outside git; this tree should stay focused on reusable analysis helpers and experiment runners.
