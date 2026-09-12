@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Intra-layer quant analysis (dense vs quantized model)
-MODEL_NAME="${MODEL_NAME:-/beacon-projects/traumallm/.cache/huggingface/hub/models--Qwen--Qwen3-0.6B-Base/snapshots/da87bfb608c14b7cf20ba1ce41287e8de496c0cd}"
+MODEL_NAME="${MODEL_NAME:-$HOME/.cache/huggingface/hub/models--Qwen--Qwen3-0.6B-Base/snapshots/da87bfb608c14b7cf20ba1ce41287e8de496c0cd}"
 QUANT_MODEL_NAME="${QUANT_MODEL_NAME:-$MODEL_NAME}"
 MODEL_TAG="${MODEL_TAG:-qwen3_0p6b_base}"
 METHOD_NAME="${METHOD_NAME:-fake_int4_g128_global}"
@@ -23,7 +23,7 @@ STRICT_QUANT_LOADING="${STRICT_QUANT_LOADING:-true}"
 FAKE_QUANT_BITS="${FAKE_QUANT_BITS:-4}"
 FAKE_QUANT_GROUP_SIZE="${FAKE_QUANT_GROUP_SIZE:-128}"
 
-PYTHON_BIN="${PYTHON_BIN:-/beacon-projects/traumallm/shwaihe/envs/sparse-ug-sys/bin/python}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
 BACKGROUND="${BACKGROUND:-false}"
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"

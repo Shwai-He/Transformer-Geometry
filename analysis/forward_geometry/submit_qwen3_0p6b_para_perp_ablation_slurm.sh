@@ -11,9 +11,9 @@ CPUS_PER_TASK="${CPUS_PER_TASK:-12}"
 MEM="${MEM:-96G}"
 TIME="${TIME:-1-00:00:00}"
 
-PYTHON_BIN="${PYTHON_BIN:-/beacon-projects/traumallm/shwaihe/envs/sparse-ug-sys/bin/python}"
-HF_HOME="${HF_HOME:-/beacon-projects/traumallm/.cache/huggingface}"
-MODEL_NAME="${MODEL_NAME:-/beacon-projects/traumallm/.cache/huggingface/models--Qwen--Qwen3-0.6B-Base/snapshots/da87bfb608c14b7cf20ba1ce41287e8de496c0cd}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
+MODEL_NAME="${MODEL_NAME:-Qwen/Qwen3-0.6B-Base}"
 MODEL_TAG="${MODEL_TAG:-qwen3_0p6b_base}"
 
 MAX_SAMPLES="${MAX_SAMPLES:-2048}"

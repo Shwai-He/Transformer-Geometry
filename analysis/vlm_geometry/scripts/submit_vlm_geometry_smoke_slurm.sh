@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="${REPO_ROOT:-/beacon-projects/traumallm/shwaihe/Transformer-Geometry}"
-SPARSE_UNIFIED_ROOT="${SPARSE_UNIFIED_ROOT:-/beacon-projects/traumallm/shwaihe/SparseUnifiedModel}"
-PYTHON_BIN="${PYTHON_BIN:-/beacon-projects/traumallm/shwaihe/envs/sparse-ug-sys/bin/python}"
+REPO_ROOT="${REPO_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+SPARSE_UNIFIED_ROOT="${SPARSE_UNIFIED_ROOT:-$HOME/SparseUnifiedModel}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
 RESULT_ROOT="${RESULT_ROOT:-$REPO_ROOT/runs/vlm_geometry_scaling/results}"
 LOG_ROOT="${LOG_ROOT:-$REPO_ROOT/runs/vlm_geometry_scaling/logs/slurm}"
 

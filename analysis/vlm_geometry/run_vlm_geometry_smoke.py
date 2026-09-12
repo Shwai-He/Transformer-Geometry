@@ -493,7 +493,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--perp-scale-max", type=float, default=1.5)
     p.add_argument("--height", type=int, default=None)
     p.add_argument("--width", type=int, default=None)
-    p.add_argument("--sparse-unified-root", default="/beacon-projects/traumallm/shwaihe/SparseUnifiedModel")
+    p.add_argument("--sparse-unified-root", default=os.environ.get("SPARSE_UNIFIED_ROOT", "SparseUnifiedModel"))
     p.add_argument("--ming-load-image-gen", default="auto", choices=["auto", "true", "false"])
     p.add_argument("--output-json", default="")
     p.add_argument("--output-image-dir", default="")

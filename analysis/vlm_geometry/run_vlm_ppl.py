@@ -473,7 +473,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--dtype", default="bf16")
     p.add_argument("--device-map", default="auto")
     p.add_argument("--seed", type=int, default=42)
-    p.add_argument("--sparse-unified-root", default="/beacon-projects/traumallm/shwaihe/SparseUnifiedModel")
+    p.add_argument("--sparse-unified-root", default=os.environ.get("SPARSE_UNIFIED_ROOT", "SparseUnifiedModel"))
     return p
 
 

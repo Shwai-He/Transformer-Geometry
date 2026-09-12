@@ -12,7 +12,7 @@ PARA_SCALES="${PARA_SCALES:-1.0,0.0}"
 PERP_SCALES="${PERP_SCALES:-1.0,0.0}"
 AXIS_MODE="${AXIS_MODE:-grid}"  # grid, para, or perp
 
-RESULT_ROOT="${RESULT_ROOT:-/beacon-projects/traumallm/shwaihe/Transformer-Geometry/runs/vlm_geometry_ppl/scaling_benchmark}"
+RESULT_ROOT="${RESULT_ROOT:-runs/vlm_geometry_ppl/scaling_benchmark}"
 TOTAL_SAMPLES="${TOTAL_SAMPLES:-64}"
 PARTITION="${PARTITION:-beacon}"
 QOS="${QOS:-medium}"

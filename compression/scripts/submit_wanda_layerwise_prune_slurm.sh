@@ -41,13 +41,13 @@ if [[ -z "${SLURM_JOB_ID:-}" && "${INSIDE_WANDA_LAYERWISE_SLURM:-0}" != "1" ]]; 
 fi
 
 cd "$REPO_ROOT"
-export HF_HOME="${HF_HOME:-/beacon-projects/traumallm/.cache/huggingface}"
+export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
 export HF_HUB_OFFLINE="${HF_HUB_OFFLINE:-1}"
 export TRANSFORMERS_OFFLINE="${TRANSFORMERS_OFFLINE:-1}"
 export TOKENIZERS_PARALLELISM="${TOKENIZERS_PARALLELISM:-false}"
 
-PYTHON_BIN="${PYTHON_BIN:-/beacon-projects/traumallm/shwaihe/envs/sparse-ug-sys/bin/python}"
-MODEL_PATH="${MODEL_PATH:-/beacon-projects/traumallm/.cache/huggingface/models--Qwen--Qwen3-0.6B-Base/snapshots/da87bfb608c14b7cf20ba1ce41287e8de496c0cd}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+MODEL_PATH="${MODEL_PATH:-Qwen/Qwen3-0.6B-Base}"
 CALIB_FILE="${CALIB_FILE:-$REPO_ROOT/compression/calibration/c4_wanda_ns128_seq2048_seed0.txt}"
 OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/compression/outputs/wanda_layerwise_pruned/qwen3_0p6b/unstructured_s0p5_c4_ns128_seq2048}"
 LOCAL_FILES_ONLY_ARGS=()

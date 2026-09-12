@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="${REPO_ROOT:-/beacon-projects/traumallm/shwaihe/Transformer-Geometry}"
-SPARSE_UNIFIED_ROOT="${SPARSE_UNIFIED_ROOT:-/beacon-projects/traumallm/shwaihe/SparseUnifiedModel}"
-PYTHON_BIN="${PYTHON_BIN:-/beacon-projects/traumallm/shwaihe/envs/sparse-ug-sys/bin/python}"
-GENEVAL_PYTHON="${GENEVAL_PYTHON:-/beacon-projects/traumallm/shwaihe/envs/geneval-mmdet/bin/python}"
+REPO_ROOT="${REPO_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+SPARSE_UNIFIED_ROOT="${SPARSE_UNIFIED_ROOT:-$HOME/SparseUnifiedModel}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+GENEVAL_PYTHON="${GENEVAL_PYTHON:-python3}"
 METADATA_FILE="${METADATA_FILE:-$SPARSE_UNIFIED_ROOT/data/evaluation/geneval_stratified_120/evaluation_metadata.jsonl}"
 EVAL_MODEL_PATH="${EVAL_MODEL_PATH:-$SPARSE_UNIFIED_ROOT/eval/gen/geneval/model}"
 EVAL_DETECTOR="${EVAL_DETECTOR:-mask2former_swin-s-p4-w7-224_8xb2-lsj-50e_coco}"

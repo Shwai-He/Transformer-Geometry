@@ -1,5 +1,5 @@
 {
-  "model_snapshot": "/beacon-projects/traumallm/.cache/huggingface/hub/models--Qwen--Qwen3-4B/snapshots/1cfa9a7208912126459214e8b04321603b3df60c",
+  "model_snapshot": "Qwen/Qwen3-4B",
   "layer": 19,
   "head": 6,
   "sample_idx": 0,

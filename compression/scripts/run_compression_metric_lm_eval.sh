@@ -9,7 +9,7 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd)"
 HARNESS_DIR="$REPO_ROOT/lm-evaluation-harness"
 
-PYTHON_BIN="${PYTHON_BIN:-/beacon-projects/traumallm/shwaihe/envs/sparse-ug-sys/bin/python}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
 BASE_MODEL="${BASE_MODEL:-/mnt/bn/seed-aws-va/shwai.he/models/Qwen/Qwen3-4B}"
 OUTPUT_ROOT="${OUTPUT_ROOT:-$REPO_ROOT/compression/outputs/compression_metric_lm_eval}"
 TASKS_CSV="${TASKS_CSV:-openbookqa,piqa,rte,winogrande,boolq,arc_challenge,hellaswag,mmlu}"
@@ -23,7 +23,7 @@ INCLUDE_LOCAL_TASKS="${INCLUDE_LOCAL_TASKS:-false}"
 LOCAL_TASK_PATH="$REPO_ROOT/compression/lm_eval_tasks/local_mcq"
 
 # Keep caches project-local by default and allow offline runs.
-export HF_HOME="${HF_HOME:-/beacon-projects/traumallm/.cache/huggingface}"
+export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
 export HF_DATASETS_CACHE="${HF_DATASETS_CACHE:-$OUTPUT_ROOT/hf_datasets_cache}"
 export HF_HUB_OFFLINE="${HF_HUB_OFFLINE:-1}"
 export TRANSFORMERS_OFFLINE="${TRANSFORMERS_OFFLINE:-1}"

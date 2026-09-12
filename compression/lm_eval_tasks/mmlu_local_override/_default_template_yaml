@@ -1,4 +1,4 @@
-dataset_path: /beacon-projects/traumallm/shwaihe/Transformer-Geometry/lm-evaluation-harness/outputs/task_cache/cais_mmlu_git_tmp
+dataset_path: cais/mmlu
 dataset_kwargs:
   trust_remote_code: true
 test_split: test

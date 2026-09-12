@@ -7,8 +7,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd)"
 
-PYTHON_BIN="${PYTHON_BIN:-/beacon-projects/traumallm/shwaihe/envs/sparse-ug-sys/bin/python}"
-MODEL_PATH="${MODEL_PATH:-/beacon-projects/traumallm/.cache/huggingface/models--Qwen--Qwen3-0.6B-Base/snapshots/da87bfb608c14b7cf20ba1ce41287e8de496c0cd}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+MODEL_PATH="${MODEL_PATH:-Qwen/Qwen3-0.6B-Base}"
 PRUNE_METHOD="${PRUNE_METHOD:-wanda}"
 GEOMETRY_STRATEGY="${GEOMETRY_STRATEGY:-residual_perp}"
 PRUNE_TARGETS="${PRUNE_TARGETS:-q_proj,k_proj,v_proj,o_proj,gate_proj,up_proj,down_proj}"
@@ -26,7 +26,7 @@ PROMPTS_FILE="${PROMPTS_FILE:-}"
 PROMPT="${PROMPT:-}"
 SAVE_MODEL="${SAVE_MODEL:-false}"
 
-export HF_HOME="${HF_HOME:-/beacon-projects/traumallm/.cache/huggingface}"
+export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
 export HF_HUB_OFFLINE="${HF_HUB_OFFLINE:-1}"
 export TRANSFORMERS_OFFLINE="${TRANSFORMERS_OFFLINE:-1}"
 

@@ -13,6 +13,7 @@ __pycache__/
 .filelist.txt
 
 # Private paper workspaces and local exports
+_overleaf_/
 _NeurIPS_2026_/
 _NeurIPS_2026_.zip
 _EMNLP_2026_/

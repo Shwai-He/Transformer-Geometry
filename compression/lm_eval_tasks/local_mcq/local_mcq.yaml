@@ -2,7 +2,7 @@ task: local_mcq
 dataset_path: json
 dataset_kwargs:
   data_files:
-    validation: /beacon-projects/traumallm/shwaihe/Transformer-Geometry/compression/lm_eval_tasks/local_mcq/local_mcq.jsonl
+    validation: compression/lm_eval_tasks/local_mcq/local_mcq.jsonl
 output_type: multiple_choice
 validation_split: validation
 doc_to_text: "Question: {{question}}\nAnswer:"

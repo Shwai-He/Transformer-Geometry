@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="${REPO_ROOT:-/beacon-projects/traumallm/shwaihe/Transformer-Geometry}"
+REPO_ROOT="${REPO_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 SUBMIT_SCRIPT="$REPO_ROOT/analysis/vlm_geometry/scripts/submit_vlm_choice_eval_slurm.sh"
 
 MODELS="${MODELS:-qwenimage,ming}"

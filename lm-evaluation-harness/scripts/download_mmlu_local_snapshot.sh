@@ -60,11 +60,11 @@ while IFS= read -r rel; do
 done < "$pointer_list"
 rm -f "$pointer_list"
 
-HF_HOME="${HF_HOME:-/beacon-projects/traumallm/.cache/huggingface}"
+HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
 HF_DATASETS_CACHE="${HF_DATASETS_CACHE:-$HF_HOME/datasets}"
 HF_HOME="$HF_HOME" HF_DATASETS_CACHE="$HF_DATASETS_CACHE" HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 \
   PYTHONPATH="$HARNESS_DIR${PYTHONPATH:+:$PYTHONPATH}" \
-  "${PYTHON_BIN:-/beacon-projects/traumallm/shwaihe/envs/sparse-ug-sys/bin/python}" - <<PY
+  "${PYTHON_BIN:-python3}" - <<PY
 from datasets import load_dataset
 
 path = "$TARGET_DIR"

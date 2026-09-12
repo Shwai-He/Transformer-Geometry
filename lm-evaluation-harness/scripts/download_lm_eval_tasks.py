@@ -72,7 +72,7 @@ def main() -> int:
 
     parser = argparse.ArgumentParser(description="Prefetch lm-eval datasets into the shared HF cache.")
     parser.add_argument("--tasks", default=DEFAULT_TASKS, help="Comma-separated tasks to prefetch.")
-    parser.add_argument("--hf-home", default=os.environ.get("HF_HOME", "/beacon-projects/traumallm/.cache/huggingface"))
+    parser.add_argument("--hf-home", default=os.environ.get("HF_HOME", os.path.expanduser("~/.cache/huggingface")))
     parser.add_argument("--cache-dir", default=None, help="Datasets cache dir. Defaults to <hf-home>/datasets.")
     parser.add_argument("--output", default=None, help="JSON manifest path.")
     parser.add_argument("--continue-on-error", action="store_true")

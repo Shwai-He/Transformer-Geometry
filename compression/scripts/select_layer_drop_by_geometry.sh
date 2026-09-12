@@ -4,8 +4,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd)"
 
-PYTHON_BIN="${PYTHON_BIN:-/beacon-projects/traumallm/shwaihe/envs/sparse-ug-sys/bin/python}"
-MODEL_NAME="${MODEL_NAME:-/beacon-projects/traumallm/.cache/huggingface/models--Qwen--Qwen3-0.6B-Base/snapshots/da87bfb608c14b7cf20ba1ce41287e8de496c0cd}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+MODEL_NAME="${MODEL_NAME:-Qwen/Qwen3-0.6B-Base}"
 MODEL_TAG="${MODEL_TAG:-}"
 OUTPUT_TAG="${OUTPUT_TAG:-}"
 PROMPTS_FILE="${PROMPTS_FILE:-$REPO_ROOT/compression/calibration/c4_wanda_ns128_seq2048_seed0.txt}"

@@ -10,7 +10,7 @@ GRES="${GRES:-gpu:nvidia_rtx_6000_ada_generation:1}"
 CPUS_PER_TASK="${CPUS_PER_TASK:-8}"
 MEM="${MEM:-96G}"
 TIME="${TIME:-1-00:00:00}"
-PYTHON_BIN="${PYTHON_BIN:-/beacon-projects/traumallm/shwaihe/envs/sparse-ug-sys/bin/python}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
 MODEL_NAME="${MODEL_NAME:-}"
 TASKS="${TASKS:-ruler}"
 RULER_LENGTHS="${RULER_LENGTHS:-4096}"
@@ -49,10 +49,10 @@ for mode in "${modes[@]}"; do
       wrap_body="$(cat <<EOF
 set -euo pipefail
 cd "$REPO_ROOT"
-export HF_HOME="${HF_HOME:-/beacon-projects/traumallm/.cache/huggingface}"
+export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
 export HF_DATASETS_CACHE="\${HF_DATASETS_CACHE:-\$HF_HOME/datasets}"
-export RULER_CACHE_DIR="${RULER_CACHE_DIR:-/beacon-projects/traumallm/.cache/ruler}"
-export NLTK_DATA="${NLTK_DATA:-/beacon-projects/traumallm/.cache/nltk_data}"
+export RULER_CACHE_DIR="${RULER_CACHE_DIR:-$HOME/.cache/ruler}"
+export NLTK_DATA="${NLTK_DATA:-$HOME/nltk_data}"
 export TOKENIZERS_PARALLELISM=false
 MODEL_NAME="$MODEL_NAME" \
 TASKS="$TASKS" \
@@ -72,10 +72,10 @@ EOF
       wrap_body="$(cat <<EOF
 set -euo pipefail
 cd "$REPO_ROOT"
-export HF_HOME="${HF_HOME:-/beacon-projects/traumallm/.cache/huggingface}"
+export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
 export HF_DATASETS_CACHE="\${HF_DATASETS_CACHE:-\$HF_HOME/datasets}"
-export RULER_CACHE_DIR="${RULER_CACHE_DIR:-/beacon-projects/traumallm/.cache/ruler}"
-export NLTK_DATA="${NLTK_DATA:-/beacon-projects/traumallm/.cache/nltk_data}"
+export RULER_CACHE_DIR="${RULER_CACHE_DIR:-$HOME/.cache/ruler}"
+export NLTK_DATA="${NLTK_DATA:-$HOME/nltk_data}"
 export TOKENIZERS_PARALLELISM=false
 MODEL_NAME="$MODEL_NAME" \
 TASKS="$TASKS" \

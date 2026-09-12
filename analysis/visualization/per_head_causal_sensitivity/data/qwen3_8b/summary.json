@@ -1,5 +1,5 @@
 {
-  "model": "/beacon-projects/traumallm/.cache/huggingface/hub/models--Qwen--Qwen3-8B/snapshots/b968826d9c46dd6066d109eabc6255188de91218",
+  "model": "Qwen/Qwen3-8B",
   "layers": [
     6,
     18,
