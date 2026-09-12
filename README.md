@@ -201,15 +201,6 @@ graph TD
     repgeo -->|Geometric regularizer loss| train
 ```
 
-| Module | Primary Directory | Core Responsibilities | Key Entrypoints |
-| :--- | :--- | :--- | :--- |
-| 🧩 **Core Geometric Engine** | [`src/repgeo/`](src/repgeo/) | Mathematical formulations for projection decomposition ($\Delta h_\parallel, \Delta h_\perp$) and PyTorch forward hook mechanisms | [`geometry_utils.py`](src/repgeo/geometry_utils.py)<br/>[`hooks.py`](src/repgeo/hooks.py) |
-| 🔍 **Probing & Diagnostic Labs** | [`analysis/`](analysis/) | Depth-wise geometric probing, angular drift tracking, GSM8K reasoning validation, and VLM cross-modality interventions | [`analysis/forward_geometry/`](analysis/forward_geometry/)<br/>[`analysis/vlm_geometry/`](analysis/vlm_geometry/) |
-| 🧪 **Benchmarking & RULER** | [`lm-evaluation-harness/`](lm-evaluation-harness/) | Extended evaluation suite supporting attention diagonal modifications, downstream benchmarks, and long-context needle tests | [`lm_eval/models/`](lm-evaluation-harness/lm_eval/models/)<br/>[`scripts/run_lm_eval_ruler_all_settings.sh`](lm-evaluation-harness/scripts/run_lm_eval_ruler_all_settings.sh) |
-| 🗜️ **Compression & Pruning** | [`compression/`](compression/) | Subspace distortion decomposition, Wanda / 2:4 / 4:8 structured pruning analysis, and geometry-guided pruning algorithms | [`compression/code/`](compression/code/)<br/>[`compression/scripts/`](compression/scripts/) |
-| ⚡ **Pretraining Dynamics** | [`training/`](training/) | From-scratch pretraining workflows with parallel-suppressed inductive bias and validation loss tracking | [`training/pretraining_xsa.py`](training/)<br/>[`training/scripts/`](training/scripts/) |
-| 🚀 **Execution Drivers** | [`scripts/`](scripts/) | Root-level CLI probing launchers and batch reproducibility entrypoints | [`scripts/run_probe.py`](scripts/run_probe.py)<br/>[`scripts/run_batch_probe.py`](scripts/run_batch_probe.py) |
-
 <details>
 <summary><b>📁 Click to expand full directory tree</b></summary>
 
