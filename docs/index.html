@@ -382,58 +382,60 @@
       </div>
 
       <!-- Main Workspace: 12-Column Responsive Layout -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         
         <!-- Left: Interactive Vector Subspace Visualizer Canvas (col-span-7) -->
-        <div class="lg:col-span-7 card-academic p-5 bg-white flex flex-col space-y-4">
-          <!-- Canvas Top Toolbar & Legend -->
-          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Vector Subspace Visualizer</span>
-              <span class="text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">Interactive Canvas</span>
+        <div class="lg:col-span-7 card-academic p-5 bg-white flex flex-col justify-between h-full border border-slate-200/90 shadow-sm rounded-2xl">
+          <div>
+            <!-- Canvas Top Toolbar & Legend -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Vector Subspace Visualizer</span>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200 font-medium">Interactive Canvas</span>
+              </div>
+              <button onclick="resetVectorCanvas()" class="text-xs text-slate-600 hover:text-slate-900 flex items-center gap-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-md px-2.5 py-1 transition shadow-2xs font-medium">
+                <i class="fa-solid fa-arrow-rotate-left text-[10px]"></i> Reset Vector
+              </button>
             </div>
-            <button onclick="resetVectorCanvas()" class="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded px-2.5 py-1 transition">
-              <i class="fa-solid fa-arrow-rotate-left text-[10px]"></i> Reset Vector
-            </button>
+
+            <!-- Color-Coded Vector Legend -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono bg-slate-50 p-2 rounded-lg border border-slate-200 mt-3 mb-2">
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-1 bg-slate-800 rounded-full inline-block"></span>
+                <span class="text-slate-700 font-semibold">h (Base)</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-1 bg-blue-600 rounded-full inline-block"></span>
+                <span class="text-blue-700 font-semibold">&alpha;&Delta;h<sub>∥</sub> (Parallel)</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-1 bg-accent-orange rounded-full inline-block"></span>
+                <span class="text-orange-700 font-semibold">&beta;&Delta;h<sub>&perp;</sub> (Perp)</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-1 bg-emerald-600 rounded-full inline-block"></span>
+                <span class="text-emerald-700 font-bold">h' (Updated)</span>
+              </div>
+            </div>
           </div>
 
-          <!-- Color-Coded Vector Legend -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono bg-slate-50 p-2.5 rounded-lg border border-slate-200">
-            <div class="flex items-center gap-1.5">
-              <span class="w-3 h-1 bg-slate-700 rounded-full inline-block"></span>
-              <span class="text-slate-700 font-semibold">h (Base)</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-3 h-1 bg-blue-600 rounded-full inline-block"></span>
-              <span class="text-blue-700 font-semibold">&alpha;&Delta;h<sub>∥</sub> (Parallel)</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-3 h-1 bg-accent-orange rounded-full inline-block"></span>
-              <span class="text-orange-700 font-semibold">&beta;&Delta;h<sub>&perp;</sub> (Perp)</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-3 h-1 bg-emerald-600 rounded-full inline-block"></span>
-              <span class="text-emerald-700 font-bold">h' (Updated)</span>
-            </div>
-          </div>
-
-          <!-- The Canvas -->
-          <div class="relative w-full aspect-[16/11] max-h-[420px] rounded-lg border border-slate-200 overflow-hidden bg-slate-50 shadow-inner group">
+          <!-- The Canvas: Flex-1 so it expands to fill space cleanly -->
+          <div class="relative w-full flex-1 min-h-[370px] rounded-xl border border-slate-200 overflow-hidden bg-slate-50/70 shadow-inner group my-2">
             <canvas id="vectorCanvas" class="w-full h-full cursor-crosshair"></canvas>
-            <div class="absolute bottom-2 left-2 text-[10px] text-slate-500 bg-white/85 backdrop-blur-xs px-2.5 py-1 rounded border border-slate-200 pointer-events-none flex items-center gap-1.5 shadow-xs">
+            <div class="absolute bottom-2.5 left-2.5 text-[10px] text-slate-500 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-md border border-slate-200 pointer-events-none flex items-center gap-1.5 shadow-2xs">
               <i class="fa-solid fa-hand-pointer text-brand-600"></i>
-              <span>Drag the <span class="font-bold text-slate-700">dotted handle (&Delta;h)</span> to deform the layer update</span>
+              <span>Drag the <span class="font-bold text-slate-800">dotted handle (&Delta;h)</span> to deform update</span>
             </div>
           </div>
 
           <!-- Real-Time Linear Algebra Formula HUD -->
-          <div class="bg-slate-50 rounded-lg p-3 border border-slate-200 text-xs font-mono text-slate-700 space-y-1">
+          <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 text-xs font-mono text-slate-700 space-y-1">
             <div class="text-[11px] text-slate-400 font-sans uppercase tracking-wider font-semibold">Live Subspace Decomposition Equation:</div>
             <div class="flex flex-wrap items-center gap-x-2 text-slate-800">
               <span>h' = h + &alpha;&middot;&Delta;h<sub>∥</sub> + &beta;&middot;&Delta;h<sub>&perp;</sub></span>
               <span class="text-slate-400">|</span>
-              <span id="mathEquation" class="text-brand-700 font-semibold">[h' = 150.0 + 1.00&times;45.0 + 1.00&times;60.0&perp;]</span>
+              <span id="mathEquation" class="text-brand-700 font-semibold">[h' = 100 + 1.00&times;24∥ + 1.00&times;45&perp;]</span>
             </div>
             <div class="text-[11px] text-slate-500 font-sans">
               Orthogonality condition: &lang;&Delta;h<sub>&perp;</sub>, h&rang; = 0.00 &middot; Right-angle symbol indicates strictly decoupled semantic rotation.
@@ -442,33 +444,29 @@
         </div>
 
         <!-- Right: Control Sliders, Presets & Live Empirical Response (col-span-5) -->
-        <div class="lg:col-span-5 space-y-5">
-          
-          <!-- Control Panel Card -->
-          <div class="card-academic p-5 bg-white space-y-5">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+        <div class="lg:col-span-5 card-academic p-5 bg-white flex flex-col justify-between h-full border border-slate-200/90 shadow-sm rounded-2xl">
+          <div>
+            <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100">
               <h3 class="font-heading font-bold text-slate-900 text-sm uppercase tracking-wider flex items-center gap-1.5">
                 <i class="fa-solid fa-sliders text-brand-600"></i>
                 <span>Subspace Scale Controls</span>
               </h3>
-              <span id="badgeStatus" class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                Stable / Normal
+              <span id="badgeStatus" class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-2xs">
+                Stable / Preserved
               </span>
             </div>
 
             <!-- Alpha Slider (Parallel) -->
-            <div>
-              <div class="flex justify-between items-center mb-1.5">
+            <div class="mb-3">
+              <div class="flex justify-between items-center mb-1">
                 <label class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                   <span class="w-2.5 h-2.5 rounded-full bg-blue-600 inline-block"></span>
                   <span>Parallel Factor (&alpha; / s<sub>∥</sub>)</span>
                 </label>
-                <div class="flex items-center gap-1">
-                  <span id="alphaVal" class="text-sm font-mono font-extrabold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">1.00&times;</span>
-                </div>
+                <span id="alphaVal" class="text-xs font-mono font-extrabold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">1.00&times;</span>
               </div>
-              <input type="range" id="alphaSlider" min="0" max="2" step="0.05" value="1.0" class="w-full accent-blue-600 cursor-pointer">
-              <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+              <input type="range" id="alphaSlider" min="0" max="2" step="0.05" value="1.0" class="w-full accent-blue-600 cursor-pointer h-1.5 bg-slate-200 rounded-lg">
+              <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
                 <span>0.0&times; (Suppressed)</span>
                 <span>1.0&times; (Baseline)</span>
                 <span>2.0&times; (Doubled)</span>
@@ -476,18 +474,16 @@
             </div>
 
             <!-- Beta Slider (Perpendicular) -->
-            <div>
-              <div class="flex justify-between items-center mb-1.5">
+            <div class="mb-3">
+              <div class="flex justify-between items-center mb-1">
                 <label class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                   <span class="w-2.5 h-2.5 rounded-full bg-accent-orange inline-block"></span>
                   <span>Perpendicular Factor (&beta; / s<sub>&perp;</sub>)</span>
                 </label>
-                <div class="flex items-center gap-1">
-                  <span id="betaVal" class="text-sm font-mono font-extrabold text-accent-orange bg-orange-50 px-2 py-0.5 rounded border border-orange-200">1.00&times;</span>
-                </div>
+                <span id="betaVal" class="text-xs font-mono font-extrabold text-accent-orange bg-orange-50 px-2 py-0.5 rounded border border-orange-200">1.00&times;</span>
               </div>
-              <input type="range" id="betaSlider" min="0" max="2" step="0.05" value="1.0" class="w-full accent-orange-600 cursor-pointer">
-              <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+              <input type="range" id="betaSlider" min="0" max="2" step="0.05" value="1.0" class="w-full accent-orange-600 cursor-pointer h-1.5 bg-slate-200 rounded-lg">
+              <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
                 <span class="text-rose-500 font-semibold">0.0&times; (Collapse)</span>
                 <span>1.0&times; (Baseline)</span>
                 <span class="text-rose-500 font-semibold">2.0&times; (Explosion)</span>
@@ -495,14 +491,17 @@
             </div>
 
             <!-- Quick Presets -->
-            <div>
-              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Paper Diagnostic Presets:</div>
-              <div class="grid grid-cols-2 gap-2">
+            <div class="mb-3">
+              <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                <span>Paper Diagnostic Presets:</span>
+                <span class="text-[10px] text-slate-400 font-normal">Click to test intervention</span>
+              </div>
+              <div class="grid grid-cols-2 gap-1.5">
                 <button onclick="setPreset(1.0, 1.0)" class="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex items-center justify-between transition">
                   <span>Baseline (s=1)</span>
                   <span class="text-[10px] font-mono text-slate-400">(1.0, 1.0)</span>
                 </button>
-                <button onclick="setPreset(0.0, 1.0)" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-between transition shadow-xs">
+                <button onclick="setPreset(0.0, 1.0)" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-between transition shadow-2xs">
                   <span>Full No-Para</span>
                   <span class="text-[10px] font-mono text-emerald-600">(0.0, 1.0)</span>
                 </button>
@@ -518,23 +517,23 @@
             </div>
 
             <!-- Real-Time Telemetry 2x2 Grid -->
-            <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
-              <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+            <div class="grid grid-cols-2 gap-2 mb-3 pt-2.5 border-t border-slate-100">
+              <div class="bg-slate-50/80 p-2 rounded-lg border border-slate-200/80">
                 <div class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Deflection Angle &theta;:</div>
                 <div id="metricAngle" class="text-sm font-mono font-bold text-slate-800 mt-0.5">18.4&deg;</div>
                 <div class="text-[10px] text-slate-400">Directional shift</div>
               </div>
-              <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+              <div class="bg-slate-50/80 p-2 rounded-lg border border-slate-200/80">
                 <div class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Update Norm ||&Delta;h'|| / ||h||:</div>
                 <div id="metricNormRatio" class="text-sm font-mono font-bold text-slate-800 mt-0.5">0.42&times;</div>
                 <div class="text-[10px] text-slate-400">Relative amplitude</div>
               </div>
-              <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+              <div class="bg-slate-50/80 p-2 rounded-lg border border-slate-200/80">
                 <div class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Parallel Energy &rho;<sub>∥</sub>:</div>
                 <div id="metricParallelRatio" class="text-sm font-mono font-bold text-blue-600 mt-0.5">36.0%</div>
                 <div class="text-[10px] text-slate-400">Free carryover ratio</div>
               </div>
-              <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+              <div class="bg-slate-50/80 p-2 rounded-lg border border-slate-200/80">
                 <div class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Cosine Sim cos(h', h):</div>
                 <div id="metricCosine" class="text-sm font-mono font-bold text-emerald-600 mt-0.5">0.948</div>
                 <div class="text-[10px] text-slate-400">Representation alignment</div>
@@ -542,23 +541,23 @@
             </div>
           </div>
 
-          <!-- Coordinated Empirical Perplexity Response HUD -->
-          <div class="card-academic p-4 bg-white space-y-3">
-            <div class="flex items-center justify-between">
+          <!-- Empirical Perplexity Response HUD (Integrated at bottom of card) -->
+          <div class="pt-2.5 border-t border-slate-100 bg-slate-50/70 rounded-xl p-3 border border-slate-200/80">
+            <div class="flex items-center justify-between mb-1">
               <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
                 <i class="fa-solid fa-chart-line text-brand-600"></i>
                 <span>Live Empirical PPL Cliff (Qwen3)</span>
               </h4>
-              <div class="text-xs font-mono font-bold" id="metricPplDisplay">+0.00 &Delta;PPL</div>
+              <div class="text-xs font-mono font-bold text-emerald-600" id="metricPplDisplay">+0.00 &Delta;PPL (Stable)</div>
             </div>
 
             <!-- Mini Canvas for Live PPL Response Curve -->
-            <div class="w-full h-24 bg-slate-50 rounded-lg border border-slate-200 overflow-hidden relative">
+            <div class="w-full h-20 bg-white rounded-lg border border-slate-200 overflow-hidden relative mb-1.5 shadow-2xs">
               <canvas id="pplCurveCanvas" class="w-full h-full"></canvas>
             </div>
             
-            <p id="pplExplanation" class="text-[11px] text-slate-600 leading-relaxed">
-              Parallel scaling modulates representation length along the residual stream with near-zero loss penalty (&Delta;PPL +0.46). Perpendicular modifications disrupt semantic subspace rotation, causing catastrophic collapse (> 95k &Delta;PPL).
+            <p id="pplExplanation" class="text-[11px] text-slate-600 leading-relaxed m-0">
+              Parallel scaling operates with near-zero perplexity impact (+0.00 ΔPPL). Semantic representations stay on the manifold while preserving downstream factual recall.
             </p>
           </div>
 
@@ -1042,35 +1041,33 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
     let simAlpha = 1.0;
     let simBeta = 1.0;
 
-    // Baseline vector parameters (visual coordinate scale)
-    let baseHLen = 160;
-    let deltaPar = 38;
-    let deltaPerp = 68;
+    // Baseline vector parameters (normalized relative to ||h|| = 1.0)
+    let relPar = 0.24;
+    let relPerp = 0.44;
     let isDraggingHandle = false;
 
     const ARCH_CONFIGS = {
       '0.6B': {
-        early: { h: 150, par: 54, perp: 42, normRatio: 0.45 },
-        mid:   { h: 150, par: 34, perp: 66, normRatio: 0.49 },
-        deep:  { h: 150, par: 16, perp: 26, normRatio: 0.20 }
+        early: { relPar: 0.36, relPerp: 0.28, normRatio: 0.45 },
+        mid:   { relPar: 0.23, relPerp: 0.44, normRatio: 0.49 },
+        deep:  { relPar: 0.11, relPerp: 0.17, normRatio: 0.20 }
       },
       '4B': {
-        early: { h: 160, par: 58, perp: 44, normRatio: 0.45 },
-        mid:   { h: 160, par: 38, perp: 68, normRatio: 0.49 },
-        deep:  { h: 160, par: 15, perp: 25, normRatio: 0.18 }
+        early: { relPar: 0.38, relPerp: 0.27, normRatio: 0.45 },
+        mid:   { relPar: 0.24, relPerp: 0.45, normRatio: 0.49 },
+        deep:  { relPar: 0.10, relPerp: 0.16, normRatio: 0.18 }
       },
       '30B': {
-        early: { h: 160, par: 48, perp: 48, normRatio: 0.42 },
-        mid:   { h: 160, par: 28, perp: 78, normRatio: 0.51 },
-        deep:  { h: 160, par: 13, perp: 30, normRatio: 0.20 }
+        early: { relPar: 0.30, relPerp: 0.30, normRatio: 0.42 },
+        mid:   { relPar: 0.18, relPerp: 0.50, normRatio: 0.51 },
+        deep:  { relPar: 0.08, relPerp: 0.19, normRatio: 0.20 }
       }
     };
 
     function applyArchPreset() {
       const cfg = ARCH_CONFIGS[simModel][simDepth];
-      baseHLen = cfg.h;
-      deltaPar = cfg.par;
-      deltaPerp = cfg.perp;
+      relPar = cfg.relPar;
+      relPerp = cfg.relPerp;
       updateSimulator();
     }
 
@@ -1157,7 +1154,6 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
         });
       }
 
-      // Drag interaction on vectorCanvas
       function getCanvasPos(e) {
         const rect = canvas.getBoundingClientRect();
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -1171,12 +1167,19 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
       function handleDragStart(e) {
         const pos = getCanvasPos(e);
         const rect = canvas.getBoundingClientRect();
-        const ox = Math.round(rect.width * 0.14);
-        const oy = Math.round(rect.height * 0.72);
-        const tipX = ox + baseHLen + deltaPar;
-        const tipY = oy - deltaPerp;
-        const dist = Math.hypot(pos.x - tipX, pos.y - tipY);
-        if (dist <= 24) {
+        const width = rect.width;
+        const height = rect.height;
+        const ox = Math.round(width * 0.10);
+        const oy = Math.round(height * 0.76);
+        const h_len = Math.round(Math.min(width * 0.44, height * 0.68));
+
+        const dpar_px = Math.round(h_len * relPar);
+        const dperp_px = Math.round(h_len * relPerp);
+        const rawTipX = ox + h_len + dpar_px;
+        const rawTipY = oy - dperp_px;
+
+        const dist = Math.hypot(pos.x - rawTipX, pos.y - rawTipY);
+        if (dist <= 26) {
           isDraggingHandle = true;
           canvas.style.cursor = 'grabbing';
           e.preventDefault();
@@ -1184,25 +1187,31 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
       }
 
       function handleDragMove(e) {
+        const rect = canvas.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const ox = Math.round(width * 0.10);
+        const oy = Math.round(height * 0.76);
+        const h_len = Math.round(Math.min(width * 0.44, height * 0.68));
+
+        const dpar_px = Math.round(h_len * relPar);
+        const dperp_px = Math.round(h_len * relPerp);
+        const rawTipX = ox + h_len + dpar_px;
+        const rawTipY = oy - dperp_px;
+
+        const pos = getCanvasPos(e);
+        const dist = Math.hypot(pos.x - rawTipX, pos.y - rawTipY);
+
         if (!isDraggingHandle) {
-          const pos = getCanvasPos(e);
-          const rect = canvas.getBoundingClientRect();
-          const ox = Math.round(rect.width * 0.14);
-          const oy = Math.round(rect.height * 0.72);
-          const tipX = ox + baseHLen + deltaPar;
-          const tipY = oy - deltaPerp;
-          const dist = Math.hypot(pos.x - tipX, pos.y - tipY);
-          canvas.style.cursor = dist <= 24 ? 'grab' : 'crosshair';
+          canvas.style.cursor = dist <= 26 ? 'grab' : 'crosshair';
           return;
         }
-        const pos = getCanvasPos(e);
-        const rect = canvas.getBoundingClientRect();
-        const ox = Math.round(rect.width * 0.14);
-        const oy = Math.round(rect.height * 0.72);
-        const newPar = Math.max(-40, Math.min(130, Math.round(pos.x - (ox + baseHLen))));
-        const newPerp = Math.max(10, Math.min(140, Math.round(oy - pos.y)));
-        deltaPar = newPar;
-        deltaPerp = newPerp;
+
+        const newPar = (pos.x - (ox + h_len)) / h_len;
+        const newPerp = (oy - pos.y) / h_len;
+
+        relPar = Math.max(-0.25, Math.min(0.65, newPar));
+        relPerp = Math.max(0.05, Math.min(0.85, newPerp));
         updateSimulator();
         e.preventDefault();
       }
@@ -1237,20 +1246,19 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
       if (alphaElem) alphaElem.innerText = simAlpha.toFixed(2) + "×";
       if (betaElem) betaElem.innerText = simBeta.toFixed(2) + "×";
 
-      // Mathematical computations
-      const h_len = baseHLen;
-      const par_component = simAlpha * deltaPar;
-      const perp_component = simBeta * deltaPerp;
+      // Mathematical computations in normalized representation units
+      const par_scaled = simAlpha * relPar;
+      const perp_scaled = simBeta * relPerp;
 
-      const hp_x = h_len + par_component;
-      const hp_y = perp_component;
+      const hp_x = 1.0 + par_scaled;
+      const hp_y = perp_scaled;
       const hp_len = Math.hypot(hp_x, hp_y);
-      const raw_update_len = Math.hypot(deltaPar, deltaPerp);
-      const normRatio = (hp_len / h_len).toFixed(2);
+      const raw_update_len = Math.hypot(relPar, relPerp);
+      const normRatio = hp_len.toFixed(2);
       const angleRad = Math.atan2(hp_y, hp_x);
       const angleDeg = (angleRad * 180 / Math.PI).toFixed(1);
-      const cosSim = (hp_x / hp_len).toFixed(3);
-      const parEnergy = raw_update_len > 0 ? Math.round((Math.pow(deltaPar, 2) / Math.pow(raw_update_len, 2)) * 100) : 0;
+      const cosSim = hp_len > 0 ? (hp_x / hp_len).toFixed(3) : "1.000";
+      const parEnergy = raw_update_len > 0 ? Math.round((Math.pow(relPar, 2) / Math.pow(raw_update_len, 2)) * 100) : 0;
 
       // Update UI Telemetry
       const mAngle = document.getElementById('metricAngle');
@@ -1265,7 +1273,7 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
       if (mParRatio) mParRatio.innerText = parEnergy + "%";
       if (mCos) mCos.innerText = cosSim;
       if (mFormula) {
-        mFormula.innerText = `[h' = ${h_len.toFixed(0)} + ${simAlpha.toFixed(2)}×${deltaPar.toFixed(0)} + ${simBeta.toFixed(2)}×${deltaPerp.toFixed(0)}⊥]`;
+        mFormula.innerText = `[h' = 100 + ${simAlpha.toFixed(2)}×${Math.round(relPar * 100)}∥ + ${simBeta.toFixed(2)}×${Math.round(relPerp * 100)}⊥]`;
       }
 
       // Empirical PPL calculation based on paper tables
@@ -1285,7 +1293,7 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
         }
         if (badge) {
           badge.innerText = "Stable / Preserved";
-          badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200";
+          badge.className = "px-2.5 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-2xs";
         }
         if (pplExp) {
           pplExp.innerText = `Parallel scaling operates with near-zero perplexity impact (+${deltaPpl.toFixed(2)} ΔPPL). Semantic representations stay on the manifold while preserving downstream factual recall.`;
@@ -1297,7 +1305,7 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
         }
         if (badge) {
           badge.innerText = "Moderate Shift";
-          badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200";
+          badge.className = "px-2.5 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200 shadow-2xs";
         }
         if (pplExp) {
           pplExp.innerText = `Representation trajectory undergoes angular drift (θ = ${angleDeg}°). Nuanced reasoning and long-context needle retrieval begin to experience slight degradation.`;
@@ -1310,18 +1318,18 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
         }
         if (badge) {
           badge.innerText = "Catastrophic Collapse";
-          badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-200";
+          badge.className = "px-2.5 py-0.5 rounded text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-200 shadow-2xs";
         }
         if (pplExp) {
           pplExp.innerText = `Perpendicular steering destroyed (> +${displayVal} ΔPPL). Orthogonal rotational capacity collapses, plunging MMLU to near-chance guessing.`;
         }
       }
 
-      drawVectorCanvas(h_len, deltaPar, deltaPerp, hp_x, hp_y, angleRad);
+      drawVectorCanvas();
       drawPplCurveCanvas(deltaPpl);
     }
 
-    function drawVectorCanvas(hx, dpar, dperp, hpx, hpy, angleRad) {
+    function drawVectorCanvas() {
       const canvas = document.getElementById('vectorCanvas');
       if (!canvas) return;
       const env = setupCanvasDpi(canvas);
@@ -1330,11 +1338,26 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
 
       ctx.clearRect(0, 0, width, height);
 
-      // Origin coordinates
-      const ox = Math.round(width * 0.14);
-      const oy = Math.round(height * 0.72);
+      // Coordinate origin and scaling calibrated to fill viewport
+      const ox = Math.round(width * 0.10);
+      const oy = Math.round(height * 0.76);
+      const h_len = Math.round(Math.min(width * 0.44, height * 0.68));
 
-      // 1. Draw subtle background Cartesian grid
+      const dpar_px = Math.round(h_len * relPar);
+      const dperp_px = Math.round(h_len * relPerp);
+
+      const par_scaled_px = simAlpha * dpar_px;
+      const perp_scaled_px = simBeta * dperp_px;
+
+      const parFootX = ox + h_len + par_scaled_px;
+      const finalY = oy - perp_scaled_px;
+
+      const hp_x = h_len + par_scaled_px;
+      const hp_y = perp_scaled_px;
+      const angleRad = Math.atan2(hp_y, hp_x);
+      const angleDeg = (angleRad * 180 / Math.PI).toFixed(1);
+
+      // 1. Subtle background Cartesian grid
       ctx.strokeStyle = '#f1f5f9';
       ctx.lineWidth = 1;
       for (let x = 0; x < width; x += 30) {
@@ -1345,12 +1368,12 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
       }
 
       // 2. Draw Parallel Subspace Span Beam
-      const gradPar = ctx.createLinearGradient(0, oy - 18, 0, oy + 18);
+      const gradPar = ctx.createLinearGradient(0, oy - 22, 0, oy + 22);
       gradPar.addColorStop(0, 'rgba(2, 132, 199, 0.01)');
-      gradPar.addColorStop(0.5, 'rgba(2, 132, 199, 0.08)');
+      gradPar.addColorStop(0.5, 'rgba(2, 132, 199, 0.07)');
       gradPar.addColorStop(1, 'rgba(2, 132, 199, 0.01)');
       ctx.fillStyle = gradPar;
-      ctx.fillRect(0, oy - 18, width, 36);
+      ctx.fillRect(0, oy - 22, width, 44);
 
       // Parallel dashed reference axis line
       ctx.strokeStyle = '#cbd5e1';
@@ -1360,18 +1383,17 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
       ctx.stroke();
 
       // Parallel Subspace label
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = "bold 10px 'JetBrains Mono', monospace";
-      ctx.fillText("span(h) [1D Parallel Subspace]", width - 185, oy + 18);
+      ctx.fillStyle = '#64748b';
+      ctx.font = "bold 11px 'JetBrains Mono', monospace";
+      ctx.fillText("span(h) [1D Parallel Subspace]", width - 215, oy + 20);
 
       // 3. Perpendicular Subspace Normal Hyperplane Beam
-      const parFootX = ox + hx + simAlpha * dpar;
-      const gradPerp = ctx.createLinearGradient(parFootX - 18, 0, parFootX + 18, 0);
+      const gradPerp = ctx.createLinearGradient(parFootX - 22, 0, parFootX + 22, 0);
       gradPerp.addColorStop(0, 'rgba(234, 88, 12, 0.01)');
       gradPerp.addColorStop(0.5, 'rgba(234, 88, 12, 0.07)');
       gradPerp.addColorStop(1, 'rgba(234, 88, 12, 0.01)');
       ctx.fillStyle = gradPerp;
-      ctx.fillRect(parFootX - 18, 0, 36, height);
+      ctx.fillRect(parFootX - 22, 0, 44, height);
 
       // Perpendicular dashed reference axis line
       ctx.strokeStyle = '#cbd5e1';
@@ -1380,8 +1402,9 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
       ctx.stroke();
       ctx.setLineDash([]);
 
-      ctx.fillStyle = '#94a3b8';
-      ctx.fillText("h⊥ [Orthogonal Hyperplane]", parFootX + 6, 24);
+      ctx.fillStyle = '#ea580c';
+      ctx.font = "bold 11px 'JetBrains Mono', monospace";
+      ctx.fillText("h⊥ [Orthogonal Hyperplane]", parFootX + 8, 22);
 
       // 4. Angular Deflection Arc
       if (Math.abs(angleRad) > 0.01) {
@@ -1391,31 +1414,32 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
         ctx.setLineDash([3, 3]);
         ctx.beginPath();
         ctx.moveTo(ox, oy);
-        ctx.arc(ox, oy, 48, 0, -angleRad, true);
+        const arcR = Math.min(54, h_len * 0.28);
+        ctx.arc(ox, oy, arcR, 0, -angleRad, true);
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
         ctx.setLineDash([]);
 
         ctx.fillStyle = '#059669';
-        ctx.font = "bold 10px 'JetBrains Mono', monospace";
+        ctx.font = "bold 11px 'JetBrains Mono', monospace";
         const midA = -angleRad / 2;
-        ctx.fillText(`θ=${(angleRad * 180 / Math.PI).toFixed(1)}°`, ox + Math.cos(midA) * 62, oy + Math.sin(midA) * 62);
+        ctx.fillText(`θ=${angleDeg}°`, ox + Math.cos(midA) * (arcR + 16), oy + Math.sin(midA) * (arcR + 16));
       }
 
       // 5. Raw Sublayer Update Vector Δh (Dotted & Interactive Handle)
-      const rawTipX = ox + hx + dpar;
-      const rawTipY = oy - dperp;
+      const rawTipX = ox + h_len + dpar_px;
+      const rawTipY = oy - dperp_px;
+
       ctx.strokeStyle = '#94a3b8';
       ctx.lineWidth = 2;
       ctx.setLineDash([4, 4]);
       ctx.beginPath();
-      ctx.moveTo(ox + hx, oy);
+      ctx.moveTo(ox + h_len, oy);
       ctx.lineTo(rawTipX, rawTipY);
       ctx.stroke();
-      ctx.setLineDash([]);
 
-      // Vertical projection guideline from raw update to parallel axis
+      // Vertical projection guideline
       ctx.strokeStyle = '#cbd5e1';
       ctx.lineWidth = 1.5;
       ctx.setLineDash([3, 3]);
@@ -1427,21 +1451,29 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
 
       // Interactive draggable handle knob at raw update tip
       ctx.fillStyle = '#ffffff';
-      ctx.strokeStyle = isDraggingHandle ? '#0284c7' : '#475569';
-      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = isDraggingHandle ? '#0284c7' : '#334155';
+      ctx.lineWidth = isDraggingHandle ? 3 : 2.5;
       ctx.beginPath();
-      ctx.arc(rawTipX, rawTipY, isDraggingHandle ? 8 : 6, 0, Math.PI * 2);
+      ctx.arc(rawTipX, rawTipY, isDraggingHandle ? 8 : 6.5, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
 
-      ctx.fillStyle = '#64748b';
-      ctx.font = "bold 10px 'JetBrains Mono', monospace";
-      ctx.fillText("Δh", rawTipX + 8, rawTipY - 6);
+      if (isDraggingHandle) {
+        ctx.strokeStyle = 'rgba(2, 132, 199, 0.35)';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(rawTipX, rawTipY, 12, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = '#475569';
+      ctx.font = "bold 11px 'JetBrains Mono', monospace";
+      ctx.fillText("Δh (handle)", rawTipX + 10, rawTipY - 6);
 
       // 6. Right-Angle Symbol (Orthogonal certification)
       ctx.strokeStyle = '#94a3b8';
       ctx.lineWidth = 1.5;
-      const sqSize = 10;
+      const sqSize = 12;
       const dirX = simAlpha >= 0 ? 1 : -1;
       ctx.beginPath();
       ctx.moveTo(parFootX, oy - sqSize);
@@ -1450,26 +1482,25 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
       ctx.stroke();
 
       // 7. Vector 1: h (Base Incoming Representation)
-      drawSharpArrow(ctx, ox, oy, ox + hx, oy, '#1e293b', 3.5, "h (base)");
+      drawSharpArrow(ctx, ox, oy, ox + h_len, oy, '#1e293b', 4, "h (base)");
 
       // 8. Vector 2: α·Δh_∥ (Scaled Parallel Component)
-      if (Math.abs(simAlpha * dpar) > 2) {
-        drawSharpArrow(ctx, ox + hx, oy, parFootX, oy, '#0284c7', 3.5, "α·Δh_∥");
+      if (Math.abs(par_scaled_px) > 2) {
+        drawSharpArrow(ctx, ox + h_len, oy, parFootX, oy, '#0284c7', 4, "α·Δh_∥");
       }
 
       // 9. Vector 3: β·Δh_⊥ (Scaled Perpendicular Component)
-      const finalY = oy - simBeta * dperp;
-      if (Math.abs(simBeta * dperp) > 2) {
-        drawSharpArrow(ctx, parFootX, oy, parFootX, finalY, '#ea580c', 3.5, "β·Δh_⊥");
+      if (Math.abs(perp_scaled_px) > 2) {
+        drawSharpArrow(ctx, parFootX, oy, parFootX, finalY, '#ea580c', 4, "β·Δh_⊥");
       }
 
       // 10. Vector 4: Resultant h' (Updated Representation)
-      drawSharpArrow(ctx, ox, oy, parFootX, finalY, '#059669', 4.5, "h' (updated)");
+      drawSharpArrow(ctx, ox, oy, parFootX, finalY, '#059669', 5, "h' (updated)");
 
       // Origin point badge
       ctx.fillStyle = '#1e293b';
       ctx.beginPath();
-      ctx.arc(ox, oy, 4, 0, Math.PI * 2);
+      ctx.arc(ox, oy, 4.5, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = '#64748b';
       ctx.font = "bold 10px 'JetBrains Mono', monospace";
@@ -1477,11 +1508,11 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
     }
 
     function drawSharpArrow(ctx, fromx, fromy, tox, toy, color, width, label) {
-      const headlen = 11;
+      const headlen = 12;
       const dx = tox - fromx;
       const dy = toy - fromy;
       const len = Math.hypot(dx, dy);
-      if (len < 1) return;
+      if (len < 2) return;
       const angle = Math.atan2(dy, dx);
 
       ctx.strokeStyle = color;
@@ -1507,9 +1538,19 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
         ctx.font = "bold 11px 'JetBrains Mono', monospace";
         const midX = (fromx + tox) / 2;
         const midY = (fromy + toy) / 2;
-        const normX = -Math.sin(angle) * 12;
-        const normY = Math.cos(angle) * 12;
-        ctx.fillText(label, midX + normX - 15, midY + normY - 2);
+        let offsetX = 0;
+        let offsetY = 0;
+        if (Math.abs(dy) < 5) {
+          offsetX = -20;
+          offsetY = 18;
+        } else if (Math.abs(dx) < 5) {
+          offsetX = 10;
+          offsetY = 4;
+        } else {
+          offsetX = -Math.sin(angle) * 16 - 20;
+          offsetY = Math.cos(angle) * 16 - 2;
+        }
+        ctx.fillText(label, midX + offsetX, midY + offsetY);
       }
     }
 
