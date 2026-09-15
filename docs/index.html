@@ -1772,7 +1772,7 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
           },
           {
             label: 'Perpendicular Scaling (Δh_⊥)',
-            data: [95500, 48000, 15000, 1200, 0.0, 850, 12000, 46000, 212700],
+            data: [95500, 48000, 15000, 1200, 1.0, 850, 12000, 46000, 212700],
             borderColor: '#ea580c',
             backgroundColor: 'transparent',
             yAxisID: 'yLog',
@@ -1787,8 +1787,17 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
           yLog: {
             position: 'right',
             type: 'logarithmic',
+            min: 1,
+            max: 300000,
             title: { display: true, text: 'Log ΔPPL (Perpendicular)' },
-            grid: { drawOnChartArea: false }
+            grid: { drawOnChartArea: false },
+            ticks: {
+              callback: function(value) {
+                if (value === 1) return '0 (Base)';
+                if (value >= 1000) return Number(value).toLocaleString();
+                return value;
+              }
+            }
           }
         },
         caption: "Figure 2: WikiText-2 Perplexity under Component Scaling on Qwen3. Notice the massive asymmetry: parallel scaling is near baseline (+0.46 to +9.13 PPL), whereas perpendicular scaling causes catastrophic failure (> 95k PPL)."
@@ -1880,7 +1889,20 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
           scales: dataCfg.yScales,
           plugins: {
             legend: { position: 'top', labels: { font: { family: "'Plus Jakarta Sans'", size: 12 } } },
-            tooltip: { padding: 10 }
+            tooltip: {
+              padding: 10,
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+                  if (label) label += ': ';
+                  let val = context.parsed.y;
+                  if (context.dataset.yAxisID === 'yLog' && val <= 1) {
+                    return label + '0.0 (Baseline No-op)';
+                  }
+                  return label + (val >= 1000 ? Number(val).toLocaleString() : val);
+                }
+              }
+            }
           }
         }
       });
