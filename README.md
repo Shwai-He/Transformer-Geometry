@@ -4,6 +4,7 @@
 ### Decomposing Transformer Updates into Parallel & Perpendicular Subspaces
 
 <p align="center">
+  <a href="https://arxiv.org/abs/2609.15975"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2609.15975-B31B1B.svg?style=flat-square"></a>
   <a href="https://2026.emnlp.org/"><img alt="EMNLP 2026 Findings" src="https://img.shields.io/badge/EMNLP_2026-Findings-blue?style=flat-square"></a>
   <a href="https://shwai-he.github.io/Transformer-Geometry/"><img alt="Project Website" src="https://img.shields.io/badge/🌐_Project-Website-0f5f56?style=flat-square"></a>
   <a href="https://pytorch.org/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C.svg?style=flat-square&logo=pytorch&logoColor=white"></a>
@@ -12,6 +13,7 @@
 </p>
 
 <p align="center">
+  <a href="https://arxiv.org/abs/2609.15975"><b>📄 arXiv Paper</b></a> •
   <a href="https://shwai-he.github.io/Transformer-Geometry/"><b>🌐 Project Homepage</b></a> •
   <a href="#-overview--core-concept"><b>Overview</b></a> •
   <a href="#-mathematical-foundation"><b>Formulation</b></a> •
@@ -377,7 +379,11 @@ For detailed workspace-specific guidance, refer to sub-package documentation:
   title={Disentangling Representation Evolution in Transformers through Directional Decomposition},
   author={He, Shwai and Zhang, Haichao and Yan, Shen},
   booktitle={Findings of the Association for Computational Linguistics: EMNLP 2026},
-  year={2026}
+  year={2026},
+  eprint={2609.15975},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL},
+  url={https://arxiv.org/abs/2609.15975}
 }
 ```
 
