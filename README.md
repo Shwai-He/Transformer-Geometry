@@ -375,15 +375,14 @@ For detailed workspace-specific guidance, refer to sub-package documentation:
 ## 📜 Citation
 
 ```bibtex
-@inproceedings{he2026transformer_geometry,
-  title={Disentangling Representation Evolution in Transformers through Directional Decomposition},
-  author={He, Shwai and Zhang, Haichao and Yan, Shen},
-  booktitle={Findings of the Association for Computational Linguistics: EMNLP 2026},
-  year={2026},
-  eprint={2609.15975},
-  archivePrefix={arXiv},
-  primaryClass={cs.CL},
-  url={https://arxiv.org/abs/2609.15975}
+@misc{he2026disentanglingrepresentationevolutiontransformers,
+      title={Disentangling Representation Evolution in Transformers through Directional Decomposition}, 
+      author={Shwai He and Haichao Zhang and Shen Yan},
+      year={2026},
+      eprint={2609.15975},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2609.15975}, 
 }
 ```
 
