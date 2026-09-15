@@ -584,206 +584,306 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
         <!-- Pillar 1 -->
-        <div class="card-academic p-5 sm:p-6 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl hover:border-blue-300 transition">
+        <div class="card-academic p-5 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl hover:border-blue-300 transition h-full">
           <div>
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center text-sm font-bold border border-blue-200">1</div>
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center text-xs font-bold border border-blue-200">1</div>
               <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">Probing Geometry</span>
             </div>
-            <h3 class="font-heading font-bold text-slate-900 text-base mb-1.5">Residual & Sublayer Probing</h3>
-            <p class="text-xs text-slate-600 leading-relaxed mb-3">
-              Residual stream updates persistently allocate substantial capacity (12%–25% variance) to direction-preserving components across Qwen3 and LLaMA architectures.
+            <h3 class="font-heading font-bold text-slate-900 text-base mb-1.5 line-clamp-1">Residual & Sublayer Probing</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3 min-h-[38px] line-clamp-2">
+              Residual stream updates persistently allocate substantial capacity (12%–25% variance) to direction-preserving components.
             </p>
             
-            <!-- Model Switcher (Dense vs MoE) -->
-            <div class="grid grid-cols-2 gap-1 p-1 bg-slate-100/80 rounded-lg text-[11px] font-semibold text-center mb-2.5 border border-slate-200/60">
+            <!-- Model Switcher -->
+            <div class="grid grid-cols-2 gap-1 p-1 bg-slate-100/80 rounded-lg text-[11px] font-semibold text-center mb-3 border border-slate-200/60">
               <button type="button" id="tabProbeDense" onclick="switchProbeModel('dense')" class="py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition">Dense (4B)</button>
               <button type="button" id="tabProbeMoe" onclick="switchProbeModel('moe')" class="py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition">MoE (30B-A3B)</button>
             </div>
             
-            <!-- Image Container -->
-            <div class="cursor-pointer group overflow-hidden rounded-xl border border-slate-200/90 bg-white p-2 shadow-2xs hover:border-blue-300 transition" onclick="openLightbox(activeProbeImg)">
-              <img id="probeModelImg" src="assets/probing_layer_distribution_qwen3_4b.png" alt="Probing Layer Distribution" class="w-full h-auto max-h-48 object-contain rounded-md group-hover:scale-[1.01] transition duration-200">
-              <div id="probeModelCaption" class="text-[11px] text-center text-slate-500 mt-1.5 font-medium">
-                <i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>Click to zoom: Dense Qwen3-4B across depths (L7, L20, L34)
+            <!-- Media Viewport -->
+            <div class="cursor-pointer group overflow-hidden rounded-xl border border-slate-200/90 bg-slate-50/50 p-2 shadow-2xs hover:border-blue-300 transition h-[180px] flex flex-col justify-between" onclick="openLightbox(activeProbeImg)">
+              <div class="flex-1 flex items-center justify-center overflow-hidden w-full">
+                <img id="probeModelImg" src="assets/probing_layer_distribution_qwen3_4b.png" alt="Probing Layer Distribution" class="max-w-full max-h-[135px] w-auto h-auto object-contain rounded-md group-hover:scale-[1.01] transition duration-200">
+              </div>
+              <div id="probeModelCaption" class="text-[11px] text-center text-slate-500 mt-1 font-medium truncate shrink-0">
+                <i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>Dense Qwen3-4B across depths (L7, L20, L34)
               </div>
             </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 font-mono flex items-center justify-between">
-            <span>scripts/run_probe.py</span>
-            <span class="text-blue-600 font-sans font-semibold text-[11px]">||&Delta;h<sub>∥</sub>||&sup2; / ||&Delta;h||&sup2;</span>
+          <div class="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2 min-w-0">
+            <div class="flex items-center gap-1.5 text-xs text-slate-500 font-mono min-w-0 truncate" title="scripts/run_probe.py">
+              <i class="fa-regular fa-file-code text-slate-400 shrink-0 text-[11px]"></i>
+              <span class="truncate">run_probe.py</span>
+            </div>
+            <span class="shrink-0 px-2 py-0.5 rounded bg-blue-50 border border-blue-200/80 text-blue-700 font-sans font-semibold text-[11px] whitespace-nowrap">||&Delta;h<sub>∥</sub>||&sup2; / ||&Delta;h||&sup2;</span>
           </div>
         </div>
 
         <!-- Pillar 2 -->
-        <div class="card-academic p-5 sm:p-6 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl hover:border-emerald-300 transition">
+        <div class="card-academic p-5 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl hover:border-emerald-300 transition h-full">
           <div>
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center text-sm font-bold border border-emerald-200">2</div>
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center text-xs font-bold border border-emerald-200">2</div>
               <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">Causal Scaling</span>
             </div>
-            <h3 class="font-heading font-bold text-slate-900 text-base mb-1.5">Inference Component Scaling</h3>
-            <p class="text-xs text-slate-600 leading-relaxed mb-3">
-              Value-space (XSA) parallel suppression is exceptionally resilient (&Delta;PPL +0.46), whereas perpendicular perturbation precipitates severe perplexity collapse.
+            <h3 class="font-heading font-bold text-slate-900 text-base mb-1.5 line-clamp-1">Inference Component Scaling</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3 min-h-[38px] line-clamp-2">
+              Value-space (XSA) parallel suppression is resilient (&Delta;PPL +0.46), whereas perpendicular perturbation precipitates severe collapse.
             </p>
             
-            <div class="cursor-pointer group overflow-hidden rounded-xl border border-slate-200/90 bg-white p-2 shadow-2xs hover:border-emerald-300 transition" onclick="openLightbox('assets/ppl_component_scaling.png')">
-              <img src="assets/ppl_component_scaling.png" alt="PPL Component Scaling" class="w-full h-auto max-h-48 object-contain rounded-md group-hover:scale-[1.01] transition duration-200">
-              <div class="text-[11px] text-center text-slate-500 mt-1.5 font-medium">
-                <i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>Click to zoom: &Delta;PPL vs component scale (&alpha; parallel, &beta; perp)
+            <!-- Scaling View Switcher -->
+            <div class="grid grid-cols-2 gap-1 p-1 bg-slate-100/80 rounded-lg text-[11px] font-semibold text-center mb-3 border border-slate-200/60">
+              <button type="button" id="tabScalingPpl" onclick="switchScalingView('ppl')" class="py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition">Component Sweep</button>
+              <button type="button" id="tabScalingDiag" onclick="switchScalingView('diag')" class="py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition">Diagonal Form</button>
+            </div>
+            
+            <!-- Media Viewport -->
+            <div class="cursor-pointer group overflow-hidden rounded-xl border border-slate-200/90 bg-slate-50/50 p-2 shadow-2xs hover:border-emerald-300 transition h-[180px] flex flex-col justify-between" onclick="openLightbox(activeScalingImg)">
+              <div class="flex-1 flex items-center justify-center overflow-hidden w-full">
+                <img id="scalingImg" src="assets/ppl_component_scaling.png" alt="PPL Component Scaling" class="max-w-full max-h-[135px] w-auto h-auto object-contain rounded-md group-hover:scale-[1.01] transition duration-200">
+              </div>
+              <div id="scalingCaption" class="text-[11px] text-center text-slate-500 mt-1 font-medium truncate shrink-0">
+                <i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>&Delta;PPL vs component scale (&alpha; parallel, &beta; perp)
               </div>
             </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 font-mono flex items-center justify-between">
-            <span>evaluation/lm_eval/models/attn_diag_hooks.py</span>
-            <span class="text-emerald-700 font-sans font-semibold text-[11px]">&Delta;PPL +0.46</span>
+          <div class="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2 min-w-0">
+            <div class="flex items-center gap-1.5 text-xs text-slate-500 font-mono min-w-0 truncate" title="evaluation/lm_eval/models/attn_diag_hooks.py">
+              <i class="fa-regular fa-file-code text-slate-400 shrink-0 text-[11px]"></i>
+              <span class="truncate">attn_diag_hooks.py</span>
+            </div>
+            <span class="shrink-0 px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200/80 text-emerald-700 font-sans font-semibold text-[11px] whitespace-nowrap">&Delta;PPL +0.46</span>
           </div>
         </div>
 
         <!-- Pillar 3 -->
-        <div class="card-academic p-5 sm:p-6 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl hover:border-amber-300 transition">
+        <div class="card-academic p-5 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl hover:border-amber-300 transition h-full">
           <div>
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center text-sm font-bold border border-amber-200">3</div>
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <div class="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center text-xs font-bold border border-amber-200">3</div>
               <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">Head Ensemble</span>
             </div>
-            <h3 class="font-heading font-bold text-slate-900 text-base mb-1.5">Head-Level Causal Sensitivity</h3>
-            <p class="text-xs text-slate-600 leading-relaxed mb-3">
-              Single-head edits cause negligible loss change (envelopes near zero), whereas joint all-head suppression triggers super-linear degradation, demonstrating mutual redundancy.
+            <h3 class="font-heading font-bold text-slate-900 text-base mb-1.5 line-clamp-1">Head-Level Causal Sensitivity</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3 min-h-[38px] line-clamp-2">
+              Single-head edits cause negligible loss change, whereas joint all-head suppression triggers super-linear degradation.
             </p>
             
-            <div class="cursor-pointer group overflow-hidden rounded-xl border border-slate-200/90 bg-white p-2 shadow-2xs hover:border-amber-300 transition" onclick="openLightbox('assets/head_delta_loss.png')">
-              <img src="assets/head_delta_loss.png" alt="Head-Level Causal Sensitivity" class="w-full h-auto max-h-48 object-contain rounded-md group-hover:scale-[1.01] transition duration-200">
-              <div class="text-[11px] text-center text-slate-500 mt-1.5 font-medium">
-                <i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>Click to zoom: FDR-controlled single-head vs joint multi-head removal
+            <!-- Head Switcher -->
+            <div class="grid grid-cols-2 gap-1 p-1 bg-slate-100/80 rounded-lg text-[11px] font-semibold text-center mb-3 border border-slate-200/60">
+              <button type="button" id="tabHeadFdr" onclick="switchHeadView('fdr')" class="py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition">Head Sensitivity</button>
+              <button type="button" id="tabHeadNorm" onclick="switchHeadView('norm')" class="py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition">Norm Ratio</button>
+            </div>
+            
+            <!-- Media Viewport -->
+            <div class="cursor-pointer group overflow-hidden rounded-xl border border-slate-200/90 bg-slate-50/50 p-2 shadow-2xs hover:border-amber-300 transition h-[180px] flex flex-col justify-between" onclick="openLightbox(activeHeadImg)">
+              <div class="flex-1 flex items-center justify-center overflow-hidden w-full">
+                <img id="headImg" src="assets/head_delta_loss.png" alt="Head-Level Causal Sensitivity" class="max-w-full max-h-[135px] w-auto h-auto object-contain rounded-md group-hover:scale-[1.01] transition duration-200">
+              </div>
+              <div id="headCaption" class="text-[11px] text-center text-slate-500 mt-1 font-medium truncate shrink-0">
+                <i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>FDR-controlled single-head vs joint multi-head removal
               </div>
             </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 font-mono flex items-center justify-between">
-            <span>repgeo/gated_attention.py</span>
-            <span class="text-amber-700 font-sans font-semibold text-[11px]">q &le; 0.05 FDR</span>
+          <div class="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2 min-w-0">
+            <div class="flex items-center gap-1.5 text-xs text-slate-500 font-mono min-w-0 truncate" title="repgeo/gated_attention.py">
+              <i class="fa-regular fa-file-code text-slate-400 shrink-0 text-[11px]"></i>
+              <span class="truncate">gated_attention.py</span>
+            </div>
+            <span class="shrink-0 px-2 py-0.5 rounded bg-amber-50 border border-amber-200/80 text-amber-800 font-sans font-semibold text-[11px] whitespace-nowrap">q &le; 0.05 FDR</span>
           </div>
         </div>
 
         <!-- Pillar 4 -->
-        <div class="card-academic p-5 sm:p-6 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl hover:border-purple-300 transition">
+        <div class="card-academic p-5 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl hover:border-purple-300 transition h-full">
           <div>
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center text-sm font-bold border border-purple-200">4</div>
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <div class="w-7 h-7 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center text-xs font-bold border border-purple-200">4</div>
               <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">Downstream Audit</span>
             </div>
-            <h3 class="font-heading font-bold text-slate-900 text-base mb-1.5">Downstream Reasoning & RULER</h3>
-            <p class="text-xs text-slate-600 leading-relaxed mb-2.5">
-              Full parallel removal preserves downstream reasoning across scales, while perpendicular removal collapses to chance. RULER audits 4k–12k needle retrieval.
+            <h3 class="font-heading font-bold text-slate-900 text-base mb-1.5 line-clamp-1">Downstream Reasoning & RULER</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3 min-h-[38px] line-clamp-2">
+              Full parallel removal preserves downstream reasoning across scales; RULER audits 4k–12k needle retrieval.
             </p>
             
-            <!-- High-Density Academic Audit Table replacing whitespace -->
-            <div class="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-2xs">
-              <table class="w-full text-left text-xs border-collapse">
-                <thead>
-                  <tr class="bg-slate-50/90 border-b border-slate-200 text-[11px] font-bold text-slate-600">
-                    <th class="py-2 px-2.5">Benchmark</th>
-                    <th class="py-2 px-2 text-center">Baseline</th>
-                    <th class="py-2 px-2 text-center text-emerald-700">No-Para</th>
-                    <th class="py-2 px-2 text-center text-rose-600">No-Perp</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100 text-[11px]">
-                  <tr class="hover:bg-slate-50/60 transition">
-                    <td class="py-1.5 px-2.5 font-medium text-slate-800">Core-MC (9 tasks)</td>
-                    <td class="py-1.5 px-2 text-center font-mono text-slate-600">55.28%</td>
-                    <td class="py-1.5 px-2 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">55.19%</td>
-                    <td class="py-1.5 px-2 text-center font-mono text-rose-600 bg-rose-50/40">37.24%</td>
-                  </tr>
-                  <tr class="hover:bg-slate-50/60 transition">
-                    <td class="py-1.5 px-2.5 font-medium text-slate-800">MMLU (5-shot)</td>
-                    <td class="py-1.5 px-2 text-center font-mono text-slate-600">60.39%</td>
-                    <td class="py-1.5 px-2 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">60.21%</td>
-                    <td class="py-1.5 px-2 text-center font-mono text-rose-600 bg-rose-50/40">24.62%</td>
-                  </tr>
-                  <tr class="hover:bg-slate-50/60 transition">
-                    <td class="py-1.5 px-2.5 font-medium text-slate-800">GSM8K (Strict)</td>
-                    <td class="py-1.5 px-2 text-center font-mono text-slate-600">45.8%</td>
-                    <td class="py-1.5 px-2 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">45.4%</td>
-                    <td class="py-1.5 px-2 text-center font-mono text-rose-600 bg-rose-50/40">8.2%</td>
-                  </tr>
-                  <tr class="hover:bg-slate-50/60 transition">
-                    <td class="py-1.5 px-2.5 font-medium text-slate-800">TruthfulQA (MC2)</td>
-                    <td class="py-1.5 px-2 text-center font-mono text-slate-600">48.2%</td>
-                    <td class="py-1.5 px-2 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">48.0%</td>
-                    <td class="py-1.5 px-2 text-center font-mono text-rose-600 bg-rose-50/40">31.5%</td>
-                  </tr>
-                  <tr class="hover:bg-slate-50/60 transition bg-slate-50/40">
-                    <td class="py-1.5 px-2.5 font-medium text-slate-800">RULER 12k Needle</td>
-                    <td class="py-1.5 px-2 text-center font-mono text-slate-600">79.3%</td>
-                    <td class="py-1.5 px-2 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">76.9%</td>
-                    <td class="py-1.5 px-2 text-center font-mono text-rose-600 bg-rose-50/40">39.2%</td>
-                  </tr>
-                </tbody>
-              </table>
+            <!-- Downstream Switcher -->
+            <div class="grid grid-cols-2 gap-1 p-1 bg-slate-100/80 rounded-lg text-[11px] font-semibold text-center mb-3 border border-slate-200/60">
+              <button type="button" id="tabDownstreamStd" onclick="switchDownstreamView('standard')" class="py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition">Core Reasoning</button>
+              <button type="button" id="tabDownstreamRuler" onclick="switchDownstreamView('ruler')" class="py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition">RULER 12k Needle</button>
+            </div>
+            
+            <!-- Media / Table Viewport -->
+            <div class="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-2xs h-[180px] flex flex-col justify-between p-0">
+              <!-- Standard Benchmarks Table -->
+              <div id="tableDownstreamStandard" class="w-full flex-1 overflow-hidden">
+                <table class="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr class="bg-slate-50 border-b border-slate-200 text-[10px] font-bold text-slate-600 uppercase tracking-wider">
+                      <th class="py-1.5 px-2">Benchmark</th>
+                      <th class="py-1.5 px-1.5 text-center">Baseline</th>
+                      <th class="py-1.5 px-1.5 text-center text-emerald-700">No-Para</th>
+                      <th class="py-1.5 px-1.5 text-center text-rose-600">No-Perp</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 text-[11px]">
+                    <tr class="hover:bg-slate-50/60 transition">
+                      <td class="py-1 px-2 font-medium text-slate-800">Core-MC (9 tasks)</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-slate-600">55.28%</td>
+                      <td class="py-1 px-1.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">55.19%</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-rose-600 bg-rose-50/40">37.24%</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/60 transition">
+                      <td class="py-1 px-2 font-medium text-slate-800">MMLU (5-shot)</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-slate-600">60.39%</td>
+                      <td class="py-1 px-1.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">60.21%</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-rose-600 bg-rose-50/40">24.62%</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/60 transition">
+                      <td class="py-1 px-2 font-medium text-slate-800">GSM8K (Strict)</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-slate-600">45.8%</td>
+                      <td class="py-1 px-1.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">45.4%</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-rose-600 bg-rose-50/40">8.2%</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/60 transition">
+                      <td class="py-1 px-2 font-medium text-slate-800">TruthfulQA (MC2)</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-slate-600">48.2%</td>
+                      <td class="py-1 px-1.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">48.0%</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-rose-600 bg-rose-50/40">31.5%</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/60 transition bg-slate-50/50 font-semibold">
+                      <td class="py-1 px-2 text-slate-900">Average</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-slate-700">52.42%</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-emerald-700 bg-emerald-50/50">52.20%</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-rose-600 bg-rose-50/50">25.39%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- RULER Needle Retrieval Table -->
+              <div id="tableDownstreamRuler" class="w-full flex-1 overflow-hidden hidden">
+                <table class="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr class="bg-slate-50 border-b border-slate-200 text-[10px] font-bold text-slate-600 uppercase tracking-wider">
+                      <th class="py-1.5 px-2">RULER Method</th>
+                      <th class="py-1.5 px-1.5 text-center">4k Acc</th>
+                      <th class="py-1.5 px-1.5 text-center">8k Acc</th>
+                      <th class="py-1.5 px-1.5 text-center">12k Acc</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 text-[11px]">
+                    <tr class="hover:bg-slate-50/60 transition">
+                      <td class="py-1 px-2 font-medium text-slate-800">Dense Baseline</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-slate-600">86.91%</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-slate-600">82.09%</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-slate-600">79.30%</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/60 transition">
+                      <td class="py-1 px-2 font-medium text-slate-800">V-Excl (s<sub>∥</sub>=0.5)</td>
+                      <td class="py-1 px-1.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">86.69%</td>
+                      <td class="py-1 px-1.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">80.80%</td>
+                      <td class="py-1 px-1.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">76.88%</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/60 transition">
+                      <td class="py-1 px-2 font-medium text-slate-800">V-Excl (s<sub>∥</sub>=0.0)</td>
+                      <td class="py-1 px-1.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">75.64%</td>
+                      <td class="py-1 px-1.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">67.97%</td>
+                      <td class="py-1 px-1.5 text-center font-mono font-bold text-emerald-700 bg-emerald-50/40">62.02%</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/60 transition bg-rose-50/20">
+                      <td class="py-1 px-2 font-medium text-rose-800">V-Full (s<sub>∥</sub>=0.0)</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-rose-600">60.99%</td>
+                      <td class="py-1 px-1.5 text-center font-mono text-rose-600">48.61%</td>
+                      <td class="py-1 px-1.5 text-center font-mono font-bold text-rose-600 bg-rose-50/40">39.17%</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/60 transition bg-slate-50/40">
+                      <td class="py-1 px-2 text-[10px] text-slate-500 italic" colspan="4">Direct self-message preservation prevents 12k collapse.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 font-mono flex items-center justify-between">
-            <span>evaluation/scripts/run_lm_eval_xsa_setting.sh</span>
-            <span class="text-purple-700 font-sans font-semibold text-[11px]">100% Retained</span>
+          <div class="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2 min-w-0">
+            <div class="flex items-center gap-1.5 text-xs text-slate-500 font-mono min-w-0 truncate" title="evaluation/scripts/run_lm_eval_xsa_setting.sh">
+              <i class="fa-regular fa-file-code text-slate-400 shrink-0 text-[11px]"></i>
+              <span class="truncate">run_lm_eval.sh</span>
+            </div>
+            <span class="shrink-0 px-2 py-0.5 rounded bg-purple-50 border border-purple-200/80 text-purple-700 font-sans font-semibold text-[11px] whitespace-nowrap">100% Retained</span>
           </div>
         </div>
 
         <!-- Pillar 5 -->
-        <div class="card-academic p-5 sm:p-6 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl hover:border-rose-300 transition">
+        <div class="card-academic p-5 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl hover:border-rose-300 transition h-full">
           <div>
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center text-sm font-bold border border-rose-200">5</div>
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <div class="w-7 h-7 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center text-xs font-bold border border-rose-200">5</div>
               <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">Compression</span>
             </div>
-            <h3 class="font-heading font-bold text-slate-900 text-base mb-1.5">Compression Distortion Diagnostics</h3>
-            <p class="text-xs text-slate-600 leading-relaxed mb-3">
-              Decomposing error shows that Wanda and magnitude pruning disproportionately corrupt &Delta;h<sub>&perp;</sub>, whereas quantization (GPTQ/AWQ) preserves update geometry.
+            <h3 class="font-heading font-bold text-slate-900 text-base mb-1.5 line-clamp-1">Compression Distortion Diagnostics</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3 min-h-[38px] line-clamp-2">
+              Pruning disproportionately corrupts &Delta;h<sub>&perp;</sub>, whereas quantization (GPTQ/AWQ) preserves update geometry.
             </p>
             
-            <!-- 3 Sub-layer Buttons (Attn, MLP, Block) -->
-            <div class="grid grid-cols-3 gap-1 p-1 bg-slate-100/80 rounded-lg text-[11px] font-semibold text-center mb-2.5 border border-slate-200/60">
+            <!-- 3 Sub-layer Buttons -->
+            <div class="grid grid-cols-3 gap-1 p-1 bg-slate-100/80 rounded-lg text-[11px] font-semibold text-center mb-3 border border-slate-200/60">
               <button type="button" id="tabCompAttn" onclick="switchCompSublayer('attn')" class="py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition">Attn</button>
               <button type="button" id="tabCompMlp" onclick="switchCompSublayer('mlp')" class="py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition">MLP</button>
               <button type="button" id="tabCompBlock" onclick="switchCompSublayer('block')" class="py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition">Block</button>
             </div>
             
-            <!-- Image Container -->
-            <div class="cursor-pointer group overflow-hidden rounded-xl border border-slate-200/90 bg-white p-2 shadow-2xs hover:border-rose-300 transition" onclick="openLightbox(activeCompImg)">
-              <img id="compSublayerImg" src="assets/compression_perp_distortion_attn.png" alt="Compression Distortion" class="w-full h-auto max-h-48 object-contain rounded-md group-hover:scale-[1.01] transition duration-200">
-              <div id="compSublayerCaption" class="text-[11px] text-center text-slate-500 mt-1.5 font-medium">
-                <i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>Click to zoom: Attention output &Delta;h<sub>&perp;</sub> error across layers
+            <!-- Media Viewport -->
+            <div class="cursor-pointer group overflow-hidden rounded-xl border border-slate-200/90 bg-slate-50/50 p-2 shadow-2xs hover:border-rose-300 transition h-[180px] flex flex-col justify-between" onclick="openLightbox(activeCompImg)">
+              <div class="flex-1 flex items-center justify-center overflow-hidden w-full">
+                <img id="compSublayerImg" src="assets/compression_perp_distortion_attn.png" alt="Compression Distortion" class="max-w-full max-h-[135px] w-auto h-auto object-contain rounded-md group-hover:scale-[1.01] transition duration-200">
+              </div>
+              <div id="compSublayerCaption" class="text-[11px] text-center text-slate-500 mt-1 font-medium truncate shrink-0">
+                <i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>Attention output &Delta;h<sub>&perp;</sub> error across layers
               </div>
             </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 font-mono flex items-center justify-between">
-            <span>scripts/compression_analysis/layerwise_para_perp_compare.py</span>
-            <span class="text-rose-700 font-sans font-semibold text-[11px]">&Delta;h<sub>&perp;</sub> distortion</span>
+          <div class="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2 min-w-0">
+            <div class="flex items-center gap-1.5 text-xs text-slate-500 font-mono min-w-0 truncate" title="scripts/compression_analysis/layerwise_para_perp_compare.py">
+              <i class="fa-regular fa-file-code text-slate-400 shrink-0 text-[11px]"></i>
+              <span class="truncate">distortion_compare.py</span>
+            </div>
+            <span class="shrink-0 px-2 py-0.5 rounded bg-rose-50 border border-rose-200/80 text-rose-700 font-sans font-semibold text-[11px] whitespace-nowrap">&Delta;h<sub>&perp;</sub> distortion</span>
           </div>
         </div>
 
         <!-- Pillar 6 -->
-        <div class="card-academic p-5 sm:p-6 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl hover:border-indigo-300 transition">
+        <div class="card-academic p-5 flex flex-col justify-between bg-white border border-slate-200/90 shadow-sm rounded-2xl hover:border-indigo-300 transition h-full">
           <div>
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center text-sm font-bold border border-indigo-200">6</div>
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <div class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center text-xs font-bold border border-indigo-200">6</div>
               <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-semibold">Pretraining</span>
             </div>
-            <h3 class="font-heading font-bold text-slate-900 text-base mb-1.5">Pretraining Regularization</h3>
-            <p class="text-xs text-slate-600 leading-relaxed mb-3">
-              Suppressing parallel attention updates during pretraining consistently yields lower validation loss from 300M to 2.7B parameters. Fixed removal outperforms tokenwise learned gating.
+            <h3 class="font-heading font-bold text-slate-900 text-base mb-1.5 line-clamp-1">Pretraining Regularization</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3 min-h-[38px] line-clamp-2">
+              Suppressing parallel attention updates during pretraining consistently yields lower validation loss from 300M to 2.7B.
             </p>
             
-            <div class="cursor-pointer group overflow-hidden rounded-xl border border-slate-200/90 bg-white p-2 shadow-2xs hover:border-indigo-300 transition" onclick="openLightbox('assets/pretraining_loss_curves_by_size.png')">
-              <img src="assets/pretraining_loss_curves_by_size.png" alt="Pretraining Loss Curves" class="w-full h-auto max-h-48 object-contain rounded-md group-hover:scale-[1.01] transition duration-200">
-              <div class="text-[11px] text-center text-slate-500 mt-1.5 font-medium">
-                <i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>Click to zoom: Validation loss across 296M, 436M, 528M
+            <!-- Pretraining Switcher -->
+            <div class="grid grid-cols-2 gap-1 p-1 bg-slate-100/80 rounded-lg text-[11px] font-semibold text-center mb-3 border border-slate-200/60">
+              <button type="button" id="tabPretrainMulti" onclick="switchPretrainView('multisize')" class="py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition">Multi-Scale</button>
+              <button type="button" id="tabPretrainGate" onclick="switchPretrainView('gate1p4')" class="py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition">1.4B Gated vs Fixed</button>
+            </div>
+            
+            <!-- Media Viewport -->
+            <div class="cursor-pointer group overflow-hidden rounded-xl border border-slate-200/90 bg-slate-50/50 p-2 shadow-2xs hover:border-indigo-300 transition h-[180px] flex flex-col justify-between" onclick="openLightbox(activePretrainImg)">
+              <div class="flex-1 flex items-center justify-center overflow-hidden w-full">
+                <img id="pretrainImg" src="assets/pretraining_loss_curves_by_size.png" alt="Pretraining Loss Curves" class="max-w-full max-h-[135px] w-auto h-auto object-contain rounded-md group-hover:scale-[1.01] transition duration-200">
+              </div>
+              <div id="pretrainCaption" class="text-[11px] text-center text-slate-500 mt-1 font-medium truncate shrink-0">
+                <i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>Validation loss across 296M, 436M, 528M
               </div>
             </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 font-mono flex items-center justify-between">
-            <span>training/scripts/plot_arr_figure6_retained_curves.py</span>
-            <span class="text-indigo-700 font-sans font-semibold text-[11px]">Loss &Delta; -0.04</span>
+          <div class="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2 min-w-0">
+            <div class="flex items-center gap-1.5 text-xs text-slate-500 font-mono min-w-0 truncate" title="training/scripts/plot_arr_figure6_retained_curves.py">
+              <i class="fa-regular fa-file-code text-slate-400 shrink-0 text-[11px]"></i>
+              <span class="truncate">plot_retained_curves.py</span>
+            </div>
+            <span class="shrink-0 px-2 py-0.5 rounded bg-indigo-50 border border-indigo-200/80 text-indigo-700 font-sans font-semibold text-[11px] whitespace-nowrap">Loss &Delta; -0.04</span>
           </div>
         </div>
 
@@ -1848,6 +1948,88 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
         caption.innerHTML = 'Click to zoom: MoE Qwen3-30B-A3B across depths (L10, L28, L46)';
       }
       img.src = activeProbeImg;
+    }
+
+    let activeScalingImg = 'assets/ppl_component_scaling.png';
+    function switchScalingView(view) {
+      const img = document.getElementById('scalingImg');
+      const caption = document.getElementById('scalingCaption');
+      const btnPpl = document.getElementById('tabScalingPpl');
+      const btnDiag = document.getElementById('tabScalingDiag');
+
+      if (view === 'ppl') {
+        activeScalingImg = 'assets/ppl_component_scaling.png';
+        btnPpl.className = 'py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition';
+        btnDiag.className = 'py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition';
+        caption.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>&Delta;PPL vs component scale (&alpha; parallel, &beta; perp)';
+      } else {
+        activeScalingImg = 'assets/attn_diagonal_matrix_edit.png';
+        btnDiag.className = 'py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition';
+        btnPpl.className = 'py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition';
+        caption.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>Attention diagonal matrix edit D = I + (&alpha;-1)P<sub>∥</sub> + (&beta;-1)P<sub>⊥</sub>';
+      }
+      img.src = activeScalingImg;
+    }
+
+    let activeHeadImg = 'assets/head_delta_loss.png';
+    function switchHeadView(view) {
+      const img = document.getElementById('headImg');
+      const caption = document.getElementById('headCaption');
+      const btnFdr = document.getElementById('tabHeadFdr');
+      const btnNorm = document.getElementById('tabHeadNorm');
+
+      if (view === 'fdr') {
+        activeHeadImg = 'assets/head_delta_loss.png';
+        btnFdr.className = 'py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition';
+        btnNorm.className = 'py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition';
+        caption.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>FDR-controlled single-head vs joint multi-head removal';
+      } else {
+        activeHeadImg = 'assets/baseline_update_over_hidden_state.png';
+        btnNorm.className = 'py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition';
+        btnFdr.className = 'py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition';
+        caption.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>Baseline update norm ratio ||&Delta;h|| / ||h|| across layers';
+      }
+      img.src = activeHeadImg;
+    }
+
+    function switchDownstreamView(view) {
+      const tStandard = document.getElementById('tableDownstreamStandard');
+      const tRuler = document.getElementById('tableDownstreamRuler');
+      const btnStd = document.getElementById('tabDownstreamStd');
+      const btnRuler = document.getElementById('tabDownstreamRuler');
+
+      if (view === 'standard') {
+        tStandard.classList.remove('hidden');
+        tRuler.classList.add('hidden');
+        btnStd.className = 'py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition';
+        btnRuler.className = 'py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition';
+      } else {
+        tStandard.classList.add('hidden');
+        tRuler.classList.remove('hidden');
+        btnRuler.className = 'py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition';
+        btnStd.className = 'py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition';
+      }
+    }
+
+    let activePretrainImg = 'assets/pretraining_loss_curves_by_size.png';
+    function switchPretrainView(view) {
+      const img = document.getElementById('pretrainImg');
+      const caption = document.getElementById('pretrainCaption');
+      const btnMulti = document.getElementById('tabPretrainMulti');
+      const btnGate = document.getElementById('tabPretrainGate');
+
+      if (view === 'multisize') {
+        activePretrainImg = 'assets/pretraining_loss_curves_by_size.png';
+        btnMulti.className = 'py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition';
+        btnGate.className = 'py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition';
+        caption.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>Validation loss across 296M, 436M, 528M';
+      } else {
+        activePretrainImg = 'assets/loss_1p4_gate_vs_xsa_absolute.png';
+        btnGate.className = 'py-1 px-1.5 rounded-md bg-white text-slate-800 shadow-xs font-bold transition';
+        btnMulti.className = 'py-1 px-1.5 rounded-md text-slate-600 hover:text-slate-900 transition';
+        caption.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus text-[10px] mr-1 text-slate-400"></i>Fixed V-Para removal vs tokenwise learned gating (1.4B)';
+      }
+      img.src = activePretrainImg;
     }
   </script>
 </body>
