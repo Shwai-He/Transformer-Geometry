@@ -1772,11 +1772,12 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
           },
           {
             label: 'Perpendicular Scaling (Δh_⊥)',
-            data: [95500, 48000, 15000, 1200, 1.0, 850, 12000, 46000, 212700],
+            data: [95500, 48000, 15000, 1200, 100, 850, 12000, 46000, 212700],
             borderColor: '#ea580c',
             backgroundColor: 'transparent',
             yAxisID: 'yLog',
-            tension: 0.3
+            tension: 0.25,
+            spanGaps: true
           }
         ],
         yScales: {
@@ -1787,13 +1788,13 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
           yLog: {
             position: 'right',
             type: 'logarithmic',
-            min: 1,
+            min: 100,
             max: 300000,
             title: { display: true, text: 'Log ΔPPL (Perpendicular)' },
             grid: { drawOnChartArea: false },
             ticks: {
               callback: function(value) {
-                if (value === 1) return '0 (Base)';
+                if (value === 100) return '0 (Base)';
                 if (value >= 1000) return Number(value).toLocaleString();
                 return value;
               }
@@ -1873,39 +1874,7 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
     };
 
     function initBenchmarkChart() {
-      const ctx = document.getElementById('benchmarkChart').getContext('2d');
-      const dataCfg = CHART_DATA.scaling;
-
-      benchmarkChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: dataCfg.labels,
-          datasets: dataCfg.datasets
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
-          scales: dataCfg.yScales,
-          plugins: {
-            legend: { position: 'top', labels: { font: { family: "'Plus Jakarta Sans'", size: 12 } } },
-            tooltip: {
-              padding: 10,
-              callbacks: {
-                label: function(context) {
-                  let label = context.dataset.label || '';
-                  if (label) label += ': ';
-                  let val = context.parsed.y;
-                  if (context.dataset.yAxisID === 'yLog' && val <= 1) {
-                    return label + '0.0 (Baseline No-op)';
-                  }
-                  return label + (val >= 1000 ? Number(val).toLocaleString() : val);
-                }
-              }
-            }
-          }
-        }
-      });
+      switchChart('scaling');
     }
 
     function switchChart(tab) {
@@ -1915,10 +1884,41 @@ bash scripts/run_lm_eval_xsa_setting.sh \\
       document.getElementById('tabBtn-' + tab).className = "px-4 py-2 text-xs sm:text-sm font-semibold rounded-md bg-white text-slate-900 shadow-sm transition";
 
       const cfg = CHART_DATA[tab];
-      benchmarkChart.data.labels = cfg.labels;
-      benchmarkChart.data.datasets = cfg.datasets;
-      benchmarkChart.options.scales = cfg.yScales;
-      benchmarkChart.update();
+      if (benchmarkChart) {
+        benchmarkChart.destroy();
+      }
+
+      const ctx = document.getElementById('benchmarkChart').getContext('2d');
+      benchmarkChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: cfg.labels,
+          datasets: cfg.datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: cfg.yScales,
+          plugins: {
+            legend: { position: 'top', labels: { font: { family: "'Plus Jakarta Sans'", size: 12 } } },
+            tooltip: {
+              padding: 10,
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+                  if (label) label += ': ';
+                  let val = context.parsed.y;
+                  if (context.dataset.yAxisID === 'yLog' && val <= 100) {
+                    return label + '0.0 (Baseline No-op)';
+                  }
+                  return label + (val >= 1000 ? Number(val).toLocaleString() : val);
+                }
+              }
+            }
+          }
+        }
+      });
 
       document.getElementById('chartCaption').innerText = cfg.caption;
     }
