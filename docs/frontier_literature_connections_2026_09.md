@@ -37,7 +37,7 @@
 
 ## 📐 2. 逐篇论文深度机制解构、数学公式与本仓库落地指南 (Per-Paper Deep-Dive Cards)
 
-### 2.1 [2026-09-27] SHAPE: Coalition-Aware Expert Pruning for Sparse Mixture-of-Experts LLMs (`arXiv:2606.09886`)
+### 2.1 [2026-09-27] SHAPE: Coalition-Aware Expert Pruning for Sparse Mixture-of-Experts LLMs
 
 * **论文信息**：`arXiv:2606.09886` (2026-06, 开源仓库：`github.com/Alizen-1009/Shapley-Moe`)
 * **核心关键词**：Sparse MoE、Cooperative Game Theory、Shapley Value Attribution、Coalition-Aware Expert Pruning、Quality-Coverage Bisection
@@ -110,12 +110,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-27_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-27_ai_paper_notes.md`
+
 
 ---
 
-### 2.2 [2026-09-27] L2R: Low-Rank and Lipschitz-Controlled Routing for Mixture-of-Experts (`arXiv:2601.21349`)
+### 2.2 [2026-09-27] L2R: Low-Rank and Lipschitz-Controlled Routing for Mixture-of-Experts
 
 * **论文信息**：Minghao Yang, Ren Togo, Guang Li, Takahiro Ogawa, Miki Haseyama (`arXiv:2601.21349`, 2026-01)
 * **核心关键词**：MoE Routing Geometry、Low-Rank Latent Space、Lipschitz Continuity、Saturated Inner-Product Scoring (SIPS)、Multi-Anchor Routing
@@ -186,12 +188,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`probing/angular_concentration.py` (Lipschitz Angular Dispersion in MoE Routers)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-27_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/angular_concentration.py` (Lipschitz Angular Dispersion in MoE Routers)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-27_ai_paper_notes.md`
+
 
 ---
 
-### 2.3 [2026-09-27] OBCache: Optimal Brain KV Cache Pruning for Efficient Long-Context LLM Inference (`arXiv:2510.07651`)
+### 2.3 [2026-09-27] OBCache: Optimal Brain KV Cache Pruning for Efficient Long-Context LLM Inference
 
 * **论文信息**：Yuzhe Gu, Xiyu Liang, Jiaojiao Zhao, Enmao Diao (`arXiv:2510.07651`, **ICML 2026**)
 * **核心关键词**：KV Cache Eviction、Optimal Brain Damage (OBD)、Second-Order Taylor Perturbation、Output-Aware Saliency、Joint KV Pruning
@@ -268,12 +272,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`attention_xsa/value_space_projection.py` (Output-Aware Value Jacobian Perturbation)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-27_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (Output-Aware Value Jacobian Perturbation)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-27_ai_paper_notes.md`
+
 
 ---
 
-### 2.4 [2026-09-26] 🔄 LoopMoE: Unifying Iterative Computation with Mixture-of-Experts for Language Modeling (`arXiv:2606.04438`)
+### 2.4 [2026-09-26] 🔄 *LoopMoE: Unifying Iterative Computation with Mixture-of-Experts for Language Modeling*
 > **聚焦领域**：Looped Transformers · Mixture of Experts (MoE) · Iterative Depth Scaling · Weight Sharing  
 > **arXiv**：[`arXiv:2606.04438`](https://arxiv.org/abs/2606.04438)
 
@@ -315,12 +321,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-26_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-26_ai_paper_notes.md`
+
 
 ---
 
-### 2.5 [2026-09-26] ⚖️ SelKV: Selective KV Cache Merging with Per-Token Merge-or-Drop and Attention Compensation (`arXiv:2607.16213`)
+### 2.5 [2026-09-26] ⚖️ *SelKV: Selective KV Cache Merging with Per-Token Merge-or-Drop and Attention Compensation*
 > **聚焦领域**：KV Cache Compression · Softmax Denominator Compensation · Token Merging vs. Dropping  
 > **arXiv**：[`arXiv:2607.16213`](https://arxiv.org/abs/2607.16213)
 
@@ -364,12 +372,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-26_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-26_ai_paper_notes.md`
+
 
 ---
 
-### 2.6 [2026-09-25] Fully Looped Transformer: Stabilizing Looped Models via Attention Injection and Residual Scaling (`arXiv:2605.18797`)
+### 2.6 [2026-09-25] Fully Looped Transformer: Stabilizing Looped Models via Attention Injection and Residual Scaling
 
 * **论文信息**：`arXiv:2605.18797` (2026-05)
 * **核心关键词**：Fully Looped Transformer、Attention Injection、Anchor KV Grounding、Gradient Oscillation Prevention
@@ -420,12 +430,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`probing/residual_decomposition.py` (Hyper-Connections Orthogonal Dispersion)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-25_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/residual_decomposition.py` (Hyper-Connections Orthogonal Dispersion)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-25_ai_paper_notes.md`
+
 
 ---
 
-### 2.7 [2026-09-25] On the Limits of Layer Pruning in Generative Reasoning LLMs (`arXiv:2602.01997`)
+### 2.7 [2026-09-25] On the Limits of Layer Pruning in Generative Reasoning LLMs
 
 * **论文信息**：`arXiv:2602.01997` (2026-02)
 * **核心关键词**：Limits of Layer Pruning、Sequential Circuit Depth、Multi-Step Arithmetic & Logic Degradation
@@ -468,12 +480,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`compression/layer_geometry_pruning.py` (Reasoning Hop Depth Lower Bound)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-25_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`compression/layer_geometry_pruning.py` (Reasoning Hop Depth Lower Bound)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-25_ai_paper_notes.md`
+
 
 ---
 
-### 2.8 [2026-09-25] How Pruning Attention Layers Affects Interpretability, Faithfulness, and Confidence Calibration (`arXiv:2606.24970`)
+### 2.8 [2026-09-25] How Pruning Attention Layers Affects Interpretability, Faithfulness, and Confidence Calibration
 
 * **论文信息**：`arXiv:2606.24970` (2026-06)
 * **核心关键词**：Attention Layer Pruning、Confidence Calibration (ECE)、Faithfulness、Overconfident Hallucination
@@ -524,12 +538,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`compression/layer_geometry_pruning.py` (Attention vs MLP Subspace Division)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-25_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`compression/layer_geometry_pruning.py` (Attention vs MLP Subspace Division)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-25_ai_paper_notes.md`
+
 
 ---
 
-### 2.9 [2026-09-25] SAC: Disaggregated KV Cache Architecture for Sparse Attention Serving over CXL (`arXiv:2604.18392`)
+### 2.9 [2026-09-25] SAC: Disaggregated KV Cache Architecture for Sparse Attention Serving over CXL
 
 * **论文信息**：`arXiv:2604.18392` (2026-04)
 * **核心关键词**：CXL 3.0 Memory Pooling、Disaggregated KV Cache、Sparse Attention Sub-Page Gather
@@ -568,12 +584,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`attention_xsa/value_space_projection.py` (Output-Aware Value Jacobian Perturbation)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-25_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (Output-Aware Value Jacobian Perturbation)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-25_ai_paper_notes.md`
+
 
 ---
 
-### 2.10 [2026-09-24] Training-Free Looped Transformers: Test-Time Mid-Stack Layer Looping (`arXiv:2605.23872`)
+### 2.10 [2026-09-24] Training-Free Looped Transformers: Test-Time Mid-Stack Layer Looping
 
 * **论文信息**：`arXiv:2605.23872` (2026-05)
 * **核心关键词**：Training-Free Looped Transformer、Test-Time Depth Scaling、Mid-Stack Fixed-Point Iteration
@@ -617,12 +635,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-24_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-24_ai_paper_notes.md`
+
 
 ---
 
-### 2.11 [2026-09-23] MELT: Memory-Efficient Looped Transformer — Decoupling Compute from Memory (`arXiv:2605.07721`)
+### 2.11 [2026-09-23] MELT: Memory-Efficient Looped Transformer — Decoupling Compute from Memory
 
 * **论文信息**：`arXiv:2605.07721` (2026-05)
 * **核心关键词**：Memory-Efficient Looped Transformer、Shared Cross-Loop KV Cache、Compute-Memory Decoupling
@@ -662,12 +682,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`probing/residual_decomposition.py` (Terminal-Iteration Latent Convergence)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-23_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/residual_decomposition.py` (Terminal-Iteration Latent Convergence)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-23_ai_paper_notes.md`
+
 
 ---
 
-### 2.12 [2026-09-22] SPIN: Unifying Sparse Attention with Hierarchical Memory for Scalable Long-Context LLM Serving (`arXiv:2604.26837`)
+### 2.12 [2026-09-22] SPIN: Unifying Sparse Attention with Hierarchical Memory for Scalable Long-Context LLM Serving
 
 * **论文信息**：`arXiv:2604.26837` (2026-04)
 * **核心关键词**：Sparse Attention Serving、Hierarchical GPU-CPU Memory、Asynchronous Layer-Ahead Prefetching
@@ -707,12 +729,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-22_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-22_ai_paper_notes.md`
+
 
 ---
 
-### 2.13 [2026-09-21] DeepLoop: Depth Scaling for Looped Transformers (`arXiv:2607.13491`)
+### 2.13 [2026-09-21] DeepLoop: Depth Scaling for Looped Transformers
 
 * **论文信息**：`arXiv:2607.13491` (2026-07)
 * **核心关键词**：Looped Transformers、Residual-Scaling Problem、Coherent Variance Growth、Depth Scaling Law
@@ -760,12 +784,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`probing/residual_decomposition.py` ($\Delta h_\parallel$ Coherent Variance Growth $O(K^2)$)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-21_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/residual_decomposition.py` ($\Delta h_\parallel$ Coherent Variance Growth $O(K^2)$)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-21_ai_paper_notes.md`
+
 
 ---
 
-### 2.14 [2026-09-21] RotateK: Rotation-Aligned Key Channel Pruning for Vision-Language Models (`arXiv:2605.19218`)
+### 2.14 [2026-09-21] RotateK: Rotation-Aligned Key Channel Pruning for Vision-Language Models
 
 * **论文信息**：`arXiv:2605.19218` (2026-05)
 * **核心关键词**：Key Channel Pruning、Orthogonal Rotation Alignment、Vision-Language Models (VLMs)、Head-Dimension Compression
@@ -815,12 +841,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`attention_xsa/value_space_projection.py` (Orthogonal Key/Value Subspace Rotation)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-21_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (Orthogonal Key/Value Subspace Rotation)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-21_ai_paper_notes.md`
+
 
 ---
 
-### 2.15 [2026-09-20] SHIFT-LLM: Distribution Shift Correction in Depth-Pruned LLMs (`arXiv:2608.25068`)
+### 2.15 [2026-09-20] SHIFT-LLM: Distribution Shift Correction in Depth-Pruned LLMs
 
 * **论文信息**：`arXiv:2608.25068` (2026-08)
 * **核心关键词**：Depth Pruning、Distribution Shift Correction、Linear Residual Adapters (LRA)、Closed-Form Ridge Regression、Weight Folding
@@ -871,12 +899,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`compression/layer_geometry_pruning.py` (Closed-Form Orthogonal Drift Compensation)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-20_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`compression/layer_geometry_pruning.py` (Closed-Form Orthogonal Drift Compensation)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-20_ai_paper_notes.md`
+
 
 ---
 
-### 2.16 [2026-09-20] Minima-KV: Mixed-Format Paged Attention for Extreme KV Cache Compression (`arXiv:2608.23834`)
+### 2.16 [2026-09-20] Minima-KV: Mixed-Format Paged Attention for Extreme KV Cache Compression
 
 * **论文信息**：`arXiv:2608.23834` (2026-08)
 * **核心关键词**：Mixed-Precision KV Cache、PagedAttention、Sub-Page Bit-Packing、Reasoning Continuity
@@ -929,12 +959,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`attention_xsa/value_space_projection.py` (Output-Aware Value Jacobian Perturbation)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-20_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (Output-Aware Value Jacobian Perturbation)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-20_ai_paper_notes.md`
+
 
 ---
 
-### 2.17 [2026-09-19] WRP: Forward-Free LLM Depth Pruning via Weight Redundancy (`arXiv:2609.09883`)
+### 2.17 [2026-09-19] WRP: Forward-Free LLM Depth Pruning via Weight Redundancy
 
 * **论文信息**：`arXiv:2609.09883` (2026-09)
 * **核心关键词**：Forward-Free Depth Pruning、Weight Redundancy、Spectral Subspace Alignment、Calibration-Free Layer Dropping
@@ -990,12 +1022,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`compression/layer_geometry_pruning.py` (Weight Spectral Redundancy vs $\Delta h_\perp$)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-19_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`compression/layer_geometry_pruning.py` (Weight Spectral Redundancy vs $\Delta h_\perp$)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-19_ai_paper_notes.md`
+
 
 ---
 
-### 2.18 [2026-09-19] REAP: Router-Weighted Expert Activation Pruning for Sparse MoE Models (`arXiv:2510.13999`)
+### 2.18 [2026-09-19] REAP: Router-Weighted Expert Activation Pruning for Sparse MoE Models
 
 * **论文信息**：`arXiv:2510.13999` (2025/2026)
 * **核心关键词**：MoE Expert Pruning、Router Gate Weighting、Expert Activation Norm、Generative Reasoning Preservation
@@ -1041,12 +1075,14 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-19_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-19_ai_paper_notes.md`
+
 
 ---
 
-### 2.19 [2026-09-18] ✂️ AnchorPrune: Geometry-Preserving Representation Hierarchy Compression for Multimodal Large Language Models (`arXiv:2609.08842`)
+### 2.19 [2026-09-18] ✂️ *AnchorPrune: Geometry-Preserving Representation Hierarchy Compression for Multimodal Large Language Models*
 > **聚焦领域**：Multimodal Sparsity · Representation Hierarchies · Layer Dropping · Geometric Manifolds  
 > **arXiv**：[`arXiv:2609.08842`](https://arxiv.org/abs/2609.08842)
 
@@ -1087,7 +1123,9 @@
 
 ---
 
-* 🛠️ **本仓库 (`transformer-geometry`) 直接对接模块**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)
-* 🔗 **双向溯源链接**：`scholar-odyssey/intelligence/papers/2026-09-18_ai_paper_notes.md`
+> [!TIP]
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/` & `attention_xsa/` (`arXiv:2609.15975`)  
+> **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-18_ai_paper_notes.md`
+
 
 ---
