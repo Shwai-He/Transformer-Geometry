@@ -1,10 +1,10 @@
 # 📐 Transformer-Geometry: 每日前沿文献关联与平行/正交子空间动力学库 (2026-09 — 2026-10)
 
-**Document ID:** `TG-LIT-202609` | **Last Updated:** `2026-10-01` | **Target Path:** `docs/frontier_literature_connections_2026_09.md` | **Total Routed Papers:** `38`
+**Document ID:** `TG-LIT-202609` | **Last Updated:** `2026-10-02` | **Target Path:** `docs/frontier_literature_connections_2026_09.md` | **Total Routed Papers:** `38`
 
 > [!IMPORTANT]
 > **🔗 跨仓库文献引用链闭环 (Cross-Repository Reference Chain Closure)**
-> 本文件由每日 AI 前沿论文精读流水线自动路由生成，专门收录直接引用或印证我们 **EMNLP 2026 Findings (*Transformer-Geometry: Decomposing Transformer Updates into Parallel & Perpendicular Subspaces*, `arXiv:2609.15975`)** 的平行分量（ $\Delta h _ \parallel$ 幅度缩放）与正交分量（ $\Delta h _ \perp$ 方向旋转）、Value-Space (XSA) 正交分解、循环残差方差增长定理（`DeepLoop`, `Fully Looped Transformer`, `Col-LN`）及无前向谱冗余层剪枝（`WRP`, `SHIFT-LLM`, `CLSE`, `ASL`, `VestigeKV`, `DEE-VLA`, `CAT-Flow`, `MSFM`, `ACPruner`, `MixedDimKV`, `DapQ`, `NFM`）的最新 arXiv 论文笔记。
+> 本文件由每日 AI 前沿论文精读流水线自动路由生成，专门收录直接引用或印证我们 **EMNLP 2026 Findings (*Transformer-Geometry: Decomposing Transformer Updates into Parallel & Perpendicular Subspaces*, `arXiv:2609.15975`)** 的平行分量（ $\Delta h _ \parallel$ 幅度缩放）与正交分量（ $\Delta h _ \perp$ 方向旋转）、Value-Space (XSA) 正交分解、循环残差方差增长定理（`DeepLoop`, `Fully Looped Transformer`, `Col-LN`）及无前向谱冗余层剪枝（`WRP`, `SHIFT-LLM`, `CLSE`, `ASL`, `VestigeKV`, `DEE-VLA`, `CAT-Flow`, `MSFM`, `ACPruner`, `MixedDimKV`, `DapQ`, `NFM`, `RAP`, `LookaheadKV`, `Transition Flow Matching`, `RecFM`, `DySL-VLA`）的最新 arXiv 论文笔记。
 > 每一篇收录文献均包含：**核心痛点、底层数学公式、ASCII 架构图、关键实测指标**，以及**与 `transformer-geometry` 仓库具体代码模块和我们已发表代表作（Our Works）的双向锚定**。
 
 ---
@@ -13,17 +13,17 @@
 
 | 收录日期 | 论文标题与 arXiv 链接 | 关键实测收益 / 核心结论 | 锚定本仓库代码模块与文档路径 (`Target Module`) | 原始精读归档 |
 | :---: | :--- | :--- | :--- | :---: |
-| `2026-10-02` | [**✂️ DySL-VLA & DySta**](https://arxiv.org/abs/2602.22896) (`arXiv:2602.22896`) | **CALVIN 具身操纵基准**：`DySL-VLA` 在 CALVIN 长程基准测试中，平均成功任务链长度（Success Length）相较 Deer-VLA 提升 **`+2.1%`**，在保持相同任务成功率的前提下，可训... | `attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
-| `2026-10-02` | [**🧩 SlimQwen & MAESTRO**](https://arxiv.org/abs/2605.08738) (`arXiv:2605.08738`) | **预训练规模下后剪枝显著优于从头训练**：`SlimQwen` 证实，在完全相同的千亿级 Token 预训练算力预算下，对预训练完成的 `Qwen3-Next-80A3B` 实施渐进专家剪枝所得的 `23A2B` 模型，在 MM... | `attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
-| `2026-10-02` | [**🗄️ LookaheadKV & RAP**](https://arxiv.org/abs/2603.10899) (`arXiv:2603.10899`) | **驱逐开销与首字延迟（TTFT）大幅降低**：在各大长文本理解基准（LongBench、L-Eval）上，`LookaheadKV` 相比依赖草稿生成的代表性基线，将 KV 驱逐耗时降低高达 **`14.5×`**，同时在复杂长... | `attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
-| `2026-10-02` | [**🦾 World Action Agent (WAA) & Recursive Harness Distillation**](https://arxiv.org/abs/2609.29964) (`arXiv:2609.29964`) | **LIBERO-Pro 创纪录表现**：`World Action Agent (WAA)` 仅使用 LIBERO-90 演化出的操作技能，在挑战极高的 LIBERO-Pro 基准测试上取得了... | `attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
-| `2026-10-02` | [**🌊 Transition Flow Matching & Recursive Flow Matching**](https://arxiv.org/abs/2603.15689) (`arXiv:2603.15689`) | **科学仿真 20x 速度飞跃**：在复杂的跨尺度时空流体仿真（Navier-Stokes 与气候动力学预测）基准测试中，`RecFM` 在 1–4 步生成下，相比目前领先的扩散基线实现了高达... | `probing/residual_decomposition.py` (Boundary-Aligned Velocity Field Projection in Tangent/Normal Spaces) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
-| `2026-10-02` | [**🧬 COEVO & SIFT**](https://arxiv.org/abs/2609.33398) (`arXiv:2609.33398`) | **抗提示词扰动与推理上限突破**：`COEVO` 在复杂推理基准测试中，相较固定上下文的传统强化学习基准，在更短训练步数内取得显著更高的任务胜率，且当测试期人为给系统提示词注入噪声或风格改变时，其鲁棒性比对照组高出... | `attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
+| `2026-10-02` | [**✂️ DySL-VLA & DySta**](https://arxiv.org/abs/2602.22896) (`arXiv:2602.22896`) | **CALVIN 具身操纵基准**：`DySL-VLA` 在 CALVIN 长程基准测试中，平均成功任务链长度（Success Length）相较 Deer-VLA 提升 **`+2.1%`**，在保持相同任务成功率的前提下，可训... | `compression/layer_geometry_pruning.py` (Informative vs Incremental Layer Decomposition & Action-Sensitivity Skipping) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
+| `2026-10-02` | [**🧩 SlimQwen & MAESTRO**](https://arxiv.org/abs/2605.08738) (`arXiv:2605.08738`) | **预训练规模下后剪枝显著优于从头训练**：`SlimQwen` 证实，在完全相同的千亿级 Token 预训练算力预算下，对预训练完成的 `Qwen3-Next-80A3B` 实施渐进专家剪枝所得的 `23A2B` 模型，在 MM... | `attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
+| `2026-10-02` | [**🗄️ LookaheadKV & RAP**](https://arxiv.org/abs/2603.10899) (`arXiv:2603.10899`) | **驱逐开销与首字延迟（TTFT）大幅降低**：在各大长文本理解基准（LongBench、L-Eval）上，`LookaheadKV` 相比依赖草稿生成的代表性基线，将 KV 驱逐耗时降低高达 **`14.5×`**，同时在复杂长... | `attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
+| `2026-10-02` | [**🦾 World Action Agent (WAA) & Recursive Harness Distillation**](https://arxiv.org/abs/2609.29964) (`arXiv:2609.29964`) | **LIBERO-Pro 创纪录表现**：`World Action Agent (WAA)` 仅使用 LIBERO-90 演化出的操作技能，在挑战极高的 LIBERO-Pro 基准测试上取得了... | `attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
+| `2026-10-02` | [**🌊 Transition Flow Matching & Recursive Flow Matching**](https://arxiv.org/abs/2603.15689) (`arXiv:2603.15689`) | **科学仿真 20x 速度飞跃**：在复杂的跨尺度时空流体仿真（Navier-Stokes 与气候动力学预测）基准测试中，`RecFM` 在 1–4 步生成下，相比目前领先的扩散基线实现了高达... | `probing/residual_decomposition.py` (Direct Global Mean Transition Velocity Field vs Instantaneous Tangent Vector Field) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
+| `2026-10-02` | [**🧬 COEVO & SIFT**](https://arxiv.org/abs/2609.33398) (`arXiv:2609.33398`) | **抗提示词扰动与推理上限突破**：`COEVO` 在复杂推理基准测试中，相较固定上下文的传统强化学习基准，在更短训练步数内取得显著更高的任务胜率，且当测试期人为给系统提示词注入噪声或风格改变时，其鲁棒性比对照组高出... | `attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation) | [2026-10-02](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-02_ai_paper_notes.md) |
 | `2026-10-01` | [**IAprune & Rényi Entropy (`Col-Ln`)**](https://arxiv.org/abs/2603.22991) (`arXiv:2603.22991`) | **`IAprune` 在仿真与真机闭环控制中的实测加速**：跨越 4 种具身操作策略、3 个仿真基准与真实机器人平台... | `probing/residual_decomposition.py` (Column-Wise Feature Standardization & Rényi Entropy Phase Transition vs $\Delta h _ \parallel$ Growth) | [2026-10-01](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-01_ai_paper_notes.md) |
 | `2026-10-01` | [**MixedDimKV & DapQ**](https://arxiv.org/abs/2603.20616) (`arXiv:2603.20616`) | **`MixedDimKV` / `MixedDimKV-H` 刷新极限压缩比记录**：在 LongBench 长文本基准上... | `attention_xsa/value_space_projection.py` (Attention Sink Parallel Anchor vs Heavy-Hitter Orthogonal Subspace Dimension Allocation) | [2026-10-01](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-01_ai_paper_notes.md) |
 | `2026-10-01` | [**Normalized Flow Matching (`NFM`) & WorldVLM**](https://arxiv.org/abs/2603.09014) (`arXiv:2603.09014`) | **`NFM` 实现“青出于蓝而胜于蓝”**：在图像生成基准上，利用预训练 `AR-NF` 蒸馏耦合训练出的学生流匹配模型（`NFM`），不仅显著优于采用独立耦合（Independent Coupling）甚至最优传输耦合（OT... | `probing/residual_decomposition.py` (Invertible Coupling Flow Trajectory Straightening vs Orthogonal Velocity Drift $\Vert \Delta h _ \perp\Vert$ ) | [2026-10-01](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-10-01_ai_paper_notes.md) |
 | `2026-09-30` | [**ACPruner & SCOPD**](https://arxiv.org/abs/2609.34558) (`arXiv:2609.34558`) | `ACPruner` (`2609.34558`) 保留 64/576 视觉 Token 维持 97.4% 精度；`SCOPD` (`2609.34044`) 10% 视觉 Token 保留率下 13 基准保留率：Vanilla 86.37%、SCOPD 90.49%、SCOPD+ 92.43% | `attention_xsa/value_space_projection.py` (Biased Attention Coverage & Barycentric Value Compensation) | [2026-09-30](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-30_ai_paper_notes.md) |
-| `2026-09-30` | [**Dynamic Flow, Static Graph & DORA**](https://arxiv.org/abs/2609.34727) (`arXiv:2609.34727`) | **端侧静态图 NPU 首字延迟骤降**：在高通骁龙 8 Elite（Hexagon NPU）与端侧 SoC 上运行 `Qwen2.5-3B/7B` 与 `Llama-3.2-3B`... | `attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces) | [2026-09-30](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-30_ai_paper_notes.md) |
+| `2026-09-30` | [**Dynamic Flow, Static Graph & DORA**](https://arxiv.org/abs/2609.34727) (`arXiv:2609.34727`) | **端侧静态图 NPU 首字延迟骤降**：在高通骁龙 8 Elite（Hexagon NPU）与端侧 SoC 上运行 `Qwen2.5-3B/7B` 与 `Llama-3.2-3B`... | `attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation) | [2026-09-30](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-30_ai_paper_notes.md) |
 | `2026-09-30` | [**CAT-Flow & MSFM**](https://arxiv.org/abs/2609.01746) (`arXiv:2609.01746`) | **`CAT-Flow` 免训练少步生成大幅提速**：在 Flux、Stable Diffusion 3、ImageNet SiT 以及机器人流匹配控制策略上，完全免训练的 `CAT-Flow` 在 **4–8 NFE** 低步数... | `probing/residual_decomposition.py` (Directional Velocity Curvature $\kappa(t)$ vs Orthogonal Update Rotation $\Vert \Delta h _ \perp\Vert$ ) | [2026-09-30](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-30_ai_paper_notes.md) |
 | `2026-09-29` | [**✂️ CoverPruner & SFPruner**](https://arxiv.org/abs/2609.03158) (`arXiv:2609.03158`) | 在 LLaVA-NeXT、Qwen2.5-VL 与 InternVL-2.5 等高分辨率多模态模型上，当剪除 **80%–88.9% 视觉 Token**（仅保留 64–128 个 Token）时，`CoverPruner` 与... | `attention_xsa/value_space_projection.py` (Value-Space Barycentric Surrogate Compensation) | [2026-09-29](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-29_ai_paper_notes.md) |
 | `2026-09-29` | [**⚡ VestigeKV**](https://arxiv.org/abs/2609.03949) (`arXiv:2609.03949`) | 在基于 MLA 架构的长上下文大模型上（128K–256K 上下文长度），`VestigeKV` 无需任何重新训练或旁路预测器，在仅加载 **15%–20% KV 潜向量**的稀疏注意力预算下，在 RULER、LongBench... | `attention_xsa/value_space_projection.py` (NoPE-MLA Orthogonal Vestigial Null-Space Norm $\Vert k _ {t,\text{vest}}\Vert _ 2$ ) | [2026-09-29](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-29_ai_paper_notes.md) |
@@ -41,7 +41,7 @@
 | `2026-09-25` | [**SAC**](https://arxiv.org/abs/2604.18392) (`arXiv:2604.18392`) | 在 TB 级长上下文并发推理中，SAC 将跨节点 KV 读取有效带宽利用率从 `15%` 提升至 **`94%`**，P99 尾延迟降低 **3.7x**。 | `attention_xsa/value_space_projection.py` (Output-Aware Value Jacobian Perturbation) | [2026-09-25](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-25_ai_paper_notes.md) |
 | `2026-09-24` | [**Training-Free Looped Transformers**](https://arxiv.org/abs/2605.23872) (`arXiv:2605.23872`) | 在完全零训练（Zero Finetuning）的 **Llama-3-8B** 与 **Mistral-7B** 上，对中段 6 层额外循环 $K=2$ 次，在 GSM8K、ARC-Challenge 与逻辑推理任务上直接获得... | `probing/` & `attention_xsa/` (`arXiv:2609.15975`) | [2026-09-24](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-24_ai_paper_notes.md) |
 | `2026-09-23` | [**MELT**](https://arxiv.org/abs/2605.07721) (`arXiv:2605.07721`) | 在 $K=4$ 与 $K=8$ 循环配置下，MELT 将长文本解码时的 **KV 缓存显存与带宽读取量直接削减 $75\text{ pct}–87.5$ %（严格降至 $1/K$ ）**，同时在语言建模与数学推理上与保存全套每步... | `probing/residual_decomposition.py` (Terminal-Iteration Latent Convergence) | [2026-09-23](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-23_ai_paper_notes.md) |
-| `2026-09-22` | [**LoRP**](https://arxiv.org/abs/2605.27786) (`arXiv:2605.27786`) | 在 **Llama-2/3** 与 **Mistral-7B** 的 25% 免训练层剪枝上，LoRP 在 MMLU 与 BBH 复杂推理基准上比全局余弦打分（ShortGPT）提升 **`+4.3%`**。 | `attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces) | [2026-09-22](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-22_ai_paper_notes.md) |
+| `2026-09-22` | [**LoRP**](https://arxiv.org/abs/2605.27786) (`arXiv:2605.27786`) | 在 **Llama-2/3** 与 **Mistral-7B** 的 25% 免训练层剪枝上，LoRP 在 MMLU 与 BBH 复杂推理基准上比全局余弦打分（ShortGPT）提升 **`+4.3%`**。 | `attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation) | [2026-09-22](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-22_ai_paper_notes.md) |
 | `2026-09-22` | [**SPIN**](https://arxiv.org/abs/2604.26837) (`arXiv:2604.26837`) | 在单台 8 卡服务器上支持 **1M–2M 上下文长度** 并发推理，相比纯 CPU Offloading（Infinite-LLM）实现 **4.8x** 吞吐提升，且恢复 99.7% 全量注意力精度。 | `probing/` & `attention_xsa/` (`arXiv:2609.15975`) | [2026-09-22](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-22_ai_paper_notes.md) |
 | `2026-09-21` | [**DeepLoop**](https://arxiv.org/abs/2607.13491) (`arXiv:2607.13491`) | 在循环深度从 $K=2$ 扩展至 ** $K=16$ ** 的语言与数学推理预训练中，标准 Pre-LN 循环架构在 $K \ge 6$ 时完全发散，而 **DeepLoop** 稳定收敛并实现随循环次数 $K$ 对数线性下降的测... | `probing/residual_decomposition.py` ( $\Delta h _ \parallel$ Coherent Variance Growth $O(K^2)$ ) | [2026-09-21](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-21_ai_paper_notes.md) |
 | `2026-09-21` | [**RotateK**](https://arxiv.org/abs/2605.19218) (`arXiv:2605.19218`) | 在 **LLaVA-NeXT**、**Qwen2-VL-7B** 与 **InternVL-2** 上，RotateK 剪除 **50%–60% 的 Key 通道**而无需微调，且与视觉 Token 剪枝（如 FastV / VL... | `attention_xsa/value_space_projection.py` (Orthogonal Key/Value Subspace Rotation) | [2026-09-21](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-21_ai_paper_notes.md) |
@@ -50,7 +50,7 @@
 | `2026-09-19` | [**WRP**](https://arxiv.org/abs/2609.09883) (`arXiv:2609.09883`) | **秒级零样本层裁剪且跨领域泛化更强**：在 **Llama-3-8B/70B**、**Qwen-2.5-14B** 与 **Mistral-7B** 上，WRP 在完全不运行任何前向传播（耗时不足 8 秒）的情况下剪除... | `compression/layer_geometry_pruning.py` (Weight Spectral Redundancy vs $\Delta h _ \perp$ ) | [2026-09-19](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-19_ai_paper_notes.md) |
 | `2026-09-19` | [**REAP**](https://arxiv.org/abs/2510.13999) (`arXiv:2510.13999`) | 在 **Mixtral-8x7B**、**DeepSeek-MoE-16B** 与 **Qwen1.5-MoE-A2.7B** 上，REAP 在 **25%–37.5% 专家剪枝率**下，在 GSM8K 与 HumanEval 生... | `probing/` & `attention_xsa/` (`arXiv:2609.15975`) | [2026-09-19](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-19_ai_paper_notes.md) |
 | `2026-09-18` | [**✂️ AnchorPrune**](https://arxiv.org/abs/2609.08842) (`arXiv:2609.08842`) | **评估模型**：Qwen2-VL-7B/72B、LLaVA-NeXT-34B； | `probing/` & `attention_xsa/` (`arXiv:2609.15975`) | [2026-09-18](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-18_ai_paper_notes.md) |
-| `2026-09-18` | [**🧬 Autoformalizer-Agent**](https://arxiv.org/abs/2609.09881) (`arXiv:2609.09881`) | 详见下方完整公式与实验卡片 | `attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces) | [2026-09-18](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-18_ai_paper_notes.md) |
+| `2026-09-18` | [**🧬 Autoformalizer-Agent**](https://arxiv.org/abs/2609.09881) (`arXiv:2609.09881`) | 详见下方完整公式与实验卡片 | `attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation) | [2026-09-18](https://github.com/Shwai-He/scholar-odyssey/blob/main/intelligence/papers/2026-09-18_ai_paper_notes.md) |
 
 ---
 
@@ -264,7 +264,7 @@ class DySLVLAPruner(nn.Module):
 ---
 
 > [!TIP]
-> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces)  
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`compression/layer_geometry_pruning.py` (Informative vs Incremental Layer Decomposition & Action-Sensitivity Skipping)  
 > **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-10-02_ai_paper_notes.md`
 
 
@@ -392,7 +392,7 @@ def compute_maestro_stationary_scores(expert_activations_seq, num_experts):
 ---
 
 > [!TIP]
-> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces)  
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation)  
 > **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-10-02_ai_paper_notes.md`
 
 
@@ -523,7 +523,7 @@ class RoPEAlignedKVPairPruner(nn.Module):
 ## 🔥 板块二：全球流行前沿热点精选 (Trending Frontier)
 
 > [!TIP]
-> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces)  
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation)  
 > **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-10-02_ai_paper_notes.md`
 
 
@@ -639,7 +639,7 @@ Playbook 本质上是解耦的因果规则图谱，在工业级机器人产线�
 ---
 
 > [!TIP]
-> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces)  
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation)  
 > **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-10-02_ai_paper_notes.md`
 
 
@@ -751,7 +751,7 @@ class TransitionFlowMatchingLoss(nn.Module):
 ---
 
 > [!TIP]
-> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/residual_decomposition.py` (Boundary-Aligned Velocity Field Projection in Tangent/Normal Spaces)  
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`probing/residual_decomposition.py` (Direct Global Mean Transition Velocity Field vs Instantaneous Tangent Vector Field)  
 > **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-10-02_ai_paper_notes.md`
 
 
@@ -861,7 +861,7 @@ def solve_bradley_terry_strengths(match_results, num_patches, reg=0.01):
 ---
 
 > [!TIP]
-> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces)  
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation)  
 > **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-10-02_ai_paper_notes.md`
 
 
@@ -1197,7 +1197,7 @@ $$
 ## 🔥 板块二：全球前沿热点精选 (Trending Frontier)
 
 > [!TIP]
-> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces)  
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation)  
 > **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-30_ai_paper_notes.md`
 
 
@@ -2275,7 +2275,7 @@ $$
 ---
 
 > [!TIP]
-> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces)  
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation)  
 > **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-22_ai_paper_notes.md`
 
 
@@ -2776,7 +2776,7 @@ $$
 ---
 
 > [!TIP]
-> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (Rank-Adaptive Orthogonal Projection in Parallel/Perpendicular Subspaces)  
+> **🎯 `transformer-geometry` 仓库代码级落地点 (`Target Module`)**：`attention_xsa/value_space_projection.py` (RoPE-Aligned 2D Rotation-Pair (2i, 2i+1) Orthogonal Subspace Inner-Product Preservation)  
 > **📚 上游精读归档 (`Upstream Source`)**：`scholar-odyssey/intelligence/papers/2026-09-18_ai_paper_notes.md`
 
 
